@@ -1,0 +1,118 @@
+<body class="h-screen bg-zinc-300 text-center">
+  <div class="flex justify-center">
+    <div
+      class="relative box-border m-2 bg-neutral-50 w-3/12 h-[calc(100vh-16px)] rounded shadow-lg overflow-auto"
+    >
+      <div #ProfileHeader>
+        <a href="your-link-here">
+          <h3
+            class="absolute top-0 right-7 pt-5 text-sm text-orange-700 hover:underline"
+          >
+            EDIT
+          </h3>
+        </a>
+        <h1 class="justify-center text-5xl font-bold text-blue-800 pb-8 pt-14">
+          Profile
+        </h1>
+      </div>
+      <div #ProfilePicture>
+        <img
+          class="w-8/12 h-8/12 rounded-full mx-auto shadow-lg border-4 border-blue-800"
+          src="./assets/testProfilePicture.jpg"
+          alt="Avatar"
+        />
+      </div>
+      <div #NameAndStats class="pt-5">
+        <h1 class="justify-center text-2xl font-bold text-blue-900">
+          Nathan Burns
+        </h1>
+        <h1>Male, 20 years</h1>
+        <h1 class="justify-center text-blue-950">6' 0'' | 173 lbs</h1>
+      </div>
+      <div #Goals class="pt-10">
+        <div
+          class="w-5/6 mx-auto rounded-lg border border-gray-300 p-2 shadow-sm"
+        >
+          <h1 class="text-xl text-blue-900 underline font-bold">Goals</h1>
+          <ul class="list-none text-blue-950">
+            <li>Maintain Weight</li>
+            <li>Gain Muscle</li>
+          </ul>
+        </div>
+      </div>
+      <div #Steaks class="pt-10">
+        <div
+          class="w-5/6 mx-auto rounded-lg border border-gray-300 p-2 shadow-sm"
+        >
+          <h1 class="text-xl text-blue-900 underline font-bold">Streaks</h1>
+          <table class="table-auto text-blue-950 mx-auto">
+            <tr>
+              <td class="text-right pr-2">Exercise:</td>
+              <td class="text-left pl-2">3 Days</td>
+            </tr>
+            <tr>
+              <td class="text-right pr-2">Eating Goals:</td>
+              <td class="text-left pl-2">12 Days</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div
+      class="box-border m-2 bg-neutral-50 w-8/12 h-[calc(100vh-16px)] rounded shadow-lg overflow-auto"
+    >
+      <div #Title class="pt-5">
+        <h1 class="justify-center text-6xl font-bold text-blue-800">
+          Fitness Tracker
+        </h1>
+        <h1 class="justify-center text-2xl text-orange-700 font-bold pt-4">
+          Welcome User
+        </h1>
+      </div>
+      <div #Date class="pt-2">
+        <h1 class="justify-center text-base text-blue-950 font-bold">
+          May 15, 2023
+        </h1>
+      </div>
+      <div #SummaryNav class="pt-12">
+        <h1 class="text-lg text-blue-950 font-bold">Summary</h1>
+        <div
+          class="w-1/2 mx-auto rounded-full border border-gray-300 p-2 shadow-sm"
+        >
+          <ul class="flex">
+            <li class="flex-1 mr-2">
+              <a
+                class="text-center block border border-blue-900 rounded-3xl py-2 px-4 bg-blue-700 hover:bg-blue-900 text-white"
+                href="#"
+                >Daily</a
+              >
+            </li>
+            <li class="flex-1 mr-2">
+              <a
+                class="text-center block border border-white rounded-3xl hover:border-gray-200 text-blue-700 hover:bg-gray-200 py-2 px-4"
+                href="#"
+                >Monthly</a
+              >
+            </li>
+            <li class="text-center flex-1">
+              <a
+                class="text-center block border border-white rounded-3xl hover:border-gray-200 text-blue-700 hover:bg-gray-200 py-2 px-4"
+                href="#"
+                >Yearly</a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div #SummaryDisplay class="pt-5">
+        <div
+          class="w-5/6 mx-auto rounded-md border border-gray-300 p-2 shadow-md"
+        >
+          <DailySummaryComponent></DailySummaryComponent>
+          <!-- <MonthlySummaryComponent></MonthlySummaryComponent> -->
+          <!-- <YearlySummaryComponent></YearlySummaryComponent> -->
+        </div>
+      </div>
+    </div>
+  </div>
+</body>

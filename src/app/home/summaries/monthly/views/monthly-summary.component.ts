@@ -7,7 +7,6 @@ import { MonthlyExerciseInfoService } from '../services/monthly-exercise-info.se
 @Component({
   selector: 'MonthlySummaryComponent',
   templateUrl: './monthly-summary.component.html',
-  styleUrls: ['./monthly-summary.component.css'],
 })
 export class MonthlySummaryComponent implements OnInit {
   monthlyBreakdownInfo!: IMonthlyBreakdownInfo[];

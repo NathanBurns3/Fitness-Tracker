@@ -9,7 +9,6 @@ import { ProfileInfoService } from 'src/app/home/services/profile-info.service';
 @Component({
   selector: 'DailySummaryComponent',
   templateUrl: './daily-summary.component.html',
-  styleUrls: ['./daily-summary.component.css'],
 })
 export class DailySummaryComponent implements OnInit {
   dailyEatingInfo!: IDailyEatingInfo;

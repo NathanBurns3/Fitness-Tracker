@@ -4,7 +4,7 @@
       class="relative box-border m-2 bg-neutral-50 w-3/12 h-[calc(100vh-16px)] rounded shadow-lg overflow-auto"
     >
       <div #ProfileHeader>
-        <a href="your-link-here">
+        <a href="ProfileSettingsLink">
           <h3
             class="absolute top-0 right-7 pt-5 text-sm text-orange-700 hover:underline"
           >
@@ -17,17 +17,22 @@
       </div>
       <div #ProfilePicture>
         <img
-          class="w-8/12 h-8/12 rounded-full mx-auto shadow-lg border-4 border-blue-800"
-          src="./assets/testProfilePicture.jpg"
+          class="w-8/12 h-8/12 rounded-full mx-auto shadow-lg border-4 border-blue-800 mb-7"
+          [src]="profileInfo.profileImage"
           alt="Avatar"
         />
       </div>
-      <div #NameAndStats class="pt-5">
+      <div
+        #NameAndStats
+        class="w-5/6 mx-auto rounded-lg border border-gray-300 p-2 shadow-sm"
+      >
         <h1 class="justify-center text-2xl font-bold text-blue-900">
-          Nathan Burns
+          {{ profileInfo.firstName }} {{ profileInfo.lastName }}
         </h1>
-        <h1>Male, 20 years</h1>
-        <h1 class="justify-center text-blue-950">6' 0'' | 173 lbs</h1>
+        <h1>{{ profileInfo.gender }}, {{ profileInfo.age }} years</h1>
+        <h1 class="justify-center text-blue-950">
+          {{ profileInfo.height }} | {{ profileInfo.weight }} lbs
+        </h1>
       </div>
       <div #Goals class="pt-10">
         <div
@@ -35,8 +40,7 @@
         >
           <h1 class="text-xl text-blue-900 underline font-bold">Goals</h1>
           <ul class="list-none text-blue-950">
-            <li>Maintain Weight</li>
-            <li>Gain Muscle</li>
+            <li *ngFor="let goal of profileInfo.goals">{{ goal }}</li>
           </ul>
         </div>
       </div>
@@ -48,11 +52,15 @@
           <table class="table-auto text-blue-950 mx-auto">
             <tr>
               <td class="text-right pr-2">Exercise:</td>
-              <td class="text-left pl-2">3 Days</td>
+              <td class="text-left pl-2">
+                {{ profileInfo.exerciseStreak }} Days
+              </td>
             </tr>
             <tr>
               <td class="text-right pr-2">Eating Goals:</td>
-              <td class="text-left pl-2">12 Days</td>
+              <td class="text-left pl-2">
+                {{ profileInfo.eatingGoalStreak }} Days
+              </td>
             </tr>
           </table>
         </div>
@@ -66,12 +74,12 @@
           Fitness Tracker
         </h1>
         <h1 class="justify-center text-2xl text-orange-700 font-bold pt-4">
-          Welcome User
+          Welcome {{ profileInfo.firstName }}!
         </h1>
       </div>
       <div #Date class="pt-2">
         <h1 class="justify-center text-base text-blue-950 font-bold">
-          May 15, 2023
+          {{ formattedDate }}
         </h1>
       </div>
       <div #SummaryNav class="pt-12">
@@ -82,22 +90,34 @@
           <ul class="flex">
             <li class="flex-1 mr-2">
               <a
-                class="text-center block border border-blue-900 rounded-3xl py-2 px-4 bg-blue-700 hover:bg-blue-900 text-white"
-                href="#"
+                (click)="selectSummary('Daily')"
+                [ngClass]="
+                  selectedSummary === 'Daily'
+                    ? 'text-center block border border-blue-900 rounded-3xl py-2 px-4 bg-blue-700 hover:bg-blue-900 text-white'
+                    : 'text-center block border border-white rounded-3xl hover:border-gray-200 text-blue-700 hover:bg-gray-200 py-2 px-4'
+                "
                 >Daily</a
               >
             </li>
             <li class="flex-1 mr-2">
               <a
-                class="text-center block border border-white rounded-3xl hover:border-gray-200 text-blue-700 hover:bg-gray-200 py-2 px-4"
-                href="#"
+                (click)="selectSummary('Monthly')"
+                [ngClass]="
+                  selectedSummary === 'Monthly'
+                    ? 'text-center block border border-blue-900 rounded-3xl py-2 px-4 bg-blue-700 hover:bg-blue-900 text-white'
+                    : 'text-center block border border-white rounded-3xl hover:border-gray-200 text-blue-700 hover:bg-gray-200 py-2 px-4'
+                "
                 >Monthly</a
               >
             </li>
             <li class="text-center flex-1">
               <a
-                class="text-center block border border-white rounded-3xl hover:border-gray-200 text-blue-700 hover:bg-gray-200 py-2 px-4"
-                href="#"
+                (click)="selectSummary('Yearly')"
+                [ngClass]="
+                  selectedSummary === 'Yearly'
+                    ? 'text-center block border border-blue-900 rounded-3xl py-2 px-4 bg-blue-700 hover:bg-blue-900 text-white'
+                    : 'text-center block border border-white rounded-3xl hover:border-gray-200 text-blue-700 hover:bg-gray-200 py-2 px-4'
+                "
                 >Yearly</a
               >
             </li>
@@ -108,9 +128,15 @@
         <div
           class="w-5/6 mx-auto rounded-md border border-gray-300 p-2 shadow-md"
         >
-          <!-- <DailySummaryComponent></DailySummaryComponent> -->
-          <MonthlySummaryComponent></MonthlySummaryComponent>
-          <!-- <YearlySummaryComponent></YearlySummaryComponent> -->
+          <DailySummaryComponent
+            *ngIf="selectedSummary === 'Daily'"
+          ></DailySummaryComponent>
+          <MonthlySummaryComponent
+            *ngIf="selectedSummary === 'Monthly'"
+          ></MonthlySummaryComponent>
+          <YearlySummaryComponent
+            *ngIf="selectedSummary === 'Yearly'"
+          ></YearlySummaryComponent>
         </div>
       </div>
     </div>

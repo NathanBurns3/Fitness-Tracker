@@ -14,14 +14,23 @@ export class HomeComponent implements OnInit {
     month: 'long',
   })} ${this.today.getDate()}, ${this.today.getFullYear()}`;
   selectedSummary: string = 'Daily';
+  formattedHeight!: string;
 
   constructor(private profileInfoService: ProfileInfoService) {}
 
   ngOnInit(): void {
     this.profileInfo = this.profileInfoService.getProfileInfo();
+    this.formattedHeight = this.formatHeight();
   }
 
   selectSummary(summary: string) {
     this.selectedSummary = summary;
+  }
+
+  formatHeight(): string {
+    let heightInInches = this.profileInfo.height;
+    let feet = Math.floor(heightInInches / 12);
+    let inches = heightInInches % 12;
+    return `${feet}' ${inches}"`;
   }
 }

@@ -5,7 +5,6 @@ export interface IProfileInfo {
   lastName: string;
   email: string;
   phone: string;
-  address: string;
   profileImage: string;
   gender: string;
   age: number;

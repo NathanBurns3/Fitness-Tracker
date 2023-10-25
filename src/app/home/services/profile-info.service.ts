@@ -11,7 +11,6 @@ export class ProfileInfoService {
       lastName: 'Burns',
       email: 'nate10nate@gmail.com',
       phone: '801-616-1234',
-      address: '1234 S 5678 E',
       profileImage: './assets/testProfilePicture.jpg',
       gender: 'Male',
       age: 20,

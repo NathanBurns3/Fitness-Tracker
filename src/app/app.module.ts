@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { HomeModule } from './home/home.module';
 import { AddExerciseModule } from './add-exercise/add-exercise.module';
 import { RouterModule } from '@angular/router';
+import { AddMealModule } from './add-meal/add-meal.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -13,6 +14,7 @@ import { RouterModule } from '@angular/router';
     BrowserModule,
     HomeModule,
     AddExerciseModule,
+    AddMealModule,
     AppRoutingModule,
     RouterModule,
   ],

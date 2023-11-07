@@ -1,14 +1,30 @@
-<body class="h-screen bg-zinc-300 text-center">
-  <div class="flex top-2 justify-between items-center relative">
-    <button
-      routerLink="/"
-      class="button absolute left-4"
-      style="vertical-align: middle"
-    >
-      <span>Back</span>
-    </button>
-    <div class="flex flex-grow justify-center">
-      <h1 class="text-6xl font-bold text-blue-800">Workouts</h1>
+<body class="h-screen text-center bg-zinc-300 overflow-auto">
+  <div class="bg-neutral-50 rounded-lg shadow-lg h-[calc(100vh-40px)] m-5">
+    <div #Title>
+      <div class="min-h-[75px]">
+        <div class="flex justify-between items-center relative">
+          <button routerLink="/" class="button absolute left-4">
+            <span>Back</span>
+          </button>
+          <div class="flex flex-grow justify-center mt-2">
+            <h1 class="text-6xl font-bold text-blue-800">Exercise</h1>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div #MainBody>
+      <div class="grid grid-cols-5 gap-4 m-4">
+        <div
+          class="border border-zinc-300 rounded-lg shadow-sm min-h-[calc(100vh-150px)] col-span-2 row-span-2"
+        ></div>
+        <div
+          class="border border-zinc-300 rounded-lg shadow-sm col-span-3"
+        ></div>
+        <div
+          class="border border-zinc-300 rounded-lg shadow-sm min-h-[300px] col-span-3"
+        ></div>
+      </div>
     </div>
   </div>
 </body>

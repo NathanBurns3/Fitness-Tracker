@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { IDailyEatingInfo } from '../models/daily-eating-info';
 import { IExerciseInfo } from '../models/exercise-info';
-import { IProfileInfo } from 'src/app/home/models/profile-info';
+import { IProfileInfo } from 'src/app/home-page/models/profile-info';
 import { DailyEatingInfoService } from '../services/daily-eating-info.service';
 import { DailyExerciseInfoService } from '../services/daily-exercise-info.service';
-import { ProfileInfoService } from 'src/app/home/services/profile-info.service';
+import { ProfileInfoService } from 'src/app/home-page/services/profile-info.service';
 
 @Component({
   selector: 'DailySummaryComponent',

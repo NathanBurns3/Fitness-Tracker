@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HomeModule } from './home/home.module';
+import { HomeModule } from './home-page/home.module';
 import { AddExerciseModule } from './add-exercise/add-exercise.module';
 import { RouterModule } from '@angular/router';
 import { AddMealModule } from './add-meal/add-meal.module';

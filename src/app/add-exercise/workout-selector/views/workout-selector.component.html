@@ -1,0 +1,77 @@
+<div class="flex items-center space-x-4">
+  <div>
+    <select
+      [(ngModel)]="selectedMuscleGroup"
+      (change)="onMuscleGroupChange()"
+      class="w-96 block rounded-lg border p-2.5 text-sm bg-gradient-to-r from-blue-500 to-blue-700 text-white focus:ring-2 focus:ring-orange-500 shadow-lg transition duration-500 ease-in-out transform hover:-translate-y-0.5 hover:scale-105"
+    >
+      <option [value]="'Choose a Muscle Group'" selected disabled>
+        Choose a Muscle Group
+      </option>
+      <option *ngFor="let muscle of muscleGroups" [value]="muscle">
+        {{ muscle }}
+      </option>
+    </select>
+    <div class="flex mt-5">
+      <select
+        [(ngModel)]="selectedWorkout"
+        [disabled]="selectedMuscleGroup === 'Choose a Muscle Group'"
+        class="w-96 block rounded-lg border p-2.5 text-sm bg-gradient-to-r from-blue-500 to-blue-700 text-white focus:ring-2 focus:ring-orange-500 shadow-lg transition duration-500 ease-in-out transform"
+        [ngClass]="{
+          'hover:-translate-y-0.5 hover:scale-105':
+            selectedMuscleGroup !== 'Choose a Muscle Group'
+        }"
+      >
+        <option [value]="'Choose a Workout'" selected>Choose a Workout</option>
+        <option *ngFor="let workout of workouts" [value]="workout.exerciseName">
+          {{ workout.exerciseName }}
+        </option>
+      </select>
+    </div>
+  </div>
+  <div class="ml-14">
+    <form>
+      <input
+        [(ngModel)]="sets"
+        name="sets"
+        class="rounded-lg border p-2.5 text-sm bg-white text-black focus:ring-2 focus:ring-blue-500 w-48 mb-5 shadow-lg transition duration-500 ease-in-out transform hover:-translate-y-0.5 hover:scale-105"
+        type="text"
+        placeholder="Number of Sets"
+        aria-label="Number of Sets"
+      />
+    </form>
+    <button
+      (click)="onAddWorkout(selectedWorkout, sets)"
+      [disabled]="
+        selectedMuscleGroup === 'Choose a Muscle Group' ||
+        selectedWorkout === 'Choose a Workout' ||
+        +sets < 1
+      "
+      class="rounded-lg border p-2.5 text-sm text-white w-48 shadow-lg transition duration-500 ease-in-out transform"
+      [ngClass]="{
+        'bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-700 hover:to-blue-900 hover:-translate-y-0.5 hover:scale-105 cursor-pointer':
+          selectedMuscleGroup !== 'Choose a Muscle Group' &&
+          selectedWorkout !== 'Choose a Workout' &&
+          +sets > 0,
+        'bg-gradient-to-r from-blue-300 to-blue-500 cursor-not-allowed':
+          selectedMuscleGroup === 'Choose a Muscle Group' ||
+          selectedWorkout === 'Choose a Workout' ||
+          +sets < 1
+      }"
+    >
+      Add Workout
+    </button>
+  </div>
+</div>
+<div class="mt-10 flex space-x-4">
+  <button
+    class="rounded-lg border w-36 p-2.5 text-sm bg-gradient-to-r from-blue-500 to-blue-700 text-white hover:from-blue-700 hover:to-blue-900 shadow-lg transition duration-500 ease-in-out transform hover:-translate-y-0.5 hover:scale-105"
+  >
+    Add New Workout
+  </button>
+  <button
+    class="rounded-lg border w-36 p-2.5 text-sm bg-gradient-to-r from-orange-500 to-orange-700 text-white hover:from-orange-700 hover:to-orange-900 shadow-lg transition duration-500 ease-in-out transform hover:-translate-y-0.5 hover:scale-105"
+  >
+    Delete Workout
+  </button>
+</div>

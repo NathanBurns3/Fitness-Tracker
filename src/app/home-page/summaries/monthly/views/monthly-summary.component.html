@@ -1,31 +1,31 @@
 <div class="container mx-auto p-4">
   <!-- Calendar Header -->
   <div class="flex justify-center items-center mb-4">
-    <h1 class="text-xl font-semibold">{{ currentMonthYear }}</h1>
+    <h1 class="text-2xl font-bold text-blue-950">{{ currentMonthYear }}</h1>
   </div>
 
   <!-- Calendar Grid -->
   <div class="grid grid-cols-7 gap-2">
     <!-- Weekday Headers -->
-    <div class="text-center text-gray-600">Sun</div>
-    <div class="text-center text-gray-600">Mon</div>
-    <div class="text-center text-gray-600">Tue</div>
-    <div class="text-center text-gray-600">Wed</div>
-    <div class="text-center text-gray-600">Thu</div>
-    <div class="text-center text-gray-600">Fri</div>
-    <div class="text-center text-gray-600">Sat</div>
+    <div class="text-center text-gray-500 font-semibold">Sun</div>
+    <div class="text-center text-gray-500 font-semibold">Mon</div>
+    <div class="text-center text-gray-500 font-semibold">Tue</div>
+    <div class="text-center text-gray-500 font-semibold">Wed</div>
+    <div class="text-center text-gray-500 font-semibold">Thu</div>
+    <div class="text-center text-gray-500 font-semibold">Fri</div>
+    <div class="text-center text-gray-500 font-semibold">Sat</div>
 
     <!-- Calendar Days -->
     <!-- TODO: Replace this with dynamic generation of days -->
     <div
       *ngFor="let info of monthlyBreakdownInfo"
-      class="text-center border"
+      class="text-center border border-gray-200 rounded-lg"
       [ngStyle]="{
         background:
           info.exerciseGoal && info.eatingGoal
-            ? 'linear-gradient(to bottom right, rgba(21, 101, 192, 0.5) 50%, rgba(245, 124, 0, 0.5) 50%)'
+            ? 'linear-gradient(to bottom right, rgba(59, 130, 246, 0.5) 50%, rgba(245, 124, 0, 0.5) 50%)'
             : info.exerciseGoal
-            ? 'linear-gradient(to bottom right, rgba(21, 101, 192, 0.5) 50%, white 50%)'
+            ? 'linear-gradient(to bottom right, rgba(59, 130, 246, 0.5) 50%, white 50%)'
             : info.eatingGoal
             ? 'linear-gradient(to bottom right, white 50%, rgba(245, 124, 0, 0.5) 50%)'
             : 'white'
@@ -38,23 +38,23 @@
   <div class="mt-4 flex items-center">
     <div class="flex items-center mr-4">
       <div
-        class="w-4 h-4 mr-2"
-        style="background: rgba(21, 101, 192, 0.5)"
+        class="w-4 h-4 mr-2 rounded-full"
+        style="background: rgba(59, 130, 246, 0.5)"
       ></div>
-      <div>Exercice Goal</div>
+      <div class="text-gray-600">Exercise Goal</div>
     </div>
     <div class="flex items-center">
       <div
-        class="w-4 h-4 mr-2"
+        class="w-4 h-4 mr-2 rounded-full"
         style="background: rgba(245, 124, 0, 0.5)"
       ></div>
-      <div>Eating Goal</div>
+      <div class="text-gray-600">Eating Goal</div>
     </div>
   </div>
 </div>
 
 <div #Exercise class="mt-6">
-  <h1 class="font-bold text-2xl text-blue-900 mb-2">Monthly Breakdown</h1>
+  <h1 class="font-bold text-2xl text-blue-950 mb-2">Monthly Breakdown</h1>
   <div #ExerciseBar>
     <div class="relative pt-1 mx-5 flex justify-center">
       <div

@@ -17,7 +17,9 @@ export class WorkoutSelectorComponent {
   constructor(private workoutsService: WorkoutsService) {}
 
   onMuscleGroupChange() {
-    this.workouts = this.workoutsService.getWorkouts(this.selectedMuscleGroup);
+    this.workouts = this.workoutsService.getWorkoutsById(
+      this.selectedMuscleGroup
+    );
     this.selectedWorkout = 'Choose a Workout';
   }
 

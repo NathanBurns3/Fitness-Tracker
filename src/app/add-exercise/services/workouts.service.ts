@@ -1,10 +1,12 @@
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { IWorkout } from '../models/workouts';
 
 @Injectable({
   providedIn: 'root',
 })
 export class WorkoutsService {
+  workoutAdded = new EventEmitter<void>();
+
   workouts: IWorkout[] = [
     {
       WorkoutId: 1,
@@ -212,14 +214,18 @@ export class WorkoutsService {
     },
   ];
 
-  getWorkouts(selectedMuscleGroup: string): IWorkout[] {
+  getWorkoutsById(selectedMuscleGroup: string): IWorkout[] {
     return this.workouts.filter(
       (workout) => workout.muscleGroup === selectedMuscleGroup
     );
   }
 
+  getWorkouts(): IWorkout[] {
+    return this.workouts;
+  }
+
   addWorkout(workout: IWorkout) {
     this.workouts.push(workout);
-    console.log('test', workout);
+    this.workoutAdded.emit();
   }
 }

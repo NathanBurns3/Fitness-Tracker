@@ -9,6 +9,7 @@ import { ProfileInfoService } from 'src/app/home-page/services/profile-info.serv
 @Component({
   selector: 'DailySummaryComponent',
   templateUrl: './daily-summary.component.html',
+  styleUrls: ['./daily-summary.component.css'],
 })
 export class DailySummaryComponent implements OnInit {
   dailyEatingInfo!: IDailyEatingInfo;
@@ -43,6 +44,7 @@ export class DailySummaryComponent implements OnInit {
     'Abs',
   ];
   macros: string[] = ['Calories', 'Protein', 'Carbs', 'Fat', 'Fiber', 'Sodium'];
+  hoverIndex: number = -1;
 
   constructor(
     private dailyEatingInfoService: DailyEatingInfoService,

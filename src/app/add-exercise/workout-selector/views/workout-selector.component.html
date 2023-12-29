@@ -47,13 +47,13 @@
         selectedWorkout === 'Choose a Workout' ||
         +sets < 1
       "
-      class="rounded-lg border p-2.5 text-sm text-white w-48 shadow-lg transition duration-500 ease-in-out transform"
+      class="rounded-lg border p-2.5 text-sm text-white w-48 shadow-lg transition duration-500 ease-in-out transform bg-gradient-to-r"
       [ngClass]="{
-        'bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-700 hover:to-blue-900 hover:-translate-y-0.5 hover:scale-105 cursor-pointer':
+        'from-blue-500 to-blue-700 hover:from-blue-700 hover:to-blue-900 hover:-translate-y-0.5 hover:scale-105 cursor-pointer':
           selectedMuscleGroup !== 'Choose a Muscle Group' &&
           selectedWorkout !== 'Choose a Workout' &&
           +sets > 0,
-        'bg-gradient-to-r from-blue-300 to-blue-500 cursor-not-allowed':
+        'from-light-blue to-dark-blue cursor-not-allowed':
           selectedMuscleGroup === 'Choose a Muscle Group' ||
           selectedWorkout === 'Choose a Workout' ||
           +sets < 1

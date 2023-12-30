@@ -2,10 +2,10 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AddExerciseComponent } from './views/add-exercise.component';
 import { RouterModule } from '@angular/router';
-import { WorkoutListComponent } from './workout-list/views/workout-list.component';
-import { WorkoutSelectorComponent } from './workout-selector/views/workout-selector.component';
+import { WorkoutListComponent } from './workout-list/workout-list.component';
+import { WorkoutSelectorComponent } from './workout-selector/workout-selector.component';
 import { FormsModule } from '@angular/forms';
-import { WorkoutImageComponent } from './workout-image/views/workout-image.component';
+import { WorkoutImageComponent } from './workout-image/workout-image.component';
 
 @NgModule({
   declarations: [

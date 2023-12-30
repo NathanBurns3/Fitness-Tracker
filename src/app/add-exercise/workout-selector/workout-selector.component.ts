@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import { muscleGroupsEnum } from '../../models/muscle-groups-enum';
-import { IWorkout } from '../../models/workouts';
-import { WorkoutsService } from '../../services/workouts.service';
+import { muscleGroupsEnum } from '../models/muscle-groups-enum';
+import { IWorkout } from '../models/workouts';
+import { WorkoutsService } from '../services/workouts.service';
 
 @Component({
   selector: 'workout-selector',

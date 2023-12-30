@@ -5,12 +5,14 @@ import { RouterModule } from '@angular/router';
 import { WorkoutListComponent } from './workout-list/views/workout-list.component';
 import { WorkoutSelectorComponent } from './workout-selector/views/workout-selector.component';
 import { FormsModule } from '@angular/forms';
+import { WorkoutImageComponent } from './workout-image/workout-image.component';
 
 @NgModule({
   declarations: [
     AddExerciseComponent,
     WorkoutListComponent,
     WorkoutSelectorComponent,
+    WorkoutImageComponent,
   ],
   imports: [CommonModule, RouterModule, FormsModule],
   exports: [AddExerciseComponent],

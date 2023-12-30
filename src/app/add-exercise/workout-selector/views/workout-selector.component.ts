@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { muscleGroupsEnum } from '../../models/muscle-groups-enum';
 import { IWorkout } from '../../models/workouts';
 import { WorkoutsService } from '../../services/workouts.service';
@@ -8,6 +8,8 @@ import { WorkoutsService } from '../../services/workouts.service';
   templateUrl: './workout-selector.component.html',
 })
 export class WorkoutSelectorComponent {
+  @Output() muscleGroupChange = new EventEmitter<string>();
+
   muscleGroups = Object.values(muscleGroupsEnum);
   selectedMuscleGroup = 'Choose a Muscle Group';
   selectedWorkout = 'Choose a Workout';
@@ -21,6 +23,7 @@ export class WorkoutSelectorComponent {
       this.selectedMuscleGroup
     );
     this.selectedWorkout = 'Choose a Workout';
+    this.muscleGroupChange.emit(this.selectedMuscleGroup);
   }
 
   onAddWorkout(exerciseName: string, sets: string): void {

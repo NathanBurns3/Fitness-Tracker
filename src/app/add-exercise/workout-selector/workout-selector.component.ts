@@ -35,5 +35,8 @@ export class WorkoutSelectorComponent {
     };
     console.log('New Workout: ', newWorkout);
     this.workoutsService.addWorkout(newWorkout);
+    this.selectedMuscleGroup = 'Choose a Muscle Group';
+    this.selectedWorkout = 'Choose a Workout';
+    this.sets = '';
   }
 }

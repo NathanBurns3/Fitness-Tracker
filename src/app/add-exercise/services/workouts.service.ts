@@ -228,4 +228,18 @@ export class WorkoutsService {
     this.workouts.push(workout);
     this.workoutAdded.emit();
   }
+
+  updateWorkout(workout: IWorkout) {
+    const index = this.workouts.findIndex(
+      (w) => w.WorkoutId === workout.WorkoutId
+    );
+    this.workouts[index] = workout;
+  }
+
+  deleteWorkout(workout: IWorkout) {
+    const index = this.workouts.findIndex(
+      (w) => w.WorkoutId === workout.WorkoutId
+    );
+    this.workouts.splice(index, 1);
+  }
 }

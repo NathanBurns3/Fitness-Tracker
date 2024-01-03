@@ -7,6 +7,7 @@ import { HomeModule } from './home-page/home.module';
 import { AddExerciseModule } from './add-exercise/add-exercise.module';
 import { RouterModule } from '@angular/router';
 import { AddMealModule } from './add-meal/add-meal.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [AppComponent],
@@ -17,6 +18,7 @@ import { AddMealModule } from './add-meal/add-meal.module';
     AddMealModule,
     AppRoutingModule,
     RouterModule,
+    BrowserAnimationsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -16,7 +16,7 @@
     <select
       [(ngModel)]="muscleGroup"
       (change)="onMuscleGroupChange(muscleGroup)"
-      class="w-full block rounded-lg border p-2.5 text-sm bg-white text-blue-800 focus:ring-2 focus:ring-blue-500 shadow-lg transition duration-500 ease-in-out transform hover:-translate-y-0.5 hover:scale-105 mb-5"
+      class="w-full block rounded-lg border p-2.5 text-sm bg-white text-blue-950 focus:ring-2 focus:ring-blue-500 shadow-lg transition duration-500 ease-in-out transform hover:-translate-y-0.5 hover:scale-105 mb-5"
     >
       <option [value]="'Choose a Muscle Group'" selected disabled>
         Choose a Muscle Group
@@ -26,11 +26,11 @@
       </option>
     </select>
 
-    <h1 class="font-bold text-blue-800 mb-2">Exercise:</h1>
+    <h1 class="text-lg font-bold text-blue-800 mb-2">Exercise:</h1>
     <select
       [(ngModel)]="workout"
       [disabled]="muscleGroup === 'Choose a Muscle Group'"
-      class="w-full block rounded-lg border p-2.5 text-sm bg-white text-blue-800 focus:ring-2 focus:ring-blue-500 shadow-lg transition duration-500 ease-in-out transform mb-5"
+      class="w-full block rounded-lg border p-2.5 text-sm bg-white text-blue-950 focus:ring-2 focus:ring-blue-500 shadow-lg transition duration-500 ease-in-out transform mb-5"
       [ngClass]="{
         'hover:-translate-y-0.5 hover:scale-105':
           muscleGroup !== 'Choose a Muscle Group'
@@ -47,7 +47,7 @@
       <input
         [(ngModel)]="sets"
         name="sets"
-        class="rounded-lg border p-2.5 text-sm bg-white text-blue-800 focus:ring-2 focus:ring-blue-500 w-full mb-5 shadow-lg transition duration-500 ease-in-out transform hover:-translate-y-0.5 hover:scale-105"
+        class="rounded-lg border p-2.5 text-sm bg-white text-blue-950 focus:ring-2 focus:ring-blue-500 w-full mb-5 shadow-lg transition duration-500 ease-in-out transform hover:-translate-y-0.5 hover:scale-105"
         type="text"
         placeholder="Number of Sets"
         aria-label="Number of Sets"

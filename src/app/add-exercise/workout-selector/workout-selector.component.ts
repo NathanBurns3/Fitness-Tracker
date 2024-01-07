@@ -2,6 +2,8 @@ import { Component, EventEmitter, Output } from '@angular/core';
 import { muscleGroupsEnum } from '../models/muscle-groups-enum';
 import { IWorkout } from '../models/workouts';
 import { WorkoutsService } from '../services/workouts.service';
+import { MatDialog } from '@angular/material/dialog';
+import { AddNewWorkoutComponent } from '../add-new-workout/add-new-workout.component';
 
 @Component({
   selector: 'workout-selector',
@@ -16,7 +18,10 @@ export class WorkoutSelectorComponent {
   workouts: IWorkout[] = [];
   sets: string = '';
 
-  constructor(private workoutsService: WorkoutsService) {}
+  constructor(
+    private workoutsService: WorkoutsService,
+    private dialog: MatDialog
+  ) {}
 
   onMuscleGroupChange() {
     this.workouts = this.workoutsService.getWorkoutsById(
@@ -38,5 +43,12 @@ export class WorkoutSelectorComponent {
     this.selectedMuscleGroup = 'Choose a Muscle Group';
     this.selectedWorkout = 'Choose a Workout';
     this.sets = '';
+  }
+
+  openAddNewWorkoutDialog() {
+    this.dialog.open(AddNewWorkoutComponent, {
+      width: '500px',
+      height: '500px',
+    });
   }
 }

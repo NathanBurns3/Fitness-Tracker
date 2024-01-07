@@ -7,6 +7,7 @@ import { WorkoutSelectorComponent } from './workout-selector/workout-selector.co
 import { FormsModule } from '@angular/forms';
 import { WorkoutImageComponent } from './workout-image/workout-image.component';
 import { WorkoutDetailsComponent } from './workout-details/workout-details.component';
+import { AddNewWorkoutComponent } from './add-new-workout/add-new-workout.component';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import { WorkoutDetailsComponent } from './workout-details/workout-details.compo
     WorkoutSelectorComponent,
     WorkoutImageComponent,
     WorkoutDetailsComponent,
+    AddNewWorkoutComponent,
   ],
   imports: [CommonModule, RouterModule, FormsModule],
   exports: [AddExerciseComponent],

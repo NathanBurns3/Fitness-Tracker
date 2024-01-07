@@ -24,7 +24,7 @@ export class AddNewWorkoutComponent {
     console.log('Workouts: ', this.workouts);
   }
 
-  closeEditWorkout() {
+  closeAddNewWorkout() {
     this.dialogRef.close();
   }
 

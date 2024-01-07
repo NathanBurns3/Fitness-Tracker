@@ -4,6 +4,7 @@ import { IWorkout } from '../models/workouts';
 import { WorkoutsService } from '../services/workouts.service';
 import { MatDialog } from '@angular/material/dialog';
 import { AddNewWorkoutComponent } from '../add-new-workout/add-new-workout.component';
+import { DeleteWorkoutComponent } from '../delete-workout/delete-workout.component';
 
 @Component({
   selector: 'workout-selector',
@@ -47,6 +48,13 @@ export class WorkoutSelectorComponent {
 
   openAddNewWorkoutDialog() {
     this.dialog.open(AddNewWorkoutComponent, {
+      width: '500px',
+      height: '500px',
+    });
+  }
+
+  openDeleteWorkoutDialog() {
+    this.dialog.open(DeleteWorkoutComponent, {
       width: '500px',
       height: '500px',
     });

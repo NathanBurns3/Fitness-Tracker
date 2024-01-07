@@ -25,7 +25,7 @@ export class WorkoutDetailsComponent implements OnInit {
     this.sets = this.data.workout.sets;
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.workouts = this.workoutsService.getWorkoutsById(this.muscleGroup);
   }
 

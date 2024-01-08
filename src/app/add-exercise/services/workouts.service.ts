@@ -1,5 +1,6 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { IWorkout } from '../models/workouts';
+import { muscleGroupsEnum } from '../models/muscle-groups-enum';
 
 @Injectable({
   providedIn: 'root',
@@ -7,239 +8,124 @@ import { IWorkout } from '../models/workouts';
 export class WorkoutsService {
   workoutAdded = new EventEmitter<void>();
 
-  workouts: IWorkout[] = [
-    {
-      WorkoutId: 1,
-      muscleGroup: 'Chest',
-      exerciseName: 'Bench Press',
-      sets: 0,
-    },
-    {
-      WorkoutId: 2,
-      muscleGroup: 'Chest',
-      exerciseName: 'Incline Bench Press',
-      sets: 0,
-    },
-    {
-      WorkoutId: 3,
-      muscleGroup: 'Chest',
-      exerciseName: 'Decline Bench Press',
-      sets: 0,
-    },
-    {
-      WorkoutId: 4,
-      muscleGroup: 'Chest',
-      exerciseName: 'Chest Fly',
-      sets: 0,
-    },
-    {
-      WorkoutId: 5,
-      muscleGroup: 'Chest',
-      exerciseName: 'Cable Crossover',
-      sets: 0,
-    },
-    {
-      WorkoutId: 6,
-      muscleGroup: 'Back',
-      exerciseName: 'Deadlift',
-      sets: 0,
-    },
-    {
-      WorkoutId: 7,
-      muscleGroup: 'Back',
-      exerciseName: 'Bent Over Row',
-      sets: 0,
-    },
-    {
-      WorkoutId: 8,
-      muscleGroup: 'Back',
-      exerciseName: 'Pull Up',
-      sets: 0,
-    },
-    {
-      WorkoutId: 9,
-      muscleGroup: 'Back',
-      exerciseName: 'Lat Pulldown',
-      sets: 0,
-    },
-    {
-      WorkoutId: 10,
-      muscleGroup: 'Back',
-      exerciseName: 'Seated Row',
-      sets: 0,
-    },
-    {
-      WorkoutId: 11,
-      muscleGroup: 'Back',
-      exerciseName: 'T-Bar Row',
-      sets: 0,
-    },
-    {
-      WorkoutId: 12,
-      muscleGroup: 'Back',
-      exerciseName: 'Straight Arm Pulldown',
-      sets: 0,
-    },
-    {
-      WorkoutId: 13,
-      muscleGroup: 'Back',
-      exerciseName: 'Back Extension',
-      sets: 0,
-    },
-    {
-      WorkoutId: 14,
-      muscleGroup: 'Back',
-      exerciseName: 'Reverse Fly',
-      sets: 0,
-    },
-    {
-      WorkoutId: 15,
-      muscleGroup: 'Back',
-      exerciseName: 'Shrug',
-      sets: 0,
-    },
-    {
-      WorkoutId: 16,
-      muscleGroup: 'Back',
-      exerciseName: 'Pull Over',
-      sets: 0,
-    },
-    {
-      WorkoutId: 17,
-      muscleGroup: 'Back',
-      exerciseName: 'Pullover',
-      sets: 0,
-    },
-    {
-      WorkoutId: 18,
-      muscleGroup: 'Back',
-      exerciseName: 'Pulldown',
-      sets: 0,
-    },
-    {
-      WorkoutId: 22,
-      muscleGroup: 'Biceps',
-      exerciseName: 'Barbell Curl',
-      sets: 0,
-    },
-    {
-      WorkoutId: 23,
-      muscleGroup: 'Biceps',
-      exerciseName: 'Dumbbell Curl',
-      sets: 0,
-    },
-    {
-      WorkoutId: 24,
-      muscleGroup: 'Biceps',
-      exerciseName: 'Hammer Curl',
-      sets: 0,
-    },
-    {
-      WorkoutId: 25,
-      muscleGroup: 'Biceps',
-      exerciseName: 'Preacher Curl',
-      sets: 0,
-    },
-    {
-      WorkoutId: 26,
-      muscleGroup: 'Biceps',
-      exerciseName: 'Concentration Curl',
-      sets: 0,
-    },
-    {
-      WorkoutId: 27,
-      muscleGroup: 'Biceps',
-      exerciseName: 'Reverse Curl',
-      sets: 0,
-    },
-    {
-      WorkoutId: 28,
-      muscleGroup: 'Biceps',
-      exerciseName: 'Cable Curl',
-      sets: 0,
-    },
-    {
-      WorkoutId: 29,
-      muscleGroup: 'Biceps',
-      exerciseName: 'EZ Bar Curl',
-      sets: 0,
-    },
-    {
-      WorkoutId: 30,
-      muscleGroup: 'Biceps',
-      exerciseName: 'Concentration Curl',
-      sets: 0,
-    },
-    {
-      WorkoutId: 31,
-      muscleGroup: 'Biceps',
-      exerciseName: 'Cable Curl',
-      sets: 0,
-    },
-    {
-      WorkoutId: 32,
-      muscleGroup: 'Biceps',
-      exerciseName: 'EZ Bar Curl',
-      sets: 0,
-    },
-    {
-      WorkoutId: 33,
-      muscleGroup: 'Biceps',
-      exerciseName: 'Concentration Curl',
-      sets: 0,
-    },
-    {
-      WorkoutId: 34,
-      muscleGroup: 'Biceps',
-      exerciseName: 'Cable Curl',
-      sets: 0,
-    },
-    {
-      WorkoutId: 35,
-      muscleGroup: 'Biceps',
-      exerciseName: 'EZ Bar Curl',
-      sets: 0,
-    },
-    {
-      WorkoutId: 36,
-      muscleGroup: 'Biceps',
-      exerciseName: 'Concentration Curl',
-      sets: 0,
-    },
-    {
-      WorkoutId: 37,
-      muscleGroup: 'Biceps',
-      exerciseName: 'Cable Curl',
-      sets: 0,
-    },
-  ];
+  exercises: Record<muscleGroupsEnum, string[]> = {
+    Abs: ['Crunches', 'Leg Raises', 'Plank'],
+    Back: [
+      'Deadlift',
+      'Bent Over Row',
+      'Pull Up',
+      'Lat Pulldown',
+      'Seated Row',
+      'T-Bar Row',
+      'Straight Arm Pulldown',
+      'Back Extension',
+      'Reverse Fly',
+      'Shrug',
+      'Pull Over',
+      'Pullover',
+      'Pulldown',
+    ],
+    Biceps: [
+      'Barbell Curl',
+      'Dumbbell Curl',
+      'Hammer Curl',
+      'Preacher Curl',
+      'Concentration Curl',
+      'Reverse Curl',
+      'Cable Curl',
+      'EZ Bar Curl',
+    ],
+    Calves: [
+      'Standing Calf Raise',
+      'Seated Calf Raise',
+      'Donkey Calf Raise',
+      'Calf Press',
+    ],
+    Chest: [
+      'Bench Press',
+      'Incline Bench Press',
+      'Decline Bench Press',
+      'Chest Fly',
+      'Cable Crossover',
+    ],
+    Forearms: ['Wrist Curl', 'Reverse Wrist Curl', 'Wrist Roller'],
+    Glutes: [
+      'Squat',
+      'Lunge',
+      'Leg Press',
+      'Deadlift',
+      'Hip Thrust',
+      'Bulgarian Split Squat',
+      'Step Up',
+      'Good Morning',
+      'Leg Extension',
+      'Leg Curl',
+    ],
+    Hamstrings: [
+      'Squat',
+      'Lunge',
+      'Leg Press',
+      'Deadlift',
+      'Hip Thrust',
+      'Bulgarian Split Squat',
+      'Step Up',
+      'Good Morning',
+      'Leg Extension',
+      'Leg Curl',
+    ],
+    Quads: [
+      'Squat',
+      'Lunge',
+      'Leg Press',
+      'Deadlift',
+      'Hip Thrust',
+      'Bulgarian Split Squat',
+      'Step Up',
+      'Good Morning',
+      'Leg Extension',
+      'Leg Curl',
+    ],
+    Shoulders: [
+      'Overhead Press',
+      'Lateral Raise',
+      'Front Raise',
+      'Rear Delt Fly',
+      'Shrug',
+      'Upright Row',
+      'Face Pull',
+      'Arnold Press',
+      'Lateral Raise',
+      'Front Raise',
+      'Rear Delt Fly',
+      'Shrug',
+      'Upright Row',
+      'Face Pull',
+      'Arnold Press',
+    ],
+    Triceps: [
+      'Close Grip Bench Press',
+      'Skullcrusher',
+      'Dip',
+      'Kickback',
+      'Pushdown',
+      'Close Grip Bench Press',
+      'Skullcrusher',
+      'Dip',
+      'Kickback',
+      'Pushdown',
+    ],
+  };
 
-  getWorkoutsById(selectedMuscleGroup: string): IWorkout[] {
-    return this.workouts.filter(
-      (workout) => workout.muscleGroup === selectedMuscleGroup
-    );
+  getWorkoutsById(selectedMuscleGroup: muscleGroupsEnum): string[] {
+    return this.exercises[selectedMuscleGroup];
   }
 
-  getWorkouts(): IWorkout[] {
-    return this.workouts;
+  addWorkout(muscleGroup: muscleGroupsEnum, workout: string) {
+    this.exercises[muscleGroup].push(workout);
   }
 
-  addWorkout(workout: IWorkout) {
-    this.workouts.push(workout);
-    this.workoutAdded.emit();
-  }
-
-  updateWorkout(workout: IWorkout) {
-    const index = this.workouts.findIndex(
-      (w) => w.WorkoutId === workout.WorkoutId
-    );
-    this.workouts[index] = workout;
-  }
-
-  deleteWorkout(workout: IWorkout) {
-    const index = this.workouts.findIndex(
-      (w) => w.WorkoutId === workout.WorkoutId
-    );
-    this.workouts.splice(index, 1);
+  deleteWorkout(muscleGroup: muscleGroupsEnum, workout: string) {
+    const index = this.exercises[muscleGroup].indexOf(workout);
+    this.exercises[muscleGroup].splice(index, 1);
   }
 }

@@ -37,8 +37,8 @@
       }"
     >
       <option [value]="'Choose a Workout'" selected>Choose a Workout</option>
-      <option *ngFor="let workout of workouts" [value]="workout.exerciseName">
-        {{ workout.exerciseName }}
+      <option *ngFor="let workout of workouts" [value]="workout">
+        {{ workout }}
       </option>
     </select>
 

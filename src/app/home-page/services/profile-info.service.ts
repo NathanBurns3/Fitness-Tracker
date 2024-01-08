@@ -19,16 +19,6 @@ export class ProfileInfoService {
       goals: ['Maintain Weight', 'Gain Muscle'],
       exerciseStreak: 3,
       eatingGoalStreak: 12,
-      eatingGoal: [
-        {
-          calories: 3200,
-          protein: 175,
-          carbs: 210,
-          fat: 100,
-          fiber: 70,
-          sodium: 2750,
-        },
-      ],
     };
   }
 }

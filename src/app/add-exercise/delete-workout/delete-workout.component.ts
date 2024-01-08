@@ -1,4 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+/*
+TODO:
+button should be disabled if not valid
+clean up the code
+give confirmation message on delete
+*/
+
+import { Component } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { WorkoutsService } from '../services/workouts.service';
 import { IWorkout } from '../models/workouts';
@@ -8,10 +15,10 @@ import { muscleGroupsEnum } from '../models/muscle-groups-enum';
   selector: 'delete-workout',
   templateUrl: './delete-workout.component.html',
 })
-export class DeleteWorkoutComponent implements OnInit {
-  muscleGroup: string = '';
+export class DeleteWorkoutComponent {
+  muscleGroup!: muscleGroupsEnum | string;
   workout: string = '';
-  workouts: IWorkout[] = [];
+  workouts: string[] = [];
   muscleGroups: muscleGroupsEnum[] = Object.values(muscleGroupsEnum);
 
   constructor(
@@ -19,25 +26,25 @@ export class DeleteWorkoutComponent implements OnInit {
     private workoutsService: WorkoutsService
   ) {}
 
-  ngOnInit(): void {}
-
   closeDeleteWorkout() {
     this.dialogRef.close();
   }
 
-  onMuscleGroupChange(selectedMuscleGroup: string) {
+  onMuscleGroupChange(selectedMuscleGroup: muscleGroupsEnum | string) {
     this.muscleGroup = selectedMuscleGroup;
-    this.workouts = this.workoutsService.getWorkoutsById(this.muscleGroup);
+    if (this.muscleGroup !== 'Choose a Muscle Group') {
+      this.workouts = this.workoutsService.getWorkoutsById(
+        muscleGroupsEnum[this.muscleGroup as muscleGroupsEnum]
+      );
+    }
     this.workout = 'Choose a Workout';
   }
 
   deleteWorkout() {
-    const deletedWorkout: IWorkout | undefined = this.workouts.find(
-      (w) => w.exerciseName === this.workout
+    this.workoutsService.deleteWorkout(
+      this.muscleGroup as muscleGroupsEnum,
+      this.workout
     );
-    if (deletedWorkout) {
-      this.workoutsService.deleteWorkout(deletedWorkout);
-    }
     this.dialogRef.close();
   }
 }

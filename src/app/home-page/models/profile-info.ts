@@ -13,5 +13,4 @@ export interface IProfileInfo {
   goals: string[];
   exerciseStreak: number;
   eatingGoalStreak: number;
-  eatingGoal: IDailyEatingInfo[];
 }

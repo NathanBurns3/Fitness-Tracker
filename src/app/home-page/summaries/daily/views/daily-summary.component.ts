@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { IDailyEatingInfo } from '../models/daily-eating-info';
 import { IExerciseInfo } from '../models/exercise-info';
-import { IProfileInfo } from 'src/app/home-page/models/profile-info';
 import { DailyEatingInfoService } from '../services/daily-eating-info.service';
 import { DailyExerciseInfoService } from '../services/daily-exercise-info.service';
-import { ProfileInfoService } from 'src/app/home-page/services/profile-info.service';
 
 @Component({
   selector: 'DailySummaryComponent',
@@ -14,7 +12,6 @@ import { ProfileInfoService } from 'src/app/home-page/services/profile-info.serv
 export class DailySummaryComponent implements OnInit {
   dailyEatingInfo!: IDailyEatingInfo;
   dailyExerciseInfo!: IExerciseInfo;
-  profileInfo!: IProfileInfo;
   exercisePercentage!: number[];
   eatingPercentage!: number[];
   colors: string[] = [
@@ -48,15 +45,13 @@ export class DailySummaryComponent implements OnInit {
 
   constructor(
     private dailyEatingInfoService: DailyEatingInfoService,
-    private dailyExerciseInfoService: DailyExerciseInfoService,
-    private profileInfoService: ProfileInfoService
+    private dailyExerciseInfoService: DailyExerciseInfoService
   ) {}
 
   ngOnInit(): void {
     this.dailyEatingInfo = this.dailyEatingInfoService.getDailyEatingInfo();
     this.dailyExerciseInfo =
       this.dailyExerciseInfoService.getDailyExerciseInfo();
-    this.profileInfo = this.profileInfoService.getProfileInfo();
     this.exercisePercentage = this.getExercisePercentage();
     this.eatingPercentage = this.getEatingPercentage();
   }
@@ -77,11 +72,11 @@ export class DailySummaryComponent implements OnInit {
 
   getEatingPercentage(): number[] {
     const percentages: number[] = [];
-    const eatingInfo = Object.values(this.dailyEatingInfo);
-    const eatingGoals = Object.values(this.profileInfo.eatingGoal[0]);
-    const eatingInfoLength = eatingInfo.length;
+    const eatingTotals = Object.values(this.dailyEatingInfo.totals);
+    const eatingGoals = Object.values(this.dailyEatingInfo.goals);
+    const eatingInfoLength = eatingTotals.length;
     for (let i = 0; i < eatingInfoLength; i++) {
-      const percentage = Math.round((eatingInfo[i] / eatingGoals[i]) * 100);
+      const percentage = Math.round((eatingTotals[i] / eatingGoals[i]) * 100);
       if (percentage !== 0) {
         percentages.push(percentage);
       }

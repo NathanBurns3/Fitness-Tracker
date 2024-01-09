@@ -6,13 +6,13 @@ make all images the same size
 import { Component, Input } from '@angular/core';
 
 @Component({
-  selector: 'workout-image',
-  templateUrl: './workout-image.component.html',
+  selector: 'exercise-image',
+  templateUrl: './exercise-image.component.html',
 })
-export class WorkoutImageComponent {
+export class ExerciseImageComponent {
   @Input() selectedMuscleGroup: string = '';
   defaultImage = 'assets/muscle-group-images/Blank.png';
-  workoutImageMap: { [key: string]: string } = {
+  exerciseImageMap: { [key: string]: string } = {
     Abs: 'assets/muscle-group-images/Abs.png',
     Back: 'assets/muscle-group-images/Back.png',
     Biceps: 'assets/muscle-group-images/Biceps.png',
@@ -27,6 +27,6 @@ export class WorkoutImageComponent {
   };
 
   get imageUrl(): string {
-    return this.workoutImageMap[this.selectedMuscleGroup] || this.defaultImage;
+    return this.exerciseImageMap[this.selectedMuscleGroup] || this.defaultImage;
   }
 }

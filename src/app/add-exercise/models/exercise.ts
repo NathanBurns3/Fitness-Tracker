@@ -1,5 +1,5 @@
-export interface IWorkout {
-  WorkoutId: number;
+export interface IExercise {
+  exerciseId: number;
   muscleGroup: string;
   exerciseName: string;
   sets: number;

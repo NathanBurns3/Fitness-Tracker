@@ -2,23 +2,24 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AddExerciseComponent } from './views/add-exercise.component';
 import { RouterModule } from '@angular/router';
-import { WorkoutListComponent } from './workout-list/workout-list.component';
-import { WorkoutSelectorComponent } from './workout-selector/workout-selector.component';
+import { ExerciseListComponent } from './exercise-list/exercise-list.component';
+import { ExerciseSelectorComponent } from './exercise-selector/exercise-selector.component';
 import { FormsModule } from '@angular/forms';
-import { WorkoutImageComponent } from './workout-image/workout-image.component';
-import { WorkoutDetailsComponent } from './workout-details/workout-details.component';
-import { AddNewWorkoutComponent } from './add-new-workout/add-new-workout.component';
-import { DeleteWorkoutComponent } from './delete-workout/delete-workout.component';
+import { ExerciseImageComponent } from './exercise-image/exercise-image.component';
+import { ExerciseDetailsComponent } from './exercise-details/exercise-details.component';
+import { AddNewExerciseComponent } from './add-new-exercise/add-new-exercise.component';
+import { DeleteExerciseComponent } from './delete-exercise/delete-exercise.component';
 
 @NgModule({
   declarations: [
+    ExerciseListComponent,
+    ExerciseListComponent,
+    ExerciseSelectorComponent,
+    ExerciseImageComponent,
+    ExerciseDetailsComponent,
+    AddNewExerciseComponent,
+    DeleteExerciseComponent,
     AddExerciseComponent,
-    WorkoutListComponent,
-    WorkoutSelectorComponent,
-    WorkoutImageComponent,
-    WorkoutDetailsComponent,
-    AddNewWorkoutComponent,
-    DeleteWorkoutComponent,
   ],
   imports: [CommonModule, RouterModule, FormsModule],
   exports: [AddExerciseComponent],

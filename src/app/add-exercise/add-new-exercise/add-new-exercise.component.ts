@@ -9,30 +9,29 @@ give confirmation message on add
 
 import { Component } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
-import { IWorkout } from '../models/workouts';
-import { WorkoutsService } from '../services/workouts.service';
+import { ExercisesService } from '../services/exercises.service';
 import { muscleGroupsEnum } from '../models/muscle-groups-enum';
 
 @Component({
-  selector: 'add-new-workout',
-  templateUrl: './add-new-workout.component.html',
+  selector: 'add-new-exercise',
+  templateUrl: './add-new-exercise.component.html',
 })
-export class AddNewWorkoutComponent {
+export class AddNewExerciseComponent {
   muscleGroup!: muscleGroupsEnum;
   muscleGroups: muscleGroupsEnum[] = Object.values(muscleGroupsEnum);
-  workout: string = '';
+  exercise: string = '';
 
   constructor(
-    public dialogRef: MatDialogRef<AddNewWorkoutComponent>,
-    private workoutsService: WorkoutsService
+    public dialogRef: MatDialogRef<AddNewExerciseComponent>,
+    private exercisesService: ExercisesService
   ) {}
 
-  closeAddNewWorkout() {
+  closeAddNewExercise() {
     this.dialogRef.close();
   }
 
-  saveWorkout() {
-    this.workoutsService.addWorkout(this.muscleGroup, this.workout);
+  saveExercise() {
+    this.exercisesService.addExercise(this.muscleGroup, this.exercise);
     this.dialogRef.close();
   }
 }

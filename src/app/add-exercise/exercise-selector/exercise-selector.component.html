@@ -14,7 +14,7 @@
     </select>
     <div class="flex mt-5">
       <select
-        [(ngModel)]="selectedWorkout"
+        [(ngModel)]="selectedExercise"
         [disabled]="selectedMuscleGroup === 'Choose a Muscle Group'"
         class="w-96 block rounded-lg border p-2.5 text-sm bg-gradient-to-r from-blue-500 to-blue-700 text-white focus:ring-2 focus:ring-orange-500 shadow-lg transition duration-500 ease-in-out transform"
         [ngClass]="{
@@ -22,9 +22,11 @@
             selectedMuscleGroup !== 'Choose a Muscle Group'
         }"
       >
-        <option [value]="'Choose a Workout'" selected>Choose a Workout</option>
-        <option *ngFor="let workout of workouts" [value]="workout">
-          {{ workout }}
+        <option [value]="'Choose a Exercise'" selected>
+          Choose a Exercise
+        </option>
+        <option *ngFor="let exercise of exercises" [value]="exercise">
+          {{ exercise }}
         </option>
       </select>
     </div>
@@ -41,39 +43,39 @@
       />
     </form>
     <button
-      (click)="onAddWorkout(selectedWorkout, sets)"
+      (click)="onAddExercise(selectedExercise, sets)"
       [disabled]="
         selectedMuscleGroup === 'Choose a Muscle Group' ||
-        selectedWorkout === 'Choose a Workout' ||
+        selectedExercise === 'Choose a Exercise' ||
         +sets < 1
       "
       class="rounded-lg border p-2.5 text-sm text-white w-48 shadow-lg transition duration-500 ease-in-out transform bg-gradient-to-r"
       [ngClass]="{
         'from-blue-500 to-blue-700 hover:from-blue-700 hover:to-blue-900 hover:-translate-y-0.5 hover:scale-105 cursor-pointer':
           selectedMuscleGroup !== 'Choose a Muscle Group' &&
-          selectedWorkout !== 'Choose a Workout' &&
+          selectedExercise !== 'Choose a Exercise' &&
           +sets > 0,
         'from-light-blue to-dark-blue cursor-not-allowed':
           selectedMuscleGroup === 'Choose a Muscle Group' ||
-          selectedWorkout === 'Choose a Workout' ||
+          selectedExercise === 'Choose a Exercise' ||
           +sets < 1
       }"
     >
-      Add Workout
+      Add Exercise
     </button>
   </div>
 </div>
 <div class="mt-8 flex space-x-4 justify-center">
   <button
     class="rounded-lg border w-36 p-2.5 text-sm bg-gradient-to-r from-blue-500 to-blue-700 text-white hover:from-blue-700 hover:to-blue-900 shadow-lg transition duration-500 ease-in-out transform hover:-translate-y-0.5 hover:scale-105"
-    (click)="openAddNewWorkoutDialog()"
+    (click)="openAddNewExerciseDialog()"
   >
-    Add New Workout
+    Add New Exercise
   </button>
   <button
     class="rounded-lg border w-36 p-2.5 text-sm bg-gradient-to-r from-orange-500 to-orange-700 text-white hover:from-orange-700 hover:to-orange-900 shadow-lg transition duration-500 ease-in-out transform hover:-translate-y-0.5 hover:scale-105"
-    (click)="openDeleteWorkoutDialog()"
+    (click)="openDeleteExerciseDialog()"
   >
-    Delete Workout
+    Delete Exercise
   </button>
 </div>

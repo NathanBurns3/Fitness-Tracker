@@ -7,43 +7,42 @@ give confirmation message on delete
 
 import { Component } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
-import { WorkoutsService } from '../services/workouts.service';
-import { IWorkout } from '../models/workouts';
+import { ExercisesService } from '../services/exercises.service';
 import { muscleGroupsEnum } from '../models/muscle-groups-enum';
 
 @Component({
-  selector: 'delete-workout',
-  templateUrl: './delete-workout.component.html',
+  selector: 'delete-exercise',
+  templateUrl: './delete-exercise.component.html',
 })
-export class DeleteWorkoutComponent {
+export class DeleteExerciseComponent {
   muscleGroup!: muscleGroupsEnum | string;
-  workout: string = '';
-  workouts: string[] = [];
+  exercise: string = '';
+  exercises: string[] = [];
   muscleGroups: muscleGroupsEnum[] = Object.values(muscleGroupsEnum);
 
   constructor(
-    public dialogRef: MatDialogRef<DeleteWorkoutComponent>,
-    private workoutsService: WorkoutsService
+    public dialogRef: MatDialogRef<DeleteExerciseComponent>,
+    private exercisesService: ExercisesService
   ) {}
 
-  closeDeleteWorkout() {
+  closeDeleteExercise() {
     this.dialogRef.close();
   }
 
   onMuscleGroupChange(selectedMuscleGroup: muscleGroupsEnum | string) {
     this.muscleGroup = selectedMuscleGroup;
     if (this.muscleGroup !== 'Choose a Muscle Group') {
-      this.workouts = this.workoutsService.getWorkoutsById(
+      this.exercises = this.exercisesService.getExercisesById(
         muscleGroupsEnum[this.muscleGroup as muscleGroupsEnum]
       );
     }
-    this.workout = 'Choose a Workout';
+    this.exercise = 'Choose a Exercise';
   }
 
-  deleteWorkout() {
-    this.workoutsService.deleteWorkout(
+  deleteExercise() {
+    this.exercisesService.deleteExercise(
       this.muscleGroup as muscleGroupsEnum,
-      this.workout
+      this.exercise
     );
     this.dialogRef.close();
   }

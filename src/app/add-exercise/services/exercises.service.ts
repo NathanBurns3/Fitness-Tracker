@@ -1,12 +1,12 @@
 import { EventEmitter, Injectable } from '@angular/core';
-import { IWorkout } from '../models/workouts';
+import { IExercise } from '../models/exercise';
 import { muscleGroupsEnum } from '../models/muscle-groups-enum';
 
 @Injectable({
   providedIn: 'root',
 })
-export class WorkoutsService {
-  workoutAdded = new EventEmitter<void>();
+export class ExercisesService {
+  exerciseAdded = new EventEmitter<void>();
 
   exercises: Record<muscleGroupsEnum, string[]> = {
     Abs: ['Crunches', 'Leg Raises', 'Plank'],
@@ -116,16 +116,16 @@ export class WorkoutsService {
     ],
   };
 
-  getWorkoutsById(selectedMuscleGroup: muscleGroupsEnum): string[] {
+  getExercisesById(selectedMuscleGroup: muscleGroupsEnum): string[] {
     return this.exercises[selectedMuscleGroup];
   }
 
-  addWorkout(muscleGroup: muscleGroupsEnum, workout: string) {
-    this.exercises[muscleGroup].push(workout);
+  addExercise(muscleGroup: muscleGroupsEnum, exercise: string) {
+    this.exercises[muscleGroup].push(exercise);
   }
 
-  deleteWorkout(muscleGroup: muscleGroupsEnum, workout: string) {
-    const index = this.exercises[muscleGroup].indexOf(workout);
+  deleteExercise(muscleGroup: muscleGroupsEnum, exercise: string) {
+    const index = this.exercises[muscleGroup].indexOf(exercise);
     this.exercises[muscleGroup].splice(index, 1);
   }
 }

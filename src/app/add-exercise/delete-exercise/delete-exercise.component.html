@@ -1,10 +1,10 @@
 <div
   class="flex flex-row items-center justify-center text-center bg-gradient-to-r from-blue-500 to-blue-700 pb-3 shadow-lg"
 >
-  <h1 class="text-4xl font-extrabold text-white mt-4">Edit Workout</h1>
+  <h1 class="text-4xl font-extrabold text-white mt-4">Delete Exercise</h1>
   <button
     class="absolute top-3 right-3 bg-red-500 hover:bg-red-700 text-xs font-medium py-1 px-2 rounded-full text-white"
-    (click)="closeEditWorkout()"
+    (click)="closeDeleteExercise()"
   >
     X
   </button>
@@ -28,7 +28,7 @@
 
     <h1 class="text-lg font-bold text-blue-800 mb-2">Exercise:</h1>
     <select
-      [(ngModel)]="workout"
+      [(ngModel)]="exercise"
       [disabled]="muscleGroup === 'Choose a Muscle Group'"
       class="w-full block rounded-lg border p-2.5 text-sm bg-white text-blue-950 focus:ring-2 focus:ring-blue-500 shadow-lg transition duration-500 ease-in-out transform mb-5"
       [ngClass]="{
@@ -36,37 +36,19 @@
           muscleGroup !== 'Choose a Muscle Group'
       }"
     >
-      <option [value]="'Choose a Workout'" selected>Choose a Workout</option>
-      <option *ngFor="let workout of workouts" [value]="workout">
-        {{ workout }}
+      <option [value]="'Choose a Exercise'" selected>Choose a Exercise</option>
+      <option *ngFor="let exercise of exercises" [value]="exercise">
+        {{ exercise }}
       </option>
     </select>
-
-    <h1 class="text-lg font-bold text-blue-800 mb-2">Number of Sets:</h1>
-    <form>
-      <input
-        [(ngModel)]="sets"
-        name="sets"
-        class="rounded-lg border p-2.5 text-sm bg-white text-blue-950 focus:ring-2 focus:ring-blue-500 w-full mb-5 shadow-lg transition duration-500 ease-in-out transform hover:-translate-y-0.5 hover:scale-105"
-        type="text"
-        placeholder="Number of Sets"
-        aria-label="Number of Sets"
-      />
-    </form>
   </div>
 </div>
 
-<div class="flex justify-center mb-3">
+<div class="flex justify-center mb-8">
   <button
-    class="rounded-lg border p-2.5 w-16 mr-2 text-sm bg-gradient-to-r from-blue-500 to-blue-700 text-white hover:from-blue-700 hover:to-blue-900 shadow-lg transition duration-500 ease-in-out transform hover:-translate-y-0.5 hover:scale-105"
-    (click)="saveWorkout()"
+    class="rounded-lg border p-2.5 w-32 ml-2 text-sm bg-gradient-to-r from-orange-500 to-orange-700 text-white hover:from-orange-700 hover:to-orange-900 shadow-lg transition duration-500 ease-in-out transform hover:-translate-y-0.5 hover:scale-105"
+    (click)="deleteExercise()"
   >
-    Save
-  </button>
-  <button
-    class="rounded-lg border p-2.5 w-16 ml-2 text-sm bg-gradient-to-r from-orange-500 to-orange-700 text-white hover:from-orange-700 hover:to-orange-900 shadow-lg transition duration-500 ease-in-out transform hover:-translate-y-0.5 hover:scale-105"
-    (click)="deleteWorkout()"
-  >
-    Delete
+    Delete Exercise
   </button>
 </div>

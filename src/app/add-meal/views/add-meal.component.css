@@ -1,0 +1,38 @@
+.button {
+  display: inline-block;
+  border-radius: 4px;
+  border: none;
+  color: #ffffff;
+  text-align: center;
+  font-size: 15px;
+  padding: 5px;
+  width: 75px;
+  transition: all 0.5s;
+  cursor: pointer;
+  margin: 5px;
+}
+
+.button span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+.button span:before {
+  content: "\00ab"; /* Use a left-pointing arrow */
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  left: -20px;
+  transition: 0.5s;
+}
+
+.button:hover span {
+  padding-left: 25px; /* Increase padding on the left side */
+}
+
+.button:hover span:before {
+  opacity: 1;
+  left: 0;
+}

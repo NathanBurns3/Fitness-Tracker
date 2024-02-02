@@ -1,0 +1,37 @@
+<div class="w-2/5 mx-auto rounded-full border border-zinc-300 p-1 shadow-sm">
+  <ul class="flex">
+    <li class="flex-1 mr-1">
+      <a
+        (click)="selectSearch('All')"
+        [ngClass]="
+          selectedSearch === 'All'
+            ? 'text-center block border border-blue-900 rounded-3xl py-0.5 px-1 transform bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-700 hover:to-blue-900 text-white text-xs'
+            : 'text-center block border border-white rounded-3xl hover:border-gray-200 text-blue-700 hover:bg-gray-200 py-0.5 px-1 text-xs'
+        "
+        >All</a
+      >
+    </li>
+    <li class="flex-1 mr-1">
+      <a
+        (click)="selectSearch('Favorites')"
+        [ngClass]="
+          selectedSearch === 'Favorites'
+            ? 'text-center block border border-blue-900 rounded-3xl py-0.5 px-1 transform bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-700 hover:to-blue-900 text-white text-xs'
+            : 'text-center block border border-white rounded-3xl hover:border-gray-200 text-blue-700 hover:bg-gray-200 py-0.5 px-1 text-xs'
+        "
+        >Favorites</a
+      >
+    </li>
+    <li class="text-center flex-1">
+      <a
+        (click)="selectSearch('Custom')"
+        [ngClass]="
+          selectedSearch === 'Custom'
+            ? 'text-center block border border-blue-900 rounded-3xl py-0.5 px-1 transform bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-700 hover:to-blue-900 text-white text-xs'
+            : 'text-center block border border-white rounded-3xl hover:border-gray-200 text-blue-700 hover:bg-gray-200 py-0.5 px-1 text-xs'
+        "
+        >Custom</a
+      >
+    </li>
+  </ul>
+</div>

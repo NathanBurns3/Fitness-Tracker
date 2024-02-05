@@ -6,6 +6,8 @@ import { RouterModule } from '@angular/router';
 import { AllMealsComponent } from './search-meals/all-meals/views/all-meals.component';
 import { CustomMealsComponent } from './search-meals/custom-meals/views/custom-meals.component';
 import { FavoriteMealsComponent } from './search-meals/favorite-meals/views/favorite-meals.component';
+import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -15,7 +17,7 @@ import { FavoriteMealsComponent } from './search-meals/favorite-meals/views/favo
     CustomMealsComponent,
     FavoriteMealsComponent,
   ],
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, FormsModule, HttpClientModule],
   exports: [AddMealComponent],
 })
 export class AddMealModule {}

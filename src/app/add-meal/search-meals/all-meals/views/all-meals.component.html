@@ -1,1 +1,19 @@
-<h1>All Meals</h1>
+<div #SearchBar class="flex mx-auto mt-2 items-center justify-center">
+  <input
+    type="search"
+    placeholder="Search meals..."
+    [(ngModel)]="mealSearch"
+    class="self-center w-1/2 h-8 rounded-xl mr-2 focus:outline-none text-sm px-8 shadow-sm border-2 border-gray-200"
+  />
+  <button
+    class="bg-transparent border border-gray-200 shadow-sm h-7 w-7 rounded-full overflow-hidden"
+  >
+    <img
+      src="assets/QR-Scan.png"
+      alt="Scan QR"
+      class="h-full w-full object-cover"
+    />
+  </button>
+</div>
+
+<button (click)="Lookup(mealSearch)" class="border border-black">SUBMIT</button>

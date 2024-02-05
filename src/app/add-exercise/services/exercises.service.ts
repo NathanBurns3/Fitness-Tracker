@@ -1,5 +1,4 @@
 import { EventEmitter, Injectable } from '@angular/core';
-import { IExercise } from '../models/exercise';
 import { muscleGroupsEnum } from '../models/muscle-groups-enum';
 
 @Injectable({

@@ -12,7 +12,7 @@ export class MealLookupService {
   constructor(private http: HttpClient) {}
 
   searchMeals(meal: string) {
-    const url = `https://api.nal.usda.gov/fdc/v1/foods/search?api_key=${this.clientID}&query=${meal}&pageSize=10`;
+    const url = `https://api.nal.usda.gov/fdc/v1/foods/search?api_key=${this.clientID}&query=${meal}&pageSize=10&requireAllWords=true`;
     return this.http
       .get(url)
       .toPromise()
@@ -20,6 +20,7 @@ export class MealLookupService {
   }
 
   private formatData(data: any) {
+    this.meals = [];
     let foods = data.foods;
     for (let food of foods) {
       let nutrients: { [key: number]: any } = {};

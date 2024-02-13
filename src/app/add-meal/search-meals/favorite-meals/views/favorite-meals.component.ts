@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { IFood } from 'src/app/add-meal/models/food';
-import { FavoriteMealService } from '../services/favorite-meal.service';
+import { FavoriteMealsService } from '../services/favorite-meals.service';
 
 @Component({
   selector: 'favorite-meals',
@@ -9,10 +9,8 @@ import { FavoriteMealService } from '../services/favorite-meal.service';
 export class FavoriteMealsComponent implements OnInit {
   favoriteMeals: IFood[] = [];
   starImage = 'assets/star-yellow.png';
-
-  constructor(private favoriteMealService: FavoriteMealService) {}
-
+  constructor(private favoriteMealsService: FavoriteMealsService) {}
   ngOnInit(): void {
-    this.favoriteMeals = this.favoriteMealService.getFavoriteMeals();
+    this.favoriteMeals = this.favoriteMealsService.getFavoriteMeals();
   }
 }

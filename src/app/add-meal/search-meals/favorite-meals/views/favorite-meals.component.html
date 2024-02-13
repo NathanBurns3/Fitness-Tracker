@@ -1,5 +1,5 @@
 <div class="flex mx-auto my-2 items-center justify-center">
-  <h1 class="font-bold text-blue-800 text-lg">Favorite Meals</h1>
+  <h1 class="font-bold text-blue-800 text-lg">Favorite Foods</h1>
 </div>
 
 <div class="overflow-auto max-h-[calc(100vh-15.75rem)] pb-5">
@@ -13,7 +13,7 @@
       <div class="mr-3">
         <img [src]="starImage" width="30" height="30" />
       </div>
-      <div class="flex-grow text-center">
+      <div class="flex-grow text-center -ml-11">
         <h5 class="text-md font-bold text-blue-900 mb-2">
           {{ meal.description }}
           <span *ngIf="meal.packageWeight">- {{ meal.packageWeight }}</span>
@@ -29,6 +29,6 @@
     role="alert"
   >
     <strong class="font-bold">Warning!</strong><br />
-    <span>No meals found.</span>
+    <span>No food found.</span>
   </div>
 </div>

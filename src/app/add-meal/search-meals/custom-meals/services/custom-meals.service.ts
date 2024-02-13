@@ -4,8 +4,8 @@ import { IFood } from 'src/app/add-meal/models/food';
 @Injectable({
   providedIn: 'root',
 })
-export class FavoriteMealService {
-  favoriteMeals: IFood[] = [
+export class CustomMealService {
+  customMeals: IFood[] = [
     {
       fdcID: 1,
       description: 'Apple',
@@ -212,11 +212,11 @@ export class FavoriteMealService {
     },
   ];
 
-  getFavoriteMeals(): IFood[] {
-    return this.favoriteMeals;
+  getCustomMeals(): IFood[] {
+    return this.customMeals;
   }
 
-  deleteFavoriteMeals(meal: IFood[]): void {
+  deleteCustomMeal(meal: IFood[]): void {
     console.log(meal);
   }
 }

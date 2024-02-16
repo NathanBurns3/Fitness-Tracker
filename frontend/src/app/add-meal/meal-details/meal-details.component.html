@@ -1,0 +1,60 @@
+<div
+  class="flex flex-row items-center justify-center text-center bg-gradient-to-r from-blue-500 to-blue-700 pb-3 shadow-lg"
+>
+  <h1 class="text-4xl font-extrabold text-white mt-4">Food Details</h1>
+  <button
+    class="absolute top-3 right-3 bg-red-500 hover:bg-red-700 text-xs font-medium py-1 px-2 rounded-full text-white"
+    (click)="closeMealDetails()"
+  >
+    X
+  </button>
+</div>
+
+<div class="grid place-items-center h-full -mt-3 justify-center">
+  <div class="flex flex-col items-center bg-white p-5 rounded-lg shadow-lg">
+    <h1 class="text-2xl font-bold text-blue-800 mb-2 text-center">
+      {{ food.description }}
+    </h1>
+
+    <div class="flex items-center mb-2">
+      <h1 class="font-bold text-blue-800 mr-2">Amount:</h1>
+      <form>
+        <input
+          [(ngModel)]="servingSize"
+          name="servingSize"
+          class="rounded-lg border p-1 text-sm bg-white text-black focus:ring-2 focus:ring-blue-500 w-24 shadow-sm transition duration-500 ease-in-out transform hover:-translate-y-0.5 hover:scale-105"
+          type="number"
+          min="0"
+          placeholder="{{ food.servingSize }}"
+          (ngModelChange)="updateNutritions($event)"
+        />
+      </form>
+    </div>
+
+    <h1 class="font-bold text-blue-800 mb-2">
+      Calories: {{ nutritions["calories"] }}
+    </h1>
+    <h1 class="font-bold text-blue-800 mb-2">
+      Carbs: {{ nutritions["carbs"] }}
+    </h1>
+    <h1 class="font-bold text-blue-800 mb-2">
+      Fiber: {{ nutritions["fiber"] }}
+    </h1>
+    <h1 class="font-bold text-blue-800 mb-2">
+      Protein: {{ nutritions["protein"] }}
+    </h1>
+    <h1 class="font-bold text-blue-800 mb-2">
+      Sodium: {{ nutritions["sodium"] }}
+    </h1>
+  </div>
+</div>
+
+<div class="flex justify-center mb-5">
+  <button
+    *ngFor="let button of buttons"
+    [ngClass]="buttonStyles[button.action]"
+    (click)="executeAction(button.action)"
+  >
+    {{ button.text }}
+  </button>
+</div>

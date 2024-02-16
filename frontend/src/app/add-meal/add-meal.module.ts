@@ -8,6 +8,7 @@ import { CustomMealsComponent } from './search-meals/custom-meals/views/custom-m
 import { FavoriteMealsComponent } from './search-meals/favorite-meals/views/favorite-meals.component';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { MealDetailsComponent } from './meal-details/meal-details.component';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { HttpClientModule } from '@angular/common/http';
     AllMealsComponent,
     CustomMealsComponent,
     FavoriteMealsComponent,
+    MealDetailsComponent,
   ],
   imports: [CommonModule, RouterModule, FormsModule, HttpClientModule],
   exports: [AddMealComponent],

@@ -1,11 +1,11 @@
 <div class="flex mx-auto my-2 items-center justify-center">
   <h1 class="font-bold text-blue-800 text-lg">Favorite Foods</h1>
 </div>
-
 <div class="overflow-auto max-h-[calc(100vh-15.75rem)] pb-5">
   <div
     *ngFor="let meal of favoriteMeals"
     class="flex items-center justify-center"
+    (click)="openFoodDetails(meal)"
   >
     <div
       class="flex-grow bg-zinc-100 border border-zinc-300 mt-3 mx-6 p-4 rounded-lg shadow-md transition-all duration-200 transform hover:scale-105 hover:shadow-lg relative flex items-center"
@@ -22,7 +22,6 @@
       </div>
     </div>
   </div>
-
   <div
     *ngIf="favoriteMeals.length === 0"
     class="bg-red-200 border border-red-400 text-red-700 px-3 py-2 rounded mt-3 mx-6"

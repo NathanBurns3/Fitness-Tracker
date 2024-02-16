@@ -23,6 +23,10 @@ export class MealDetailsComponent {
       'rounded-lg border p-2.5 w-32 mx-2 text-sm bg-gradient-to-r from-gray-500 to-gray-700 text-white hover:from-gray-700 hover:to-gray-900 shadow-lg transition duration-500 ease-in-out transform hover:-translate-y-0.5 hover:scale-105',
     removeCustomFood:
       'rounded-lg border p-2.5 w-32 mx-2 text-sm bg-gradient-to-r from-orange-500 to-orange-700 text-white hover:from-orange-700 hover:to-orange-900 shadow-lg transition duration-500 ease-in-out transform hover:-translate-y-0.5 hover:scale-105',
+    saveFood:
+      'rounded-lg border p-2.5 w-32 mx-2 text-sm bg-gradient-to-r from-blue-500 to-blue-700 text-white hover:from-blue-700 hover:to-blue-900 shadow-lg transition duration-500 ease-in-out transform hover:-translate-y-0.5 hover:scale-105',
+    removeFood:
+      'rounded-lg border p-2.5 w-32 mx-2 text-sm bg-gradient-to-r from-orange-500 to-orange-700 text-white hover:from-orange-700 hover:to-orange-900 shadow-lg transition duration-500 ease-in-out transform hover:-translate-y-0.5 hover:scale-105',
   };
 
   constructor(
@@ -73,6 +77,10 @@ export class MealDetailsComponent {
       this.editFood();
     } else if (action === 'removeCustomFood') {
       this.removeCustomFood();
+    } else if (action === 'saveFood') {
+      this.saveFood();
+    } else if (action === 'removeFood') {
+      this.removeFood();
     }
   }
 
@@ -94,5 +102,13 @@ export class MealDetailsComponent {
 
   removeCustomFood() {
     console.log('Remove custom food');
+  }
+
+  saveFood() {
+    console.log('Save food');
+  }
+
+  removeFood() {
+    console.log('Remove food');
   }
 }

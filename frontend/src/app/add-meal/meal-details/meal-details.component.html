@@ -11,41 +11,71 @@
 </div>
 
 <div class="grid place-items-center h-full -mt-3 justify-center">
-  <div class="flex flex-col items-center bg-white p-5 rounded-lg shadow-lg">
-    <h1 class="text-2xl font-bold text-blue-800 mb-2 text-center">
+  <div
+    class="flex flex-col items-center border border-zinc-200 rounded-xl p-10 shadow-sm m-10"
+  >
+    <h1 class="text-3xl font-semibold text-blue-900 mb-5 -mt-7 text-center">
       {{ food.description }}
     </h1>
 
-    <div class="flex items-center mb-2">
-      <h1 class="font-bold text-blue-800 mr-2">Amount:</h1>
+    <div class="flex items-center mb-4">
+      <h2 class="text-xl font-bold text-blue-800 mr-2">Amount:</h2>
       <form>
         <input
-          [(ngModel)]="servingSize"
+          [(ngModel)]="clonedFood.servingSize"
           name="servingSize"
-          class="rounded-lg border p-1 text-sm bg-white text-black focus:ring-2 focus:ring-blue-500 w-24 shadow-sm transition duration-500 ease-in-out transform hover:-translate-y-0.5 hover:scale-105"
+          class="rounded-lg border p-2 text-lg bg-white text-orange-800 focus:ring-2 focus:ring-orange-500 w-20 shadow-sm transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-105 text-right"
           type="number"
           min="0"
           placeholder="{{ food.servingSize }}"
           (ngModelChange)="updateNutritions($event)"
         />
       </form>
+      <h2 class="text-xl font-bold text-blue-800 ml-2">
+        {{ food.servingUnit }}(s)
+      </h2>
     </div>
 
-    <h1 class="font-bold text-blue-800 mb-2">
-      Calories: {{ nutritions["calories"] }}
-    </h1>
-    <h1 class="font-bold text-blue-800 mb-2">
-      Carbs: {{ nutritions["carbs"] }}
-    </h1>
-    <h1 class="font-bold text-blue-800 mb-2">
-      Fiber: {{ nutritions["fiber"] }}
-    </h1>
-    <h1 class="font-bold text-blue-800 mb-2">
-      Protein: {{ nutritions["protein"] }}
-    </h1>
-    <h1 class="font-bold text-blue-800 mb-2">
-      Sodium: {{ nutritions["sodium"] }}
-    </h1>
+    <div
+      class="grid grid-cols-2 gap-4 border border-zinc-200 rounded-xl p-5 shadow-sm"
+    >
+      <h2 class="text-xl font-bold text-blue-800 mb-2">
+        Calories:
+        <span class="text-orange-800 text-lg">{{
+          clonedFood.nutritions.calories
+        }}</span>
+      </h2>
+      <h2 class="text-xl font-bold text-blue-800 mb-2">
+        Carbs:
+        <span class="text-orange-800 text-lg">{{
+          clonedFood.nutritions.carbs
+        }}</span>
+      </h2>
+      <h2 class="text-xl font-bold text-blue-800 mb-2">
+        Fat:
+        <span class="text-orange-800 text-lg">{{
+          clonedFood.nutritions.fat
+        }}</span>
+      </h2>
+      <h2 class="text-xl font-bold text-blue-800 mb-2">
+        Fiber:
+        <span class="text-orange-800 text-lg">{{
+          clonedFood.nutritions.fiber
+        }}</span>
+      </h2>
+      <h2 class="text-xl font-bold text-blue-800 mb-2">
+        Protein:
+        <span class="text-orange-800 text-lg">{{
+          clonedFood.nutritions.protein
+        }}</span>
+      </h2>
+      <h2 class="text-xl font-bold text-blue-800 mb-2">
+        Sodium:
+        <span class="text-orange-800 text-lg">{{
+          clonedFood.nutritions.sodium
+        }}</span>
+      </h2>
+    </div>
   </div>
 </div>
 

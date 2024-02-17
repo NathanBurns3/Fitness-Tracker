@@ -32,8 +32,8 @@ export class MealListComponent {
           { text: 'Remove Meal', action: 'removeFood' },
         ],
       },
-      width: '500px',
-      height: '500px',
+      width: '600px',
+      height: '600px',
     });
   }
 }

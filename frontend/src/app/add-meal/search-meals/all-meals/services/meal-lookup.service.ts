@@ -1,5 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { DailyFoodService } from 'src/app/add-meal/meal-list/services/daily-food.service';
 import { IFood, Nutrient_Ids } from 'src/app/add-meal/models/food';
 @Injectable({
   providedIn: 'root',
@@ -8,7 +10,10 @@ export class MealLookupService {
   private clientID: string = 'FOOD API KEY HERE';
   meals: IFood[] = [];
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private dailyFoodService: DailyFoodService
+  ) {}
   searchMeals(meal: string) {
     const url = `https://api.nal.usda.gov/fdc/v1/foods/search?api_key=${this.clientID}&query=${meal}&pageSize=10&requireAllWords=true`;
     return this.http
@@ -45,5 +50,10 @@ export class MealLookupService {
       this.meals.push(meal);
     }
     return this.meals;
+  }
+
+  addMeal(meal: IFood): void {
+    this.dailyFoodService.addFood(meal);
+    this.meals.push(meal);
   }
 }

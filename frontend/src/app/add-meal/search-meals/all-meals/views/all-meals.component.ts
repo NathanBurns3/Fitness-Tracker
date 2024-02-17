@@ -57,8 +57,8 @@ export class AllMealsComponent {
           { text: 'Favorite', action: 'addFavoriteFood' },
         ],
       },
-      width: '500px',
-      height: '500px',
+      width: '600px',
+      height: '600px',
     });
   }
 

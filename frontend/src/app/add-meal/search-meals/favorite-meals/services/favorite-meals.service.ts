@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { IFood } from 'src/app/add-meal/models/food';
 
 @Injectable({
@@ -212,11 +213,34 @@ export class FavoriteMealsService {
     },
   ];
 
+  constructor(private snackBar: MatSnackBar) {}
+
   getFavoriteMeals(): IFood[] {
     return this.favoriteMeals;
   }
 
-  deleteFavoriteMeals(meal: IFood[]): void {
-    console.log(meal);
+  deleteFavoriteMeal(meal: IFood): void {
+    const index = this.favoriteMeals.findIndex((x) => x.fdcID === meal.fdcID);
+    this.favoriteMeals.splice(index, 1);
+    this.snackBar.open(meal.description + ' was removed from favorites!', '', {
+      duration: 2000,
+    });
+  }
+
+  addFavoriteMeal(meal: IFood): void {
+    if (this.favoriteMeals.includes(meal)) {
+      this.snackBar.open(
+        meal.description + ' is already in your favorites!',
+        '',
+        {
+          duration: 2000,
+        }
+      );
+      return;
+    }
+    this.favoriteMeals.push(meal);
+    this.snackBar.open(meal.description + ' added to favorites!', '', {
+      duration: 2000,
+    });
   }
 }

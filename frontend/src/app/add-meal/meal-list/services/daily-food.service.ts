@@ -1,5 +1,6 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { IFood } from '../../models/food';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable({
   providedIn: 'root',
@@ -214,6 +215,8 @@ export class DailyFoodService {
     },
   ];
 
+  constructor(private snackBar: MatSnackBar) {}
+
   getFoods(): IFood[] {
     return this.foods;
   }
@@ -221,15 +224,24 @@ export class DailyFoodService {
   addFood(food: IFood): void {
     this.foods.push(food);
     this.foodAdded.emit();
+    this.snackBar.open(food.description + ' was added!', '', {
+      duration: 2000,
+    });
   }
 
   updateFood(food: IFood): void {
     const index = this.foods.findIndex((w) => w.fdcID === food.fdcID);
     this.foods[index] = food;
+    this.snackBar.open(food.description + ' was edited!', '', {
+      duration: 2000,
+    });
   }
 
   deleteFood(food: IFood): void {
     const index = this.foods.findIndex((w) => w.fdcID === food.fdcID);
     this.foods.splice(index, 1);
+    this.snackBar.open(food.description + ' was deleted!', '', {
+      duration: 2000,
+    });
   }
 }

@@ -29,12 +29,12 @@ export class CustomMealsComponent implements OnInit {
         food,
         buttons: [
           { text: 'Add Meal', action: 'addFood' },
-          { text: 'Edit Meal', action: 'editFood' },
+          { text: 'Edit Meal', action: 'editCustomFood' },
           { text: 'Remove Meal', action: 'removeCustomFood' },
         ],
       },
-      width: '500px',
-      height: '500px',
+      width: '600px',
+      height: '600px',
     });
   }
 }

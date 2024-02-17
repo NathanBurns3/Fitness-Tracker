@@ -2,6 +2,10 @@ import { Component, Inject } from '@angular/core';
 import { IFood } from '../models/food';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Ibutton } from '../models/button';
+import { FavoriteMealsService } from '../search-meals/favorite-meals/services/favorite-meals.service';
+import { CustomMealService } from '../search-meals/custom-meals/services/custom-meals.service';
+import { MealLookupService } from '../search-meals/all-meals/services/meal-lookup.service';
+import { DailyFoodService } from '../meal-list/services/daily-food.service';
 
 @Component({
   selector: 'meal-details',
@@ -9,8 +13,7 @@ import { Ibutton } from '../models/button';
 })
 export class MealDetailsComponent {
   food: IFood;
-  servingSize: string = '';
-  nutritions: { [key: string]: number } = {};
+  clonedFood: IFood;
   buttons: Ibutton[] = [];
   buttonStyles: { [key: string]: string } = {
     addFood:
@@ -19,7 +22,7 @@ export class MealDetailsComponent {
       'rounded-lg border p-2.5 w-32 mx-2 text-sm bg-gradient-to-r from-gray-500 to-gray-700 text-white hover:from-gray-700 hover:to-gray-900 shadow-lg transition duration-500 ease-in-out transform hover:-translate-y-0.5 hover:scale-105',
     removeFavoriteFood:
       'rounded-lg border p-2.5 w-32 mx-2 text-sm bg-gradient-to-r from-orange-500 to-orange-700 text-white hover:from-orange-700 hover:to-orange-900 shadow-lg transition duration-500 ease-in-out transform hover:-translate-y-0.5 hover:scale-105',
-    editFood:
+    editCustomFood:
       'rounded-lg border p-2.5 w-32 mx-2 text-sm bg-gradient-to-r from-gray-500 to-gray-700 text-white hover:from-gray-700 hover:to-gray-900 shadow-lg transition duration-500 ease-in-out transform hover:-translate-y-0.5 hover:scale-105',
     removeCustomFood:
       'rounded-lg border p-2.5 w-32 mx-2 text-sm bg-gradient-to-r from-orange-500 to-orange-700 text-white hover:from-orange-700 hover:to-orange-900 shadow-lg transition duration-500 ease-in-out transform hover:-translate-y-0.5 hover:scale-105',
@@ -31,10 +34,14 @@ export class MealDetailsComponent {
 
   constructor(
     public dialogRef: MatDialogRef<MealDetailsComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { food: IFood; buttons: Ibutton[] }
+    @Inject(MAT_DIALOG_DATA) public data: { food: IFood; buttons: Ibutton[] },
+    private favoriteMealsService: FavoriteMealsService,
+    private customMealService: CustomMealService,
+    private mealLookupService: MealLookupService,
+    private dailyFoodService: DailyFoodService
   ) {
     this.food = this.setValues(this.data.food);
-    this.nutritions = { ...this.food.nutritions };
+    this.clonedFood = JSON.parse(JSON.stringify(this.food));
     this.buttons = this.data.buttons;
   }
 
@@ -52,17 +59,18 @@ export class MealDetailsComponent {
   }
 
   updateNutritions(servingSize: number) {
-    if (servingSize < 0) {
+    if (servingSize <= 0) {
       return;
     }
-    let servingSizeRatio: number = servingSize / this.food.servingSize;
+    const servingRatio = servingSize / this.food.servingSize;
+    this.clonedFood.servingSize = servingSize;
     for (const key in this.food.nutritions) {
-      this.nutritions[key as keyof typeof this.nutritions] = parseFloat(
-        (
-          this.food.nutritions[key as keyof typeof this.food.nutritions] *
-          servingSizeRatio
-        ).toFixed(3)
-      );
+      const updatedNutrition =
+        this.food.nutritions[key as keyof typeof this.food.nutritions] *
+        servingRatio;
+      this.clonedFood.nutritions[
+        key as keyof typeof this.clonedFood.nutritions
+      ] = +parseFloat(updatedNutrition.toFixed(2));
     }
   }
 
@@ -73,8 +81,8 @@ export class MealDetailsComponent {
       this.addFavoriteFood();
     } else if (action === 'removeFavoriteFood') {
       this.removeFavoriteFood();
-    } else if (action === 'editFood') {
-      this.editFood();
+    } else if (action === 'editCustomFood') {
+      this.editCustomFood();
     } else if (action === 'removeCustomFood') {
       this.removeCustomFood();
     } else if (action === 'saveFood') {
@@ -85,30 +93,36 @@ export class MealDetailsComponent {
   }
 
   addFood() {
-    console.log('Add food');
+    this.mealLookupService.addMeal(this.clonedFood);
+    this.closeMealDetails();
   }
 
   addFavoriteFood() {
-    console.log('Add favorite food');
+    this.favoriteMealsService.addFavoriteMeal(this.food);
   }
 
   removeFavoriteFood() {
-    console.log('Remove favorite food');
+    this.favoriteMealsService.deleteFavoriteMeal(this.food);
+    this.closeMealDetails();
   }
 
-  editFood() {
+  editCustomFood() {
+    //TODO: Implement edit custom food
     console.log('Edit food');
   }
 
   removeCustomFood() {
-    console.log('Remove custom food');
+    this.customMealService.deleteCustomMeal(this.food);
+    this.closeMealDetails();
   }
 
   saveFood() {
-    console.log('Save food');
+    this.dailyFoodService.updateFood(this.clonedFood);
+    this.closeMealDetails();
   }
 
   removeFood() {
-    console.log('Remove food');
+    this.dailyFoodService.deleteFood(this.food);
+    this.closeMealDetails();
   }
 }

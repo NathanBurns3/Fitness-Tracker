@@ -30,8 +30,8 @@ export class FavoriteMealsComponent implements OnInit {
           { text: 'Remove Favorite', action: 'removeFavoriteFood' },
         ],
       },
-      width: '500px',
-      height: '500px',
+      width: '600px',
+      height: '600px',
     });
   }
 }

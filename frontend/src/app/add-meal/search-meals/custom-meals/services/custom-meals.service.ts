@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { IFood } from 'src/app/add-meal/models/food';
 
 @Injectable({
@@ -212,11 +213,21 @@ export class CustomMealService {
     },
   ];
 
+  constructor(private snackBar: MatSnackBar) {}
+
   getCustomMeals(): IFood[] {
     return this.customMeals;
   }
 
-  deleteCustomMeal(meal: IFood[]): void {
-    console.log(meal);
+  deleteCustomMeal(meal: IFood): void {
+    const index = this.customMeals.findIndex((m) => m.fdcID === meal.fdcID);
+    this.customMeals.splice(index, 1);
+    this.snackBar.open(
+      meal.description + ' was removed from custom meals!',
+      '',
+      {
+        duration: 2000,
+      }
+    );
   }
 }

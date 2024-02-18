@@ -13,7 +13,6 @@ export class AllMealsComponent {
   mealSearch: string = '';
   meals: IFood[] = [];
   loading: boolean = false;
-
   submitButtonPressed: boolean = false;
 
   constructor(

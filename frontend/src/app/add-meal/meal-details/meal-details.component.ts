@@ -1,11 +1,17 @@
 import { Component, Inject } from '@angular/core';
 import { IFood } from '../models/food';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import {
+  MAT_DIALOG_DATA,
+  MatDialog,
+  MatDialogRef,
+} from '@angular/material/dialog';
 import { Ibutton } from '../models/button';
 import { FavoriteMealsService } from '../search-meals/favorite-meals/services/favorite-meals.service';
 import { CustomMealService } from '../search-meals/custom-meals/services/custom-meals.service';
 import { MealLookupService } from '../search-meals/all-meals/services/meal-lookup.service';
 import { DailyFoodService } from '../meal-list/services/daily-food.service';
+import { CustomMealDetailsComponent } from '../custom-meal-details/custom-meal-details.component';
+import { ICustomMeal } from '../models/custom-meal';
 
 @Component({
   selector: 'meal-details',
@@ -34,11 +40,13 @@ export class MealDetailsComponent {
 
   constructor(
     public dialogRef: MatDialogRef<MealDetailsComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { food: IFood; buttons: Ibutton[] },
+    @Inject(MAT_DIALOG_DATA)
+    public data: { food: IFood; buttons: Ibutton[]; customFoodID: number },
     private favoriteMealsService: FavoriteMealsService,
     private customMealService: CustomMealService,
     private mealLookupService: MealLookupService,
-    private dailyFoodService: DailyFoodService
+    private dailyFoodService: DailyFoodService,
+    private dialog: MatDialog
   ) {
     this.food = this.setValues(this.data.food);
     this.clonedFood = JSON.parse(JSON.stringify(this.food));
@@ -92,6 +100,40 @@ export class MealDetailsComponent {
     }
   }
 
+  convertCustomFoodToFood(meal: ICustomMeal): IFood {
+    return {
+      fdcID: meal.id,
+      description: meal.name,
+      brandName: 'Custom',
+      servingSize: meal.servingSize,
+      servingUnit: meal.servingUnit,
+      packageWeight: '0g',
+      ingredients: meal.food.map((f) => f.description).join(', '),
+      nutritions: {
+        calories: parseFloat(
+          meal.food
+            .reduce((acc, f) => acc + f.nutritions.calories, 0)
+            .toFixed(2)
+        ),
+        protein: parseFloat(
+          meal.food.reduce((acc, f) => acc + f.nutritions.protein, 0).toFixed(2)
+        ),
+        carbs: parseFloat(
+          meal.food.reduce((acc, f) => acc + f.nutritions.carbs, 0).toFixed(2)
+        ),
+        fat: parseFloat(
+          meal.food.reduce((acc, f) => acc + f.nutritions.fat, 0).toFixed(2)
+        ),
+        fiber: parseFloat(
+          meal.food.reduce((acc, f) => acc + f.nutritions.fiber, 0).toFixed(2)
+        ),
+        sodium: parseFloat(
+          meal.food.reduce((acc, f) => acc + f.nutritions.sodium, 0).toFixed(2)
+        ),
+      },
+    };
+  }
+
   addFood() {
     this.mealLookupService.addMeal(this.clonedFood);
     this.closeMealDetails();
@@ -107,12 +149,29 @@ export class MealDetailsComponent {
   }
 
   editCustomFood() {
-    //TODO: Implement edit custom food
-    console.log('Edit food');
+    const customMeal: ICustomMeal | undefined =
+      this.customMealService.getCustomMeal(this.data.customFoodID);
+    if (customMeal) {
+      const dialogRef = this.dialog.open(CustomMealDetailsComponent, {
+        data: { meal: customMeal, title: 'Edit Custom Meal' },
+        width: '900px',
+        height: '750px',
+      });
+
+      dialogRef.afterClosed().subscribe((result) => {
+        console.log('The dialog was closed', result);
+        // Refresh the meal details here
+        if (result) {
+          this.data.food = this.convertCustomFoodToFood(result);
+          this.food = this.setValues(this.data.food);
+          this.clonedFood = JSON.parse(JSON.stringify(this.food));
+        }
+      });
+    }
   }
 
   removeCustomFood() {
-    this.customMealService.deleteCustomMeal(this.food);
+    this.customMealService.deleteCustomMeal(this.data.customFoodID);
     this.closeMealDetails();
   }
 

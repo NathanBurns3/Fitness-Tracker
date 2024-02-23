@@ -10,6 +10,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { MealDetailsComponent } from './meal-details/meal-details.component';
 import { MealListComponent } from './meal-list/views/meal-list.component';
+import { CustomMealDetailsComponent } from './custom-meal-details/custom-meal-details.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { MealListComponent } from './meal-list/views/meal-list.component';
     FavoriteMealsComponent,
     MealDetailsComponent,
     MealListComponent,
+    CustomMealDetailsComponent,
   ],
   imports: [CommonModule, RouterModule, FormsModule, HttpClientModule],
   exports: [AddMealComponent],

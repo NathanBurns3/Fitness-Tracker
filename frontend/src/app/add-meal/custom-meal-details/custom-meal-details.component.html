@@ -1,0 +1,181 @@
+<div
+  class="flex flex-row items-center justify-center text-center bg-gradient-to-r from-blue-500 to-blue-700 pb-3 shadow-lg"
+>
+  <h1 class="text-4xl font-extrabold text-white mt-4">{{ title }}</h1>
+  <button
+    class="absolute top-3 right-3 bg-red-500 hover:bg-red-700 text-xs font-medium py-1 px-2 rounded-full text-white"
+    (click)="closeCustomMealDetails()"
+  >
+    X
+  </button>
+</div>
+
+<div class="grid place-items-center h-full -mt-3 justify-center">
+  <div
+    class="flex flex-col items-center border border-zinc-200 rounded-xl p-10 shadow-sm m-10 -mb-3"
+  >
+    <input
+      type="text"
+      class="text-3xl font-semibold text-blue-900 mb-5 -mt-7 text-center rounded-lg border focus:ring-2 shadow-sm transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-102 placeholder-gray-400 placeholder-opacity-50"
+      [(ngModel)]="clonedMeal.name"
+      placeholder="custom food name"
+    />
+
+    <div class="flex items-center mb-4">
+      <h2 class="text-xl font-bold text-blue-800 mr-2">Serving Size:</h2>
+      <form>
+        <input
+          [(ngModel)]="clonedMeal.servingSize"
+          name="servingSize"
+          class="rounded-lg border p-2 text-lg text-orange-800 focus:ring-2 focus:ring-orange-500 w-20 shadow-sm transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-102 text-right"
+          type="number"
+          min="0"
+          placeholder="{{ clonedMeal.servingSize }}"
+          (ngModelChange)="updateNutritions($event)"
+        />
+      </form>
+      <h2 class="text-xl font-bold text-blue-800 ml-2">
+        {{ clonedMeal.servingUnit }}(s)
+      </h2>
+    </div>
+
+    <div
+      class="border border-zinc-200 rounded-xl p-2 shadow-sm flex flex-wrap justify-between space-x-4"
+    >
+      <h2 class="text-xl font-bold text-blue-800">
+        Calories:
+        <span class="text-orange-800 text-lg">{{
+          totalNutritions.calories
+        }}</span>
+      </h2>
+      <h2 class="text-xl font-bold text-blue-800">
+        Carbs:
+        <span class="text-orange-800 text-lg">{{ totalNutritions.carbs }}</span>
+      </h2>
+      <h2 class="text-xl font-bold text-blue-800">
+        Fat:
+        <span class="text-orange-800 text-lg">{{ totalNutritions.fat }}</span>
+      </h2>
+      <h2 class="text-xl font-bold text-blue-800">
+        Fiber:
+        <span class="text-orange-800 text-lg">{{ totalNutritions.fiber }}</span>
+      </h2>
+      <h2 class="text-xl font-bold text-blue-800">
+        Protein:
+        <span class="text-orange-800 text-lg">{{
+          totalNutritions.protein
+        }}</span>
+      </h2>
+      <h2 class="text-xl font-bold text-blue-800">
+        Sodium:
+        <span class="text-orange-800 text-lg">{{
+          totalNutritions.sodium
+        }}</span>
+      </h2>
+    </div>
+
+    <div
+      class="w-full overflow-auto max-h-[calc(100vh-33rem)] border border-zinc-200 rounded-xl shadow-sm mt-5 -mb-5"
+    >
+      <div
+        class="bg-gradient-to-r from-blue-500 to-blue-700 rounded-lg shadow-md p-2 my-4 mx-6 flex items-center justify-between space-x-2"
+      >
+        <div class="w-8/12 flex items-center">
+          <input
+            type="text"
+            class="w-full text-sm font-semibold text-blue-900 text-center rounded-lg shadow-sm placeholder-gray-400 placeholder-opacity-50 outline-none"
+            placeholder="food name"
+            [(ngModel)]="mealSearch"
+            (input)="showDropdown = false"
+          />
+          <button
+            [disabled]="!mealSearch"
+            (click)="Lookup(mealSearch); showDropdown = !showDropdown"
+            class="bg-white shadow-sm h-5 w-5 -ml-2 rounded-r-lg overflow-hidden text-blue-500 flex items-center justify-center hover:shadow-md hover:scale-105"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              class="h-5 w-5 text-blue-500"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M5 13l4 4L19 7"
+              ></path>
+            </svg>
+          </button>
+        </div>
+        <div *ngIf="foodSelected" class="flex items-center">
+          <input
+            type="number"
+            class="w-20 mr-2 text-sm font-semibold text-blue-900 text-center rounded-lg shadow-sm placeholder-gray-400 placeholder-opacity-50 outline-none"
+            placeholder="amount"
+            [(ngModel)]="amount"
+            (input)="showDropdown = false"
+          />
+          <button
+            [disabled]="!mealSearch || !amount"
+            [ngClass]="{
+              'opacity-50 cursor-not-allowed': !mealSearch || !amount
+            }"
+            class="bg-white shadow-sm h-5 w-5 rounded-full overflow-hidden text-blue-500 flex items-center justify-center hover:shadow-md hover:scale-105"
+            (click)="addFood(amount)"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              class="h-5 w-5 text-blue-500"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M5 13l4 4L19 7"
+              ></path>
+            </svg>
+          </button>
+        </div>
+        <div
+          *ngIf="showDropdown && !loading"
+          class="absolute bg-white shadow-md rounded-lg p-1 w-1/5 h-24 overflow-auto mt-28 z-10"
+          style="margin-left: -1px"
+        >
+          <div
+            *ngFor="let meal of mealOptions"
+            class="p-1 hover:bg-blue-200 cursor-pointer text-sm"
+            (click)="selectFood(meal); showDropdown = false"
+          >
+            {{ meal.description }}
+          </div>
+          <div *ngIf="noResults" class="p-1 text-sm text-red-500">
+            No results found
+          </div>
+        </div>
+      </div>
+      <div
+        *ngFor="let food of clonedMeal.food"
+        class="bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-700 hover:to-blue-900 rounded-lg shadow-md p-2 my-4 mx-6 flex items-center justify-between transition-all duration-200 transform hover:scale-105"
+      >
+        <h1 class="text-base font-bold text-white">{{ food.description }}</h1>
+        <h1 class="text-base font-bold text-white">
+          {{ food.servingSize }} {{ food.servingUnit }}
+        </h1>
+      </div>
+    </div>
+  </div>
+
+  <div class="flex justify-center mb-4">
+    <button
+      class="rounded-lg border p-2.5 w-36 mr-2 text-sm bg-gradient-to-r from-blue-500 to-blue-700 text-white hover:from-blue-700 hover:to-blue-900 shadow-lg transition duration-500 ease-in-out transform hover:-translate-y-0.5 hover:scale-105"
+      (click)="saveCustomMeal()"
+    >
+      Save Custom Meal
+    </button>
+  </div>
+</div>

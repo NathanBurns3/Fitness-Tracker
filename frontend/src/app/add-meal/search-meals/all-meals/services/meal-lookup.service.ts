@@ -63,12 +63,24 @@ export class MealLookupService {
   formatNutritions(data: any, meal: IFood) {
     console.log(data[0].labelNutrients);
     meal.nutritions = {
-      calories: Math.ceil(data[0].labelNutrients.calories.value),
-      protein: Math.ceil(data[0].labelNutrients.protein.value),
-      carbs: Math.ceil(data[0].labelNutrients.carbohydrates.value),
-      fat: Math.ceil(data[0].labelNutrients.fat.value),
-      fiber: Math.ceil(data[0].labelNutrients.fiber.value),
-      sodium: Math.ceil(data[0].labelNutrients.sodium.value),
+      calories: data[0].labelNutrients.calories
+        ? Math.ceil(data[0].labelNutrients.calories.value)
+        : 0,
+      protein: data[0].labelNutrients.protein
+        ? Math.ceil(data[0].labelNutrients.protein.value)
+        : 0,
+      carbs: data[0].labelNutrients.carbohydrates
+        ? Math.ceil(data[0].labelNutrients.carbohydrates.value)
+        : 0,
+      fat: data[0].labelNutrients.fat
+        ? Math.ceil(data[0].labelNutrients.fat.value)
+        : 0,
+      fiber: data[0].labelNutrients.fiber
+        ? Math.ceil(data[0].labelNutrients.fiber.value)
+        : 0,
+      sodium: data[0].labelNutrients.sodium
+        ? Math.ceil(data[0].labelNutrients.sodium.value)
+        : 0,
     };
   }
 

@@ -8,7 +8,6 @@ import { MatDialog } from '@angular/material/dialog';
   selector: 'all-meals',
   templateUrl: './all-meals.component.html',
 })
-// In your component
 export class AllMealsComponent {
   mealSearch: string = '';
   meals: IFood[] = [];
@@ -47,7 +46,8 @@ export class AllMealsComponent {
       });
   }
 
-  openFoodDetails(food: IFood): void {
+  async openFoodDetails(food: IFood): Promise<void> {
+    food = await this.mealLookupService.updateNutritions(food);
     this.dialog.open(MealDetailsComponent, {
       data: {
         food,

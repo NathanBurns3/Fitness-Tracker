@@ -22,7 +22,7 @@ export class MealLookupService {
       .then((data: any) => this.formatData(data));
   }
 
-  private formatData(data: any) {
+  private formatData(data: any): IFood[] {
     this.meals = [];
     let foods = data.foods;
     for (let food of foods) {
@@ -50,6 +50,26 @@ export class MealLookupService {
       this.meals.push(meal);
     }
     return this.meals;
+  }
+
+  async updateNutritions(meal: IFood): Promise<IFood> {
+    const url = `https://api.nal.usda.gov/fdc/v1/foods?api_key=${this.clientID}&fdcIds=${meal.fdcID}`;
+    const data: any = await this.http.get(url).toPromise();
+    this.formatNutritions(data, meal);
+    console.log(meal);
+    return meal;
+  }
+
+  formatNutritions(data: any, meal: IFood) {
+    console.log(data[0].labelNutrients);
+    meal.nutritions = {
+      calories: Math.ceil(data[0].labelNutrients.calories.value),
+      protein: Math.ceil(data[0].labelNutrients.protein.value),
+      carbs: Math.ceil(data[0].labelNutrients.carbohydrates.value),
+      fat: Math.ceil(data[0].labelNutrients.fat.value),
+      fiber: Math.ceil(data[0].labelNutrients.fiber.value),
+      sodium: Math.ceil(data[0].labelNutrients.sodium.value),
+    };
   }
 
   addMeal(meal: IFood): void {

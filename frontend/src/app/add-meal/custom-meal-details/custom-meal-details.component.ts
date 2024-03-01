@@ -150,7 +150,8 @@ export class CustomMealDetailsComponent {
       .join(', ');
   }
 
-  selectFood(food: IFood) {
+  async selectFood(food: IFood) {
+    food = await this.mealLookupService.updateNutritions(food);
     this.foodSelected = true;
     this.foodChosen = food;
   }

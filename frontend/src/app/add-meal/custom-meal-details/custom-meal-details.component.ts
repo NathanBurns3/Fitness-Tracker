@@ -218,4 +218,12 @@ export class CustomMealDetailsComponent {
     this.customMealService.updateCustomMeal(this.clonedMeal);
     this.dialogRef.close(this.clonedMeal);
   }
+
+  deleteFood(food: IFood) {
+    const index = this.clonedMeal.food.indexOf(food);
+    if (index > -1) {
+      this.clonedMeal.food.splice(index, 1);
+    }
+    this.totalNutritions = this.calculateTotalNutritions(this.foods);
+  }
 }

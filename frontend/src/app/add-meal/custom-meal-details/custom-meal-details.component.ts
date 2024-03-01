@@ -47,6 +47,21 @@ export class CustomMealDetailsComponent {
   };
   clonedMeal: ICustomMeal;
   noResults: boolean = false;
+  servingUnits: string[] = [
+    'tsp',
+    'tbsp',
+    'fl oz',
+    'c',
+    'pt',
+    'qt',
+    'gal',
+    'ml',
+    'l',
+    'oz',
+    'lb',
+    'g',
+    'kg',
+  ];
 
   constructor(
     public dialogRef: MatDialogRef<CustomMealDetailsComponent>,

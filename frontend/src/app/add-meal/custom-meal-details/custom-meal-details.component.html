@@ -34,9 +34,13 @@
           (ngModelChange)="updateNutritions($event)"
         />
       </form>
-      <h2 class="text-xl font-bold text-blue-800 ml-2">
-        {{ clonedMeal.servingUnit }}(s)
-      </h2>
+      <select
+        [(ngModel)]="clonedMeal.servingUnit"
+        class="text-lg p-2 font-bold text-blue-800 ml-2 border rounded-lg focus:ring-2 focus:ring-orange-500 w-20 shadow-sm transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-102 text-right"
+      >
+        <option value="" disabled selected>Unit</option>
+        <option *ngFor="let unit of servingUnits">{{ unit }}</option>
+      </select>
     </div>
 
     <div
@@ -188,7 +192,14 @@
   <div class="flex justify-center mb-4">
     <button
       class="rounded-lg border p-2.5 w-36 mr-2 text-sm bg-gradient-to-r from-blue-500 to-blue-700 text-white hover:from-blue-700 hover:to-blue-900 shadow-lg transition duration-500 ease-in-out transform hover:-translate-y-0.5 hover:scale-105"
+      [class.opacity-50]="
+        !foods.length || !clonedMeal.name || !clonedMeal.servingUnit
+      "
+      [class.pointer-events-none]="
+        !foods.length || !clonedMeal.name || !clonedMeal.servingUnit
+      "
       (click)="saveCustomMeal()"
+      [disabled]="!foods.length || !clonedMeal.name || !clonedMeal.servingUnit"
     >
       Save Custom Meal
     </button>

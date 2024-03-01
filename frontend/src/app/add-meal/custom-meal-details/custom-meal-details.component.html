@@ -116,11 +116,14 @@
         <div *ngIf="foodSelected" class="flex items-center">
           <input
             type="number"
-            class="w-20 mr-2 text-sm font-semibold text-blue-900 text-center rounded-lg shadow-sm placeholder-gray-400 placeholder-opacity-50 outline-none"
+            class="w-20 mr-1 text-sm font-semibold text-blue-900 text-center rounded-lg shadow-sm placeholder-gray-400 placeholder-opacity-50 outline-none"
             placeholder="amount"
             [(ngModel)]="amount"
             (input)="showDropdown = false"
           />
+          <div class="text-white mr-3">
+            {{ foodChosen.servingUnit }}
+          </div>
           <button
             [disabled]="!mealSearch || !amount"
             [ngClass]="{
@@ -164,7 +167,7 @@
       </div>
       <div
         *ngFor="let food of clonedMeal.food"
-        class="bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-700 hover:to-blue-900 rounded-lg shadow-md p-2 my-4 mx-6 flex items-center justify-between transition-all duration-200 transform hover:scale-105"
+        class="bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-700 hover:to-blue-900 rounded-lg shadow-md p-2 my-4 mx-6 flex items-center justify-between"
       >
         <h1 class="text-base font-bold text-white">{{ food.description }}</h1>
         <h1 class="text-base font-bold text-white">

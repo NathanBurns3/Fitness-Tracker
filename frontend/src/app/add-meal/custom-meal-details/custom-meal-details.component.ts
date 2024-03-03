@@ -4,6 +4,7 @@ import { ICustomMeal } from '../models/custom-meal';
 import { IFood } from '../models/food';
 import { MealLookupService } from '../search-meals/all-meals/services/meal-lookup.service';
 import { CustomMealService } from '../search-meals/custom-meals/services/custom-meals.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'custom-meal-details',
@@ -68,7 +69,8 @@ export class CustomMealDetailsComponent {
     @Inject(MAT_DIALOG_DATA)
     public data: { meal: ICustomMeal; title: string },
     private mealLookupService: MealLookupService,
-    private customMealService: CustomMealService
+    private customMealService: CustomMealService,
+    private snackBar: MatSnackBar
   ) {
     this.title = data.title;
     this.customFood = data.meal;
@@ -222,6 +224,9 @@ export class CustomMealDetailsComponent {
     };
     this.clonedMeal.food.push(food);
     console.log(food);
+    this.snackBar.open(food.description + ' was added!', '', {
+      duration: 2000,
+    });
     this.totalNutritions = this.calculateTotalNutritions(this.foods);
   }
 

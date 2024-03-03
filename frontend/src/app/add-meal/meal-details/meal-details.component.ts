@@ -159,8 +159,6 @@ export class MealDetailsComponent {
       });
 
       dialogRef.afterClosed().subscribe((result) => {
-        console.log('The dialog was closed', result);
-        // Refresh the meal details here
         if (result) {
           this.data.food = this.convertCustomFoodToFood(result);
           this.food = this.setValues(this.data.food);

@@ -1,5 +1,6 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { IExercise } from '../models/exercise';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable({
   providedIn: 'root',
@@ -214,6 +215,8 @@ export class DailyExercisesService {
     },
   ];
 
+  constructor(private snackBar: MatSnackBar) {}
+
   getExercises(): IExercise[] {
     return this.exercises;
   }
@@ -221,6 +224,9 @@ export class DailyExercisesService {
   addExercise(exercise: IExercise): void {
     this.exercises.push(exercise);
     this.exerciseAdded.emit();
+    this.snackBar.open(exercise.exerciseName + ' was added!', '', {
+      duration: 2000,
+    });
   }
 
   updateExercise(exercise: IExercise): void {
@@ -228,6 +234,9 @@ export class DailyExercisesService {
       (w) => w.exerciseId === exercise.exerciseId
     );
     this.exercises[index] = exercise;
+    this.snackBar.open(exercise.exerciseName + ' was edited!', '', {
+      duration: 2000,
+    });
   }
 
   deleteExercise(exercise: IExercise): void {
@@ -235,5 +244,8 @@ export class DailyExercisesService {
       (w) => w.exerciseId === exercise.exerciseId
     );
     this.exercises.splice(index, 1);
+    this.snackBar.open(exercise.exerciseName + ' was deleted!', '', {
+      duration: 2000,
+    });
   }
 }

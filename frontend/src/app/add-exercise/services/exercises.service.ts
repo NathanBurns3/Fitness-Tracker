@@ -1,5 +1,6 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { muscleGroupsEnum } from '../models/muscle-groups-enum';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable({
   providedIn: 'root',
@@ -115,16 +116,24 @@ export class ExercisesService {
     ],
   };
 
+  constructor(private snackBar: MatSnackBar) {}
+
   getExercisesById(selectedMuscleGroup: muscleGroupsEnum): string[] {
     return this.exercises[selectedMuscleGroup];
   }
 
   addExercise(muscleGroup: muscleGroupsEnum, exercise: string) {
     this.exercises[muscleGroup].push(exercise);
+    this.snackBar.open(exercise + ' was added!', '', {
+      duration: 2000,
+    });
   }
 
   deleteExercise(muscleGroup: muscleGroupsEnum, exercise: string) {
     const index = this.exercises[muscleGroup].indexOf(exercise);
     this.exercises[muscleGroup].splice(index, 1);
+    this.snackBar.open(exercise + ' was deleted!', '', {
+      duration: 2000,
+    });
   }
 }

@@ -36,6 +36,7 @@ export class AllMealsComponent {
             ...meal,
             description: this.formatFoodName(meal.description),
             ingredients: this.formatFoodName(meal.ingredients),
+            brandName: this.formatFoodName(meal.brandName),
           };
         });
         this.loading = false;

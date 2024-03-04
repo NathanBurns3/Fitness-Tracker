@@ -136,4 +136,10 @@ export class ExercisesService {
       duration: 2000,
     });
   }
+
+  exerciseExists(muscleGroup: muscleGroupsEnum, exercise: string): boolean {
+    return this.exercises[muscleGroup]
+      .map((e) => e.toLowerCase())
+      .includes(exercise.toLowerCase());
+  }
 }

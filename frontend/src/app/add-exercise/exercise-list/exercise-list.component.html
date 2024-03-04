@@ -8,7 +8,11 @@
     class="bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-700 hover:to-blue-900 rounded-lg shadow-md p-4 my-4 mx-6 flex items-center justify-between transition-all duration-200 transform hover:scale-105"
     (click)="openExerciseDetails(exercise)"
   >
-    <h1 class="text-xl font-bold text-white">{{ exercise.exerciseName }}</h1>
-    <h1 class="text-xl font-bold text-white">x{{ exercise.sets }}</h1>
+    <h1 class="text-xl font-bold text-white w-10/12 truncate text-left">
+      {{ exercise.exerciseName }}
+    </h1>
+    <h1 class="text-xl font-bold text-white w-2/12 truncate text-right">
+      x{{ exercise.sets }}
+    </h1>
   </div>
 </div>

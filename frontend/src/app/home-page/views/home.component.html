@@ -11,7 +11,7 @@
             EDIT
           </h3>
         </a>
-        <h1 class="justify-center text-5xl font-bold text-blue-800 pb-8 pt-14">
+        <h1 class="justify-center text-5xl font-bold text-blue-800 pb-4 pt-14">
           Profile
         </h1>
       </div>
@@ -26,7 +26,7 @@
         #NameAndStats
         class="w-5/6 mx-auto border border-zinc-300 rounded-md shadow-md p-2"
       >
-        <h1 class="justify-center text-2xl font-bold text-blue-900">
+        <h1 class="justify-center text-2xl font-bold text-blue-900 truncate">
           {{ profileInfo.firstName }} {{ profileInfo.lastName }}
         </h1>
         <h1>{{ profileInfo.gender }}, {{ profileInfo.age }} years</h1>
@@ -34,7 +34,7 @@
           {{ formattedHeight }} | {{ profileInfo.weight }} lbs
         </h1>
       </div>
-      <div #Goals class="pt-10">
+      <div #Goals class="pt-8">
         <div
           class="w-5/6 mx-auto border border-zinc-300 rounded-lg shadow-md p-2"
         >
@@ -44,7 +44,7 @@
           </ul>
         </div>
       </div>
-      <div #Steaks class="pt-10">
+      <div #Steaks class="pt-8">
         <div
           class="w-5/6 mx-auto p-2 border border-zinc-300 rounded-lg shadow-md"
         >

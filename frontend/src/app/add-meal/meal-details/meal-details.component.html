@@ -10,11 +10,13 @@
   </button>
 </div>
 
-<div class="grid place-items-center h-full -mt-3 justify-center">
+<div class="grid place-items-center h-full mx-8 -mt-3 justify-center">
   <div
     class="flex flex-col items-center border border-zinc-200 rounded-xl p-10 shadow-sm m-10"
   >
-    <h1 class="text-3xl font-semibold text-blue-900 mb-5 -mt-7 text-center">
+    <h1
+      class="text-3xl font-semibold text-blue-900 mb-5 -mt-7 text-center truncate overflow-auto break-words max-w-lg mx-auto"
+    >
       {{ food.description }}
     </h1>
 
@@ -79,7 +81,7 @@
   </div>
 </div>
 
-<div class="flex justify-center mb-5">
+<div class="flex justify-center mb-5 -mt-7">
   <button
     *ngFor="let button of buttons"
     [ngClass]="buttonStyles[button.action]"

@@ -56,12 +56,10 @@ export class MealLookupService {
     const url = `https://api.nal.usda.gov/fdc/v1/foods?api_key=${this.clientID}&fdcIds=${meal.fdcID}`;
     const data: any = await this.http.get(url).toPromise();
     this.formatNutritions(data, meal);
-    console.log(meal);
     return meal;
   }
 
   formatNutritions(data: any, meal: IFood) {
-    console.log(data[0].labelNutrients);
     meal.nutritions = {
       calories: data[0].labelNutrients.calories
         ? Math.ceil(data[0].labelNutrients.calories.value)

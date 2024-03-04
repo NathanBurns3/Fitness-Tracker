@@ -1,10 +1,6 @@
 /*
 TODO:
-validation on save
-  sets is a number and greater than 0 and under a certain number (100?)
-    should disable save button if not valid
 clean up the code
-give confirmation message on save/delete
 */
 
 import { Component, Inject, OnInit } from '@angular/core';
@@ -13,6 +9,7 @@ import { IExercise } from '../models/exercise';
 import { muscleGroupsEnum } from '../models/muscle-groups-enum';
 import { ExercisesService } from '../services/exercises.service';
 import { DailyExercisesService } from '../services/daily-exercises.service';
+import { FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'exercise-details',
@@ -21,7 +18,7 @@ import { DailyExercisesService } from '../services/daily-exercises.service';
 export class ExerciseDetailsComponent implements OnInit {
   muscleGroup!: muscleGroupsEnum | string;
   exercise: string;
-  sets: number;
+  sets: FormControl;
   exercises: string[] = [];
   muscleGroups: muscleGroupsEnum[] = Object.values(muscleGroupsEnum);
 
@@ -33,7 +30,11 @@ export class ExerciseDetailsComponent implements OnInit {
   ) {
     this.muscleGroup = this.data.exercise.muscleGroup as muscleGroupsEnum;
     this.exercise = this.data.exercise.exerciseName;
-    this.sets = this.data.exercise.sets;
+    this.sets = new FormControl(this.data.exercise.sets, [
+      Validators.required,
+      Validators.min(1),
+      Validators.max(999),
+    ]);
   }
 
   ngOnInit(): void {
@@ -55,11 +56,13 @@ export class ExerciseDetailsComponent implements OnInit {
   }
 
   saveExercise() {
-    this.data.exercise.muscleGroup = this.muscleGroup;
-    this.data.exercise.exerciseName = this.exercise;
-    this.data.exercise.sets = this.sets;
-    this.dailyExercisesService.updateExercise(this.data.exercise);
-    this.dialogRef.close();
+    if (this.sets.valid) {
+      this.data.exercise.muscleGroup = this.muscleGroup;
+      this.data.exercise.exerciseName = this.exercise;
+      this.data.exercise.sets = this.sets.value;
+      this.dailyExercisesService.updateExercise(this.data.exercise);
+      this.dialogRef.close();
+    }
   }
 
   deleteExercise() {

@@ -1,10 +1,6 @@
 /*
 TODO:
-validation on save
-  sets is a number and greater than 0 and under a certain number (100?)
-    should disable add button if not valid
 clean up the code
-give confirmation message on add
 */
 
 import { Component, EventEmitter, Output } from '@angular/core';
@@ -15,6 +11,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { AddNewExerciseComponent } from '../add-new-exercise/add-new-exercise.component';
 import { DeleteExerciseComponent } from '../delete-exercise/delete-exercise.component';
 import { DailyExercisesService } from '../services/daily-exercises.service';
+import { FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'exercise-selector',
@@ -27,13 +24,19 @@ export class ExerciseSelectorComponent {
   selectedMuscleGroup = 'Choose a Muscle Group';
   selectedExercise = 'Choose a Exercise';
   exercises: string[] = [];
-  sets: string = '';
+  sets: FormControl;
 
   constructor(
     private exercisesService: ExercisesService,
     private dailyExercisesService: DailyExercisesService,
     private dialog: MatDialog
-  ) {}
+  ) {
+    this.sets = new FormControl('', [
+      Validators.required,
+      Validators.min(1),
+      Validators.max(999),
+    ]);
+  }
 
   onMuscleGroupChange() {
     this.exercises = this.exercisesService.getExercisesById(
@@ -43,17 +46,19 @@ export class ExerciseSelectorComponent {
     this.muscleGroupChange.emit(this.selectedMuscleGroup);
   }
 
-  onAddExercise(exerciseName: string, sets: string): void {
-    const newExercise: IExercise = {
-      exerciseId: this.dailyExercisesService.exercises.length + 1,
-      muscleGroup: this.selectedMuscleGroup,
-      exerciseName: exerciseName,
-      sets: Number(sets),
-    };
-    this.dailyExercisesService.addExercise(newExercise);
-    this.selectedMuscleGroup = 'Choose a Muscle Group';
-    this.selectedExercise = 'Choose a Exercise';
-    this.sets = '';
+  onAddExercise(exerciseName: string): void {
+    if (this.sets.valid) {
+      const newExercise: IExercise = {
+        exerciseId: this.dailyExercisesService.exercises.length + 1,
+        muscleGroup: this.selectedMuscleGroup,
+        exerciseName: exerciseName,
+        sets: this.sets.value,
+      };
+      this.dailyExercisesService.addExercise(newExercise);
+      this.selectedMuscleGroup = 'Choose a Muscle Group';
+      this.selectedExercise = 'Choose a Exercise';
+      this.sets.reset();
+    }
   }
 
   openAddNewExerciseDialog() {

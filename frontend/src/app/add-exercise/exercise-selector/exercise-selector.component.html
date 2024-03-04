@@ -34,32 +34,32 @@
   <div class="ml-14">
     <form>
       <input
-        [(ngModel)]="sets"
+        [formControl]="sets"
         name="sets"
         class="rounded-lg border p-2.5 text-sm bg-white text-black focus:ring-2 focus:ring-blue-500 w-48 mb-5 shadow-lg transition duration-500 ease-in-out transform hover:-translate-y-0.5 hover:scale-105"
-        type="text"
+        type="number"
         placeholder="Number of Sets"
         aria-label="Number of Sets"
       />
     </form>
     <button
-      (click)="onAddExercise(selectedExercise, sets)"
+      (click)="onAddExercise(selectedExercise)"
       [disabled]="
         selectedMuscleGroup === 'Choose a Muscle Group' ||
         selectedExercise === 'Choose a Exercise' ||
-        +sets < 1
+        sets.invalid
       "
-      class="rounded-lg border p-2.5 text-sm text-white w-48 shadow-lg transition duration-500 ease-in-out transform bg-gradient-to-r"
-      [ngClass]="{
-        'from-blue-500 to-blue-700 hover:from-blue-700 hover:to-blue-900 hover:-translate-y-0.5 hover:scale-105 cursor-pointer':
-          selectedMuscleGroup !== 'Choose a Muscle Group' &&
-          selectedExercise !== 'Choose a Exercise' &&
-          +sets > 0,
-        'from-light-blue to-dark-blue cursor-not-allowed':
-          selectedMuscleGroup === 'Choose a Muscle Group' ||
-          selectedExercise === 'Choose a Exercise' ||
-          +sets < 1
-      }"
+      class="rounded-lg border p-2.5 text-sm text-white w-48 shadow-lg transition duration-500 ease-in-out transform bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-700 hover:to-blue-900 hover:-translate-y-0.5 hover:scale-105 cursor-pointer"
+      [class.opacity-50]="
+        selectedMuscleGroup === 'Choose a Muscle Group' ||
+        selectedExercise === 'Choose a Exercise' ||
+        sets.invalid
+      "
+      [class.pointer-events-none]="
+        selectedMuscleGroup === 'Choose a Muscle Group' ||
+        selectedExercise === 'Choose a Exercise' ||
+        sets.invalid
+      "
     >
       Add Exercise
     </button>

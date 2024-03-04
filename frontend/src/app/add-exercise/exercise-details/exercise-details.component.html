@@ -45,10 +45,10 @@
     <h1 class="text-lg font-bold text-blue-800 mb-2">Number of Sets:</h1>
     <form>
       <input
-        [(ngModel)]="sets"
+        [formControl]="sets"
         name="sets"
         class="rounded-lg border p-2.5 text-sm bg-white text-blue-950 focus:ring-2 focus:ring-blue-500 w-full mb-5 shadow-lg transition duration-500 ease-in-out transform hover:-translate-y-0.5 hover:scale-105"
-        type="text"
+        type="number"
         placeholder="Number of Sets"
         aria-label="Number of Sets"
       />
@@ -60,6 +60,9 @@
   <button
     class="rounded-lg border p-2.5 w-16 mr-2 text-sm bg-gradient-to-r from-blue-500 to-blue-700 text-white hover:from-blue-700 hover:to-blue-900 shadow-lg transition duration-500 ease-in-out transform hover:-translate-y-0.5 hover:scale-105"
     (click)="saveExercise()"
+    [class.opacity-50]="sets.invalid"
+    [class.pointer-events-none]="sets.invalid"
+    [disabled]="sets.invalid"
   >
     Save
   </button>

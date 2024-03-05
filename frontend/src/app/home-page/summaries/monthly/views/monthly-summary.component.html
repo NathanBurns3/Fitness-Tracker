@@ -18,7 +18,11 @@
     <!-- Calendar Days -->
     <div
       *ngFor="let info of daysOfMonth"
-      class="text-center border border-gray-200 rounded-lg"
+      class="text-center rounded-lg"
+      [ngClass]="{
+        'border-2 border-gray-500': info.day === date.getDate(),
+        'border border-gray-200': info.day !== date.getDate()
+      }"
       [ngStyle]="{
         background:
           info.exerciseGoal && info.eatingGoal

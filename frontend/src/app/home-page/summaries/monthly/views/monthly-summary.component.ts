@@ -45,6 +45,7 @@ export class MonthlySummaryComponent implements OnInit {
     year: 'numeric',
   });
   hoverIndex: number = -1;
+  daysOfMonth: IMonthlyBreakdownInfo[] = [];
 
   constructor(
     private monthlyBreakdownInfoService: MonthlyBreakdownInfoService,
@@ -57,6 +58,29 @@ export class MonthlySummaryComponent implements OnInit {
     this.monthlyExerciseInfo =
       this.monthlyExerciseInfoService.getMonthlyExerciseInfo();
     this.exercisePercentage = this.getExercisePercentage();
+    this.daysOfMonth = this.generateDaysOfMonth(
+      this.date.getFullYear(),
+      this.date.getMonth()
+    );
+  }
+
+  generateDaysOfMonth(year: number, month: number): IMonthlyBreakdownInfo[] {
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+    const firstDayOfWeek = new Date(year, month, 1).getDay();
+    const days: IMonthlyBreakdownInfo[] = [];
+    const goals = this.monthlyBreakdownInfoService.getMonthlyBreakdownInfo();
+    for (let i = 0; i < firstDayOfWeek; i++) {
+      days.push({ day: null, exerciseGoal: false, eatingGoal: false });
+    }
+    for (let day = 1; day <= daysInMonth; day++) {
+      const goal = goals.find((g) => g.day === day);
+      if (goal) {
+        days.push(goal);
+      } else {
+        days.push({ day, exerciseGoal: false, eatingGoal: false });
+      }
+    }
+    return days;
   }
 
   getExercisePercentage(): number[] {

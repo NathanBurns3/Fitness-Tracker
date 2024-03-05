@@ -1,5 +1,5 @@
 export interface IMonthlyBreakdownInfo {
-  day: number;
+  day: number | null;
   exerciseGoal: boolean;
   eatingGoal: boolean;
 }

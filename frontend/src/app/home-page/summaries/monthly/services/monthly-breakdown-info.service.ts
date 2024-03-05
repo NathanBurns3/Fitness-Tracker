@@ -24,19 +24,6 @@ export class MonthlyBreakdownInfoService {
       { day: 16, exerciseGoal: true, eatingGoal: true },
       { day: 17, exerciseGoal: false, eatingGoal: false },
       { day: 18, exerciseGoal: false, eatingGoal: false },
-      { day: 19, exerciseGoal: true, eatingGoal: false },
-      { day: 20, exerciseGoal: false, eatingGoal: true },
-      { day: 21, exerciseGoal: true, eatingGoal: true },
-      { day: 22, exerciseGoal: false, eatingGoal: true },
-      { day: 23, exerciseGoal: true, eatingGoal: false },
-      { day: 24, exerciseGoal: false, eatingGoal: true },
-      { day: 25, exerciseGoal: false, eatingGoal: false },
-      { day: 26, exerciseGoal: true, eatingGoal: true },
-      { day: 27, exerciseGoal: true, eatingGoal: false },
-      { day: 28, exerciseGoal: false, eatingGoal: false },
-      { day: 29, exerciseGoal: false, eatingGoal: true },
-      { day: 30, exerciseGoal: true, eatingGoal: false },
-      { day: 31, exerciseGoal: false, eatingGoal: true },
     ];
   }
 }

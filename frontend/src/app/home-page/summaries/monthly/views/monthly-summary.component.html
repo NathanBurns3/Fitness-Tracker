@@ -16,9 +16,8 @@
     <div class="text-center text-gray-500 font-semibold">Sat</div>
 
     <!-- Calendar Days -->
-    <!-- TODO: Replace this with dynamic generation of days -->
     <div
-      *ngFor="let info of monthlyBreakdownInfo"
+      *ngFor="let info of daysOfMonth"
       class="text-center border border-gray-200 rounded-lg"
       [ngStyle]="{
         background:
@@ -31,7 +30,7 @@
             : 'white'
       }"
     >
-      {{ info.day }}
+      {{ info.day ? info.day : "" }}
     </div>
   </div>
   <!-- Color Key -->

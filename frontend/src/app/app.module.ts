@@ -8,6 +8,7 @@ import { AddExerciseModule } from './add-exercise/add-exercise.module';
 import { RouterModule } from '@angular/router';
 import { AddMealModule } from './add-meal/add-meal.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { UserSettingsModule } from './user-settings/user-settings.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -16,6 +17,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     HomeModule,
     AddExerciseModule,
     AddMealModule,
+    UserSettingsModule,
     AppRoutingModule,
     RouterModule,
     BrowserAnimationsModule,

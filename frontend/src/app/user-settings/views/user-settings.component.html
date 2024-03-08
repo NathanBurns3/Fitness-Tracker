@@ -1,1 +1,59 @@
-<h1>test</h1>
+<body class="h-screen text-center bg-zinc-300 overflow-auto">
+  <div class="bg-neutral-50 rounded-lg shadow-2xl h-[calc(100vh-40px)] m-5 p-5">
+    <div #Title>
+      <div class="min-h-[50px]">
+        <div class="flex justify-between items-center relative">
+          <button
+            routerLink="/"
+            class="button absolute left-4 bg-zinc-300 hover:bg-zinc-400 text-white font-bold py-2 px-4 rounded bg-gradient-to-r from-orange-500 to-orange-700"
+          >
+            <span>Back</span>
+          </button>
+          <div class="flex flex-grow justify-center">
+            <h1 class="text-6xl font-bold text-blue-800">Settings</h1>
+          </div>
+          <a>
+            <h3
+              routerLink="/user-settings"
+              class="absolute top-0 right-3 mt-3 font-bold text-orange-700 hover:cursor-default px-3 py-1 border border-orange-700 rounded hover:bg-orange-700 hover:text-white transition-colors duration-200"
+            >
+              Sign Out
+            </h3>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="m-4 grid grid-cols-8 h-[calc(100vh-10rem)]">
+      <div class="col-span-5 mx-3">
+        <div
+          class="border border-zinc-300 rounded-lg shadow-lg col-span-5 p-4 h-[50%] mb-4"
+        >
+          <h1>Personal Information</h1>
+        </div>
+        <div
+          class="border border-zinc-300 rounded-lg shadow-lg col-span-5 p-4 h-[25%] mb-4"
+        >
+          <h1>Contact Information</h1>
+        </div>
+        <div
+          class="border border-zinc-300 rounded-lg shadow-lg col-span-5 p-4 h-[20%]"
+        >
+          <h1>Account Management</h1>
+        </div>
+      </div>
+      <div class="col-span-3 mx-3">
+        <div
+          class="border border-zinc-300 rounded-lg shadow-lg col-span-3 p-4 h-[27.5%] mb-4"
+        >
+          <h1>Physical Measurements</h1>
+        </div>
+        <div
+          class="border border-zinc-300 rounded-lg shadow-lg col-span-3 p-4 h-[70%]"
+        >
+          <h1>Activity and Goals</h1>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>

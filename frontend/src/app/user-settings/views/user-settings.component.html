@@ -1,27 +1,31 @@
 <body class="h-screen text-center bg-zinc-300 overflow-auto">
   <div class="bg-neutral-50 rounded-lg shadow-2xl h-[calc(100vh-40px)] m-5 p-5">
     <div #Title>
-      <div class="min-h-[50px]">
-        <div class="flex justify-between items-center relative">
+      <div class="min-h-[50px] relative">
+        <div class="flex justify-between items-center">
           <button
             routerLink="/"
             class="button absolute left-4 bg-zinc-300 hover:bg-zinc-400 text-white font-bold py-2 px-4 rounded bg-gradient-to-r from-orange-500 to-orange-700"
           >
             <span>Back</span>
           </button>
-          <div class="flex flex-grow justify-center">
-            <h1 class="text-6xl font-bold text-blue-800">Settings</h1>
+          <h1
+            class="text-6xl font-bold text-blue-800 absolute left-1/2 transform -translate-x-1/2"
+          >
+            Settings
+          </h1>
+          <div class="flex flex-grow justify-end">
+            <button
+              class="rounded-lg border p-2 w-16 mr-2 text-sm bg-gradient-to-r from-blue-500 to-blue-700 text-white hover:from-blue-700 hover:to-blue-900 shadow-lg transition duration-500 ease-in-out transform hover:-translate-y-0.5 hover:scale-105"
+            >
+              Save
+            </button>
+            <button
+              class="rounded-lg border p-2 w-16 mr-2 text-sm bg-gradient-to-r from-orange-500 to-orange-700 text-white hover:from-orange-700 hover:to-orange-900 shadow-lg transition duration-500 ease-in-out transform hover:-translate-y-0.5 hover:scale-105"
+            >
+              Cancel
+            </button>
           </div>
-          <button
-            class="rounded-lg border p-2 w-16 mr-2 text-sm bg-gradient-to-r from-blue-500 to-blue-700 text-white hover:from-blue-700 hover:to-blue-900 shadow-lg transition duration-500 ease-in-out transform hover:-translate-y-0.5 hover:scale-105"
-          >
-            Save
-          </button>
-          <button
-            class="rounded-lg border p-2 w-16 mr-2 text-sm bg-gradient-to-r from-orange-500 to-orange-700 text-white hover:from-orange-700 hover:to-orange-900 shadow-lg transition duration-500 ease-in-out transform hover:-translate-y-0.5 hover:scale-105"
-          >
-            Cancel
-          </button>
         </div>
       </div>
     </div>

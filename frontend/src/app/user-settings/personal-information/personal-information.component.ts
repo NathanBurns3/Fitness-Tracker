@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { IPersonalInformation } from '../models/personal-information';
-import { PersonalInformationService } from '../services/personal-information.service';
+import { UserSettingsService } from '../services/user-settings.service';
 
 @Component({
   selector: 'personal-information',
@@ -11,11 +11,11 @@ export class PersonalInformationComponent implements OnInit {
   previewImage: string = '';
   genderOptions: string[] = ['Male', 'Female', 'Other'];
 
-  constructor(private personalInformationService: PersonalInformationService) {}
+  constructor(private userSettingsService: UserSettingsService) {}
 
   ngOnInit(): void {
     this.personalInformation = {
-      ...this.personalInformationService.getPersonalInformation(),
+      ...this.userSettingsService.getPersonalInformation(),
     };
     this.previewImage = this.personalInformation.profilePicture;
   }

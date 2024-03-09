@@ -4,7 +4,7 @@ import { IPersonalInformation } from '../models/personal-information';
 @Injectable({
   providedIn: 'root',
 })
-export class PersonalInformationService {
+export class UserSettingsService {
   personalInformation: IPersonalInformation = {
     firstName: 'John',
     lastName: 'Doe',

@@ -6,6 +6,7 @@ import { PersonalInformationComponent } from './personal-information/personal-in
 import { FormsModule } from '@angular/forms';
 import { ContactInformationComponent } from './contact-information/contact-information.component';
 import { AccountManagementComponent } from './account-management/account-management.component';
+import { PhysicalMeasurementsComponent } from './physical-measurements/physical-measurements.component';
 
 @NgModule({
   declarations: [
@@ -13,6 +14,7 @@ import { AccountManagementComponent } from './account-management/account-managem
     PersonalInformationComponent,
     ContactInformationComponent,
     AccountManagementComponent,
+    PhysicalMeasurementsComponent,
   ],
   imports: [CommonModule, RouterModule, FormsModule],
   exports: [UserSettingsComponent],

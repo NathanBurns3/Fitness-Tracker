@@ -19,6 +19,11 @@ export class UserSettingsService {
     phoneNumber: '123-456-7890',
   };
 
+  physicalMeasurements = {
+    height: 75,
+    weight: 180,
+  };
+
   getPersonalInformation(): IPersonalInformation {
     return this.personalInformation;
   }
@@ -33,5 +38,13 @@ export class UserSettingsService {
 
   updateContactInformation(contactInformation: IContactInformation): void {
     this.contactInformation = contactInformation;
+  }
+
+  getPhysicalMeasurements() {
+    return this.physicalMeasurements;
+  }
+
+  updatePhysicalMeasurements(physicalMeasurements: any) {
+    this.physicalMeasurements = physicalMeasurements;
   }
 }

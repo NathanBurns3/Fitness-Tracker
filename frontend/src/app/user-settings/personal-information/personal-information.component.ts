@@ -1,22 +1,28 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { IPersonalInformation } from '../models/personal-information';
-import { UserSettingsService } from '../services/user-settings.service';
 
 @Component({
   selector: 'personal-information',
   templateUrl: './personal-information.component.html',
 })
-export class PersonalInformationComponent implements OnInit {
+export class PersonalInformationComponent implements OnInit, OnChanges {
+  @Input() originalPersonalInformation!: IPersonalInformation;
+  @Output() personalInformationChange =
+    new EventEmitter<IPersonalInformation>();
+
   personalInformation!: IPersonalInformation;
   previewImage: string = '';
   genderOptions: string[] = ['Male', 'Female', 'Other'];
 
-  constructor(private userSettingsService: UserSettingsService) {}
-
   ngOnInit(): void {
-    this.personalInformation = {
-      ...this.userSettingsService.getPersonalInformation(),
-    };
+    this.personalInformation = { ...this.originalPersonalInformation };
     this.previewImage = this.personalInformation.profilePicture;
   }
 
@@ -28,9 +34,20 @@ export class PersonalInformationComponent implements OnInit {
 
       reader.onload = (e: any) => {
         this.previewImage = e.target.result;
+        this.personalInformation.profilePicture = e.target.result;
+        this.updatePersonalInformation();
       };
 
       reader.readAsDataURL(file);
     }
+  }
+
+  ngOnChanges(): void {
+    this.personalInformation = { ...this.originalPersonalInformation };
+    this.previewImage = this.personalInformation.profilePicture;
+  }
+
+  updatePersonalInformation(): void {
+    this.personalInformationChange.emit(this.personalInformation);
   }
 }

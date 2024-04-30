@@ -1,22 +1,33 @@
-import { Component, OnInit } from '@angular/core';
-import { UserSettingsService } from '../services/user-settings.service';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { IPhysicalMeasurements } from '../models/physical-measurements';
 
 @Component({
   selector: 'physical-measurements',
   templateUrl: './physical-measurements.component.html',
 })
-export class PhysicalMeasurementsComponent implements OnInit {
+export class PhysicalMeasurementsComponent implements OnInit, OnChanges {
+  @Input() originalPhysicalMeasurements!: IPhysicalMeasurements;
+  @Output() physicalMeasurementsChange =
+    new EventEmitter<IPhysicalMeasurements>();
+
   physicalMeasurements!: IPhysicalMeasurements;
   heightFeet: number = 0;
   heightInches: number = 0;
 
-  constructor(private userSettingsService: UserSettingsService) {}
-
   ngOnInit(): void {
-    this.physicalMeasurements = {
-      ...this.userSettingsService.getPhysicalMeasurements(),
-    };
+    this.physicalMeasurements = { ...this.originalPhysicalMeasurements };
+    this.convertToFeetAndInches();
+  }
+
+  ngOnChanges(): void {
+    this.physicalMeasurements = { ...this.originalPhysicalMeasurements };
     this.convertToFeetAndInches();
   }
 
@@ -27,5 +38,10 @@ export class PhysicalMeasurementsComponent implements OnInit {
 
   convertyToInches(): void {
     this.physicalMeasurements.height = this.heightFeet * 12 + this.heightInches;
+  }
+
+  updatePhysicalMeasurements(): void {
+    this.convertyToInches();
+    this.physicalMeasurementsChange.emit(this.physicalMeasurements);
   }
 }

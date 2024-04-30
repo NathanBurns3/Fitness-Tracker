@@ -5,6 +5,7 @@ import { IActivityGoal } from '../models/activity-goals';
 import { ActivityLevelEnum } from '../models/activity-level-enum';
 import { WeightGoalEnum } from '../models/weight-goal-enum';
 import { IPhysicalMeasurements } from '../models/physical-measurements';
+import { IUserSettings } from '../models/user-settings';
 
 @Injectable({
   providedIn: 'root',
@@ -33,35 +34,26 @@ export class UserSettingsService {
     WeightGoal: WeightGoalEnum.WeightLoss,
   };
 
-  getPersonalInformation(): IPersonalInformation {
-    return this.personalInformation;
+  updateUserSettings(userSettings: IUserSettings): void {
+    this.personalInformation = userSettings.personalInformation;
+    this.contactInformation = userSettings.contactInformation;
+    this.physicalMeasurements = userSettings.physicalMeasurements;
+    this.activityGoal = userSettings.activityGoal;
   }
 
-  updatePersonalInformation(personalInformation: IPersonalInformation): void {
-    this.personalInformation = personalInformation;
+  getPersonalInformation(): IPersonalInformation {
+    return this.personalInformation;
   }
 
   getContactInformation(): IContactInformation {
     return this.contactInformation;
   }
 
-  updateContactInformation(contactInformation: IContactInformation): void {
-    this.contactInformation = contactInformation;
-  }
-
   getPhysicalMeasurements() {
     return this.physicalMeasurements;
   }
 
-  updatePhysicalMeasurements(physicalMeasurements: IPhysicalMeasurements) {
-    this.physicalMeasurements = physicalMeasurements;
-  }
-
   getActivityGoal() {
     return this.activityGoal;
-  }
-
-  updateActivityGoal(activityGoal: IActivityGoal) {
-    this.activityGoal = activityGoal;
   }
 }

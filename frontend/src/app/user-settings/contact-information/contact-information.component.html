@@ -4,6 +4,7 @@
     <h1 class="text-lg font-bold text-blue-800 mb-1">Email:</h1>
     <input
       [(ngModel)]="contactInformation.email"
+      (ngModelChange)="updateContactInformation()"
       class="rounded-lg border p-2.5 text-sm bg-white text-blue-950 focus:ring-2 focus:ring-blue-500 w-48 mb-5 shadow-lg transition duration-500 ease-in-out transform hover:-translate-y-0.5 hover:scale-105"
       type="text"
       placeholder="{{ contactInformation.email }}"
@@ -14,6 +15,7 @@
     <h1 class="text-lg font-bold text-blue-800 mb-1">Phone Number:</h1>
     <input
       [(ngModel)]="contactInformation.phoneNumber"
+      (ngModelChange)="updateContactInformation()"
       class="rounded-lg border p-2.5 text-sm bg-white text-blue-950 focus:ring-2 focus:ring-blue-500 w-48 mb-5 shadow-lg transition duration-500 ease-in-out transform hover:-translate-y-0.5 hover:scale-105"
       type="text"
       placeholder="{{ contactInformation.phoneNumber }}"

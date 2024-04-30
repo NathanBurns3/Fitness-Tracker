@@ -1,7 +1,7 @@
 <body class="h-screen text-center bg-zinc-300 overflow-auto">
   <div class="bg-neutral-50 rounded-lg shadow-2xl h-[calc(100vh-40px)] m-5 p-5">
     <div #Title>
-      <div class="min-h-[50px] relative">
+      <div class="min-h-[50px] relative mt-5 -mb-4">
         <div class="flex justify-between items-center">
           <button
             routerLink="/"
@@ -14,18 +14,6 @@
           >
             Settings
           </h1>
-          <div class="flex flex-grow justify-end">
-            <button
-              class="rounded-lg border p-2 w-16 mr-2 text-sm bg-gradient-to-r from-blue-500 to-blue-700 text-white hover:from-blue-700 hover:to-blue-900 shadow-lg transition duration-500 ease-in-out transform hover:-translate-y-0.5 hover:scale-105"
-            >
-              Save
-            </button>
-            <button
-              class="rounded-lg border p-2 w-16 mr-2 text-sm bg-gradient-to-r from-orange-500 to-orange-700 text-white hover:from-orange-700 hover:to-orange-900 shadow-lg transition duration-500 ease-in-out transform hover:-translate-y-0.5 hover:scale-105"
-            >
-              Cancel
-            </button>
-          </div>
         </div>
       </div>
     </div>
@@ -43,21 +31,33 @@
           <contact-information></contact-information>
         </div>
         <div
-          class="border border-zinc-300 rounded-lg shadow-lg col-span-5 p-4 h-[20%]"
+          class="border border-zinc-300 rounded-lg shadow-lg col-span-8 p-4 h-[20%]"
         >
           <account-management></account-management>
         </div>
       </div>
       <div class="col-span-3 mx-3">
         <div
-          class="border border-zinc-300 rounded-lg shadow-lg col-span-3 p-4 h-[27.5%] mb-4"
+          class="border border-zinc-300 rounded-lg shadow-lg col-span-3 p-4 h-[30%] mb-4"
         >
           <physical-measurements></physical-measurements>
         </div>
         <div
-          class="border border-zinc-300 rounded-lg shadow-lg col-span-3 p-4 h-[70%]"
+          class="border border-zinc-300 rounded-lg shadow-lg col-span-3 p-4 h-[45%]"
         >
-          <h1>Activity and Goals</h1>
+          <activity-goal></activity-goal>
+        </div>
+        <div class="flex items-center justify-center h-[20%] mt-4 space-x-10">
+          <button
+            class="rounded-lg border p-2 w-32 mr-2 text-3xl font-bold bg-gradient-to-r from-blue-500 to-blue-700 text-white hover:from-blue-700 hover:to-blue-900 shadow-lg transition duration-500 ease-in-out transform hover:-translate-y-0.5 hover:scale-105"
+          >
+            Save
+          </button>
+          <button
+            class="rounded-lg border p-2 w-32 mr-2 text-3xl font-bold bg-gradient-to-r from-orange-500 to-orange-700 text-white hover:from-orange-700 hover:to-orange-900 shadow-lg transition duration-500 ease-in-out transform hover:-translate-y-0.5 hover:scale-105"
+          >
+            Cancel
+          </button>
         </div>
       </div>
     </div>

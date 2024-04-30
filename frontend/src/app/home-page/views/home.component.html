@@ -35,14 +35,14 @@
           {{ formattedHeight }} | {{ profileInfo.weight }} lbs
         </h1>
       </div>
-      <div #Goals class="pt-8">
+      <div #Goal class="pt-8">
         <div
           class="w-5/6 mx-auto border border-zinc-300 rounded-lg shadow-md p-2"
         >
-          <h1 class="text-xl text-blue-900 underline font-bold">Goals</h1>
-          <ul class="list-none text-blue-950">
-            <li *ngFor="let goal of profileInfo.goals">{{ goal }}</li>
-          </ul>
+          <h1 class="text-xl text-blue-900 underline font-bold">Goal</h1>
+          <h1 class="justify-center text-blue-950">
+            {{ weightGoalLabels[profileInfo.goal] }}
+          </h1>
         </div>
       </div>
       <div #Steaks class="pt-8">

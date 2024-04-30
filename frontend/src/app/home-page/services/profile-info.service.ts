@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { IProfileInfo } from '../models/profile-info';
+import { WeightGoalEnum } from 'src/app/user-settings/models/weight-goal-enum';
 
 @Injectable({
   providedIn: 'root',
@@ -16,7 +17,7 @@ export class ProfileInfoService {
       age: 20,
       height: 72,
       weight: 173,
-      goals: ['Maintain Weight', 'Gain Muscle'],
+      goal: WeightGoalEnum.Maintain,
       exerciseStreak: 3,
       eatingGoalStreak: 12,
     };

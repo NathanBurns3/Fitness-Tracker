@@ -1,4 +1,4 @@
-import { IDailyEatingInfo } from '../summaries/daily/models/daily-eating-info';
+import { WeightGoalEnum } from 'src/app/user-settings/models/weight-goal-enum';
 
 export interface IProfileInfo {
   firstName: string;
@@ -10,7 +10,7 @@ export interface IProfileInfo {
   age: number;
   height: number;
   weight: number;
-  goals: string[];
+  goal: WeightGoalEnum;
   exerciseStreak: number;
   eatingGoalStreak: number;
 }

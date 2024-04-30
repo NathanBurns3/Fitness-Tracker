@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { IProfileInfo } from '../models/profile-info';
 import { ProfileInfoService } from '../services/profile-info.service';
+import { WeightGoalEnum } from 'src/app/user-settings/models/weight-goal-enum';
 
 @Component({
   selector: 'home',
@@ -15,6 +16,15 @@ export class HomeComponent implements OnInit {
   })} ${this.today.getDate()}, ${this.today.getFullYear()}`;
   selectedSummary: string = 'Daily';
   formattedHeight!: string;
+  weightGoalLabels = {
+    [WeightGoalEnum.Maintain]: 'Maintain',
+    [WeightGoalEnum.MildWeightLoss]: 'Mild Lose',
+    [WeightGoalEnum.WeightLoss]: 'Weight lose',
+    [WeightGoalEnum.ExtremeWeightLoss]: 'Extreme Lose',
+    [WeightGoalEnum.MildWeightGain]: 'Mild Gain',
+    [WeightGoalEnum.WeightGain]: 'Weight Gain',
+    [WeightGoalEnum.ExtremeWeightGain]: 'Extreme Gain',
+  };
 
   constructor(private profileInfoService: ProfileInfoService) {}
 

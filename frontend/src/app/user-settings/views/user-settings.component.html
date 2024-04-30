@@ -23,7 +23,10 @@
         <div
           class="border border-zinc-300 rounded-lg shadow-lg col-span-5 p-4 h-[50%] mb-4"
         >
-          <personal-information></personal-information>
+          <personal-information
+            [originalPersonalInformation]="userSettings.personalInformation"
+            (personalInformationChange)="updatePersonalInformation($event)"
+          ></personal-information>
         </div>
         <div
           class="border border-zinc-300 rounded-lg shadow-lg col-span-5 p-4 h-[25%] mb-4"
@@ -43,12 +46,18 @@
         <div
           class="border border-zinc-300 rounded-lg shadow-lg col-span-3 p-4 h-[30%] mb-4"
         >
-          <physical-measurements></physical-measurements>
+          <physical-measurements
+            [originalPhysicalMeasurements]="userSettings.physicalMeasurements"
+            (physicalMeasurementsChange)="updatePhysicalMeasurements($event)"
+          ></physical-measurements>
         </div>
         <div
           class="border border-zinc-300 rounded-lg shadow-lg col-span-3 p-4 h-[45%]"
         >
-          <activity-goal></activity-goal>
+          <activity-goal
+            [originalActivityGoal]="userSettings.activityGoal"
+            (activityGoalChange)="updateActivityGoal($event)"
+          ></activity-goal>
         </div>
         <div class="flex items-center justify-center h-[20%] mt-4 space-x-10">
           <button

@@ -1,0 +1,37 @@
+<h1 class="text-2xl font-bold text-blue-900 -mt-2">Activity and Goal</h1>
+
+<div
+  class="flex flex-col space-y-10 h-full w-full justify-center items-center -mt-3"
+>
+  <div class="flex flex-col items-center justify-center">
+    <h1 class="text-lg font-bold text-blue-800 mb-1">Activity:</h1>
+    <select
+      [(ngModel)]="selectedActivityLevel"
+      class="text-lg p-2 font-bold text-blue-950 ml-2 border rounded-lg focus:ring-2 focus:ring-orange-500 w-56 shadow-sm transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-102 text-center"
+    >
+      <option value="" disabled selected>Select Activity Level</option>
+      <option
+        *ngFor="let level of activityLevelLabels | keyvalue"
+        [value]="level.key"
+      >
+        {{ level.value }}
+      </option>
+    </select>
+  </div>
+
+  <div class="flex flex-col items-center justify-center">
+    <h1 class="text-lg font-bold text-blue-800 mb-1">Goal:</h1>
+    <select
+      [(ngModel)]="selectedWeightGoal"
+      class="text-lg p-2 font-bold text-blue-950 ml-2 border rounded-lg focus:ring-2 focus:ring-orange-500 w-56 shadow-sm transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-102 text-center"
+    >
+      <option value="" disabled selected>Select Weight Goal</option>
+      <option
+        *ngFor="let goal of weightGoalLabels | keyvalue"
+        [value]="goal.key"
+      >
+        {{ goal.value }}
+      </option>
+    </select>
+  </div>
+</div>

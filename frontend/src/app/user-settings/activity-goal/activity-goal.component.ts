@@ -1,14 +1,23 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { ActivityLevelEnum } from '../models/activity-level-enum';
 import { WeightGoalEnum } from '../models/weight-goal-enum';
 import { IActivityGoal } from '../models/activity-goals';
-import { UserSettingsService } from '../services/user-settings.service';
 
 @Component({
   selector: 'activity-goal',
   templateUrl: './activity-goal.component.html',
 })
-export class ActivityGoalComponent implements OnInit {
+export class ActivityGoalComponent implements OnInit, OnChanges {
+  @Input() originalActivityGoal!: IActivityGoal;
+  @Output() activityGoalChange = new EventEmitter<IActivityGoal>();
+
   activityLevelLabels = {
     [ActivityLevelEnum.Sedentary]: 'None',
     [ActivityLevelEnum.Exercise1To3TimesPerWeek]: '1-3 Days a week',
@@ -26,16 +35,23 @@ export class ActivityGoalComponent implements OnInit {
   };
   selectedActivityLevel!: ActivityLevelEnum;
   selectedWeightGoal!: WeightGoalEnum;
-
   activityGoal!: IActivityGoal;
 
-  constructor(private userSettingsService: UserSettingsService) {}
-
   ngOnInit(): void {
-    this.activityGoal = {
-      ...this.userSettingsService.getActivityGoal(),
-    };
+    this.activityGoal = { ...this.originalActivityGoal };
     this.selectedActivityLevel = this.activityGoal.Activity;
     this.selectedWeightGoal = this.activityGoal.WeightGoal;
+  }
+
+  ngOnChanges(): void {
+    this.activityGoal = { ...this.originalActivityGoal };
+    this.selectedActivityLevel = this.activityGoal.Activity;
+    this.selectedWeightGoal = this.activityGoal.WeightGoal;
+  }
+
+  updateActivityGoal(): void {
+    this.activityGoal.Activity = this.selectedActivityLevel;
+    this.activityGoal.WeightGoal = this.selectedWeightGoal;
+    this.activityGoalChange.emit(this.activityGoal);
   }
 }

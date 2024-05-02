@@ -44,4 +44,12 @@ export class PhysicalMeasurementsComponent implements OnInit, OnChanges {
     this.convertyToInches();
     this.physicalMeasurementsChange.emit(this.physicalMeasurements);
   }
+
+  numberOnly(event: KeyboardEvent): boolean {
+    const charCode = event.which ? event.which : event.keyCode;
+    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+      return false;
+    }
+    return true;
+  }
 }

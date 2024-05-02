@@ -8,7 +8,8 @@
         <input
           [(ngModel)]="heightFeet"
           (ngModelChange)="updatePhysicalMeasurements()"
-          class="rounded-lg border p-2.5 text-sm bg-white text-blue-950 focus:ring-2 focus:ring-blue-500 w-12 mb-5 shadow-lg transition duration-500 ease-in-out transform hover:-translate-y-0.5 hover:scale-105 text-right"
+          (keypress)="numberOnly($event)"
+          class="rounded-lg border p-2.5 text-sm bg-white text-blue-950 focus:ring-2 focus:ring-blue-500 w-14 mb-5 shadow-lg transition duration-500 ease-in-out transform hover:-translate-y-0.5 hover:scale-105 text-right"
           type="number"
           placeholder="{{ heightFeet }}"
         />
@@ -18,7 +19,8 @@
         <input
           [(ngModel)]="heightInches"
           (ngModelChange)="updatePhysicalMeasurements()"
-          class="rounded-lg border p-2.5 text-sm bg-white text-blue-950 focus:ring-2 focus:ring-blue-500 w-12 mb-5 shadow-lg transition duration-500 ease-in-out transform hover:-translate-y-0.5 hover:scale-105 text-right"
+          (keypress)="numberOnly($event)"
+          class="rounded-lg border p-2.5 text-sm bg-white text-blue-950 focus:ring-2 focus:ring-blue-500 w-14 mb-5 shadow-lg transition duration-500 ease-in-out transform hover:-translate-y-0.5 hover:scale-105 text-right"
           type="number"
           placeholder="{{ heightInches }}"
         />
@@ -33,6 +35,7 @@
       <input
         [(ngModel)]="physicalMeasurements.weight"
         (ngModelChange)="updatePhysicalMeasurements()"
+        (keypress)="numberOnly($event)"
         class="rounded-lg border p-2.5 text-sm bg-white text-blue-950 focus:ring-2 focus:ring-blue-500 w-16 mb-5 shadow-lg transition duration-500 ease-in-out transform hover:-translate-y-0.5 hover:scale-105 text-right"
         type="number"
         placeholder="{{ physicalMeasurements.weight }}"

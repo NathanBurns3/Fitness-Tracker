@@ -63,12 +63,18 @@
           <button
             class="rounded-lg border p-2 w-32 mr-2 text-3xl font-bold bg-gradient-to-r from-blue-500 to-blue-700 text-white hover:from-blue-700 hover:to-blue-900 shadow-lg transition duration-500 ease-in-out transform hover:-translate-y-0.5 hover:scale-105"
             (click)="saveSettings()"
+            [class.opacity-50]="!userSettingsChanged || !pageValid"
+            [class.pointer-events-none]="!userSettingsChanged || !pageValid"
+            [disabled]="!userSettingsChanged || !pageValid"
           >
             Save
           </button>
           <button
             class="rounded-lg border p-2 w-32 mr-2 text-3xl font-bold bg-gradient-to-r from-orange-500 to-orange-700 text-white hover:from-orange-700 hover:to-orange-900 shadow-lg transition duration-500 ease-in-out transform hover:-translate-y-0.5 hover:scale-105"
             (click)="cancelSettings()"
+            [class.opacity-50]="!userSettingsChanged"
+            [class.pointer-events-none]="!userSettingsChanged"
+            [disabled]="!userSettingsChanged"
           >
             Cancel
           </button>

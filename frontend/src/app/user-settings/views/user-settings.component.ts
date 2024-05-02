@@ -13,6 +13,8 @@ import { IActivityGoal } from '../models/activity-goals';
 })
 export class UserSettingsComponent implements OnInit {
   userSettings!: IUserSettings;
+  userSettingsChanged: boolean = false;
+  pageValid: boolean = true;
 
   constructor(private userSettingsService: UserSettingsService) {}
 
@@ -28,23 +30,39 @@ export class UserSettingsComponent implements OnInit {
   updateContactInformation(
     updatedContactInformation: IContactInformation
   ): void {
+    this.pageValid = this.isInformationValid(updatedContactInformation);
     this.userSettings.contactInformation = updatedContactInformation;
+    this.userSettingsChanged = true;
   }
 
   updatePersonalInformation(
     updatedPersonalInformation: IPersonalInformation
   ): void {
+    this.pageValid = this.isInformationValid(updatedPersonalInformation);
     this.userSettings.personalInformation = updatedPersonalInformation;
+    this.userSettingsChanged = true;
   }
 
   updatePhysicalMeasurements(
     updatedPhysicalMeasurements: IPhysicalMeasurements
   ): void {
+    this.pageValid = this.isInformationValid(updatedPhysicalMeasurements);
     this.userSettings.physicalMeasurements = updatedPhysicalMeasurements;
+    this.userSettingsChanged = true;
   }
 
   updateActivityGoal(updatedActivityGoal: IActivityGoal): void {
     this.userSettings.activityGoal = updatedActivityGoal;
+    this.userSettingsChanged = true;
+  }
+
+  isInformationValid(information: any): boolean {
+    for (let key in information) {
+      if (information[key] === '' || information[key] === null) {
+        return false;
+      }
+    }
+    return true;
   }
 
   saveSettings(): void {

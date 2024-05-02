@@ -1,11 +1,18 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { IContactInformation } from '../models/contact-information';
 
 @Component({
   selector: 'contact-information',
   templateUrl: './contact-information.component.html',
 })
-export class ContactInformationComponent implements OnInit {
+export class ContactInformationComponent implements OnInit, OnChanges {
   @Input() originalContactInformation!: IContactInformation;
   @Output() contactInformationChange = new EventEmitter<IContactInformation>();
   contactInformation!: IContactInformation;

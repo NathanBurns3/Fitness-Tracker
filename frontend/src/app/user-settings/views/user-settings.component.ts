@@ -5,6 +5,7 @@ import { IContactInformation } from '../models/contact-information';
 import { IPersonalInformation } from '../models/personal-information';
 import { IPhysicalMeasurements } from '../models/physical-measurements';
 import { IActivityGoal } from '../models/activity-goals';
+import validator from 'validator';
 
 @Component({
   selector: 'user-settings',
@@ -15,6 +16,7 @@ export class UserSettingsComponent implements OnInit {
   userSettings!: IUserSettings;
   userSettingsChanged: boolean = false;
   pageValid: boolean = true;
+  validEmail: boolean = true;
 
   constructor(private userSettingsService: UserSettingsService) {}
 
@@ -30,7 +32,10 @@ export class UserSettingsComponent implements OnInit {
   updateContactInformation(
     updatedContactInformation: IContactInformation
   ): void {
-    this.pageValid = this.isInformationValid(updatedContactInformation);
+    this.pageValid =
+      this.isInformationValid(updatedContactInformation) &&
+      validator.isEmail(updatedContactInformation.email) &&
+      validator.isMobilePhone(updatedContactInformation.phoneNumber);
     this.userSettings.contactInformation = updatedContactInformation;
     this.userSettingsChanged = true;
   }
@@ -39,6 +44,13 @@ export class UserSettingsComponent implements OnInit {
     updatedPersonalInformation: IPersonalInformation
   ): void {
     this.pageValid = this.isInformationValid(updatedPersonalInformation);
+    if (
+      updatedPersonalInformation.firstName.length > 50 ||
+      updatedPersonalInformation.lastName.length > 50 ||
+      updatedPersonalInformation.age > 999
+    ) {
+      this.pageValid = false;
+    }
     this.userSettings.personalInformation = updatedPersonalInformation;
     this.userSettingsChanged = true;
   }
@@ -47,6 +59,12 @@ export class UserSettingsComponent implements OnInit {
     updatedPhysicalMeasurements: IPhysicalMeasurements
   ): void {
     this.pageValid = this.isInformationValid(updatedPhysicalMeasurements);
+    if (
+      updatedPhysicalMeasurements.height > 119 ||
+      updatedPhysicalMeasurements.weight > 999
+    ) {
+      this.pageValid = false;
+    }
     this.userSettings.physicalMeasurements = updatedPhysicalMeasurements;
     this.userSettingsChanged = true;
   }

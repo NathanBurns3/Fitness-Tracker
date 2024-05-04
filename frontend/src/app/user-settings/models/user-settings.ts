@@ -8,4 +8,5 @@ export interface IUserSettings {
   contactInformation: IContactInformation;
   physicalMeasurements: IPhysicalMeasurements;
   activityGoal: IActivityGoal;
+  dietPlan: string;
 }

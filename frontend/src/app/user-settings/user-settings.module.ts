@@ -8,6 +8,7 @@ import { ContactInformationComponent } from './contact-information/contact-infor
 import { AccountManagementComponent } from './account-management/account-management.component';
 import { PhysicalMeasurementsComponent } from './physical-measurements/physical-measurements.component';
 import { ActivityGoalComponent } from './activity-goal/activity-goal.component';
+import { DietSelectionComponent } from './diet-selection/diet-selection.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { ActivityGoalComponent } from './activity-goal/activity-goal.component';
     AccountManagementComponent,
     PhysicalMeasurementsComponent,
     ActivityGoalComponent,
+    DietSelectionComponent,
   ],
   imports: [CommonModule, RouterModule, FormsModule],
   exports: [UserSettingsComponent],

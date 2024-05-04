@@ -72,12 +72,20 @@
           ></physical-measurements>
         </div>
         <div
-          class="border border-zinc-300 rounded-lg shadow-lg col-span-3 p-4 h-[45%]"
+          class="border border-zinc-300 rounded-lg shadow-lg col-span-3 p-4 h-[45%] mb-4"
         >
           <activity-goal
             [originalActivityGoal]="userSettings.activityGoal"
             (activityGoalChange)="updateActivityGoal($event)"
           ></activity-goal>
+        </div>
+        <div
+          class="border border-zinc-300 rounded-lg shadow-lg col-span-3 p-4 h-[20%]"
+        >
+          <diet-selection
+            [originalDietSelection]="userSettings.dietPlan"
+            (dietSelectionChange)="updateDietSelection($event)"
+          ></diet-selection>
         </div>
       </div>
     </div>

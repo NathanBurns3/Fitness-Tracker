@@ -26,6 +26,7 @@ export class UserSettingsComponent implements OnInit {
       contactInformation: this.userSettingsService.getContactInformation(),
       physicalMeasurements: this.userSettingsService.getPhysicalMeasurements(),
       activityGoal: this.userSettingsService.getActivityGoal(),
+      dietPlan: this.userSettingsService.getDietPlan(),
     };
   }
 
@@ -71,6 +72,11 @@ export class UserSettingsComponent implements OnInit {
 
   updateActivityGoal(updatedActivityGoal: IActivityGoal): void {
     this.userSettings.activityGoal = updatedActivityGoal;
+    this.userSettingsChanged = true;
+  }
+
+  updateDietSelection(dietSelection: string): void {
+    this.userSettings.dietPlan = dietSelection;
     this.userSettingsChanged = true;
   }
 

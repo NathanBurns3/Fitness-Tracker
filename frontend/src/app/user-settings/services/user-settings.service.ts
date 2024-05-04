@@ -6,6 +6,7 @@ import { ActivityLevelEnum } from '../models/activity-level-enum';
 import { WeightGoalEnum } from '../models/weight-goal-enum';
 import { IPhysicalMeasurements } from '../models/physical-measurements';
 import { IUserSettings } from '../models/user-settings';
+import { DietEnum } from '../models/diet-enum';
 
 @Injectable({
   providedIn: 'root',
@@ -34,11 +35,14 @@ export class UserSettingsService {
     WeightGoal: WeightGoalEnum.WeightLoss,
   };
 
+  dietPlan: string = DietEnum.Balanced;
+
   updateUserSettings(userSettings: IUserSettings): void {
     this.personalInformation = userSettings.personalInformation;
     this.contactInformation = userSettings.contactInformation;
     this.physicalMeasurements = userSettings.physicalMeasurements;
     this.activityGoal = userSettings.activityGoal;
+    this.dietPlan = userSettings.dietPlan;
   }
 
   getPersonalInformation(): IPersonalInformation {
@@ -55,5 +59,9 @@ export class UserSettingsService {
 
   getActivityGoal() {
     return this.activityGoal;
+  }
+
+  getDietPlan() {
+    return this.dietPlan;
   }
 }

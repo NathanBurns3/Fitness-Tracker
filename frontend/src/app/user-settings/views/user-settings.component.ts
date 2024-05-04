@@ -91,9 +91,11 @@ export class UserSettingsComponent implements OnInit {
 
   saveSettings(): void {
     this.userSettingsService.updateUserSettings(this.userSettings);
+    this.userSettingsChanged = false;
   }
 
   cancelSettings(): void {
     this.ngOnInit();
+    this.userSettingsChanged = false;
   }
 }

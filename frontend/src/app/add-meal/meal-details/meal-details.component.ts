@@ -127,8 +127,8 @@ export class MealDetailsComponent {
         fiber: parseFloat(
           meal.food.reduce((acc, f) => acc + f.nutritions.fiber, 0).toFixed(2)
         ),
-        sodium: parseFloat(
-          meal.food.reduce((acc, f) => acc + f.nutritions.sodium, 0).toFixed(2)
+        sugar: parseFloat(
+          meal.food.reduce((acc, f) => acc + f.nutritions.sugar, 0).toFixed(2)
         ),
       },
     };

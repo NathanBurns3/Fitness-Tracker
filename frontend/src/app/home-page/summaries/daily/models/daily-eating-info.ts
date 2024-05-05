@@ -5,7 +5,7 @@ export interface IDailyEatingInfo {
     carbsGoal: number;
     fatGoal: number;
     fiberGoal: number;
-    sodiumGoal: number;
+    sugarGoal: number;
   };
   totals: {
     calories: number;
@@ -13,6 +13,6 @@ export interface IDailyEatingInfo {
     carbs: number;
     fat: number;
     fiber: number;
-    sodium: number;
+    sugar: number;
   };
 }

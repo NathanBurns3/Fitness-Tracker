@@ -44,7 +44,7 @@ export class MealLookupService {
           carbs: nutrients[Nutrient_Ids.Carbs],
           fat: nutrients[Nutrient_Ids.Fat],
           fiber: nutrients[Nutrient_Ids.Fiber],
-          sodium: nutrients[Nutrient_Ids.Sodium],
+          sugar: nutrients[Nutrient_Ids.Sugar],
         },
       };
       this.meals.push(meal);
@@ -76,8 +76,8 @@ export class MealLookupService {
       fiber: data[0].labelNutrients.fiber
         ? Math.ceil(data[0].labelNutrients.fiber.value)
         : 0,
-      sodium: data[0].labelNutrients.sodium
-        ? Math.ceil(data[0].labelNutrients.sodium.value)
+      sugar: data[0].labelNutrients.addedSugar
+        ? Math.ceil(data[0].labelNutrients.addedSugar.value)
         : 0,
     };
   }

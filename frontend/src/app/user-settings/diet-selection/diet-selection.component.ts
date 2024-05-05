@@ -19,7 +19,7 @@ export class DietSelectionComponent implements OnInit, OnChanges {
   dietLabels = {
     [DietEnum.Balanced]: 'Balanced',
     [DietEnum.LowFat]: 'Low Fat',
-    [DietEnum.LowCarb]: 'Low Carb',
+    [DietEnum.LowCarbs]: 'Low Carb',
     [DietEnum.highProtein]: 'High Protein',
   };
   selectedDiet!: DietEnum;

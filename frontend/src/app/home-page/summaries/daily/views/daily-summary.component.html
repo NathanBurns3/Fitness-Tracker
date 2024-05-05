@@ -45,7 +45,13 @@
 <div #Eating class="mt-5">
   <h1 class="font-bold text-2xl text-blue-950 -mb-3">Eating Goals</h1>
   <div *ngFor="let macro of macros; let i = index" class="mx-5 mb-2">
-    <h1 class="text-left mb-1 font-semibold">{{ macro }}</h1>
+    <h1 class="text-left mb-1 font-semibold">
+      {{ macro }}
+      <span class="text-xs">
+        ({{ eatingTotalsAndGoals[i].total }}{{ macroUnits[macro] }} /
+        {{ eatingTotalsAndGoals[i].goal }}{{ macroUnits[macro] }})
+      </span>
+    </h1>
     <div class="flex justify-center">
       <div class="bg-gray-200 rounded-full dark:bg-gray-300 w-full shadow-3xl">
         <div

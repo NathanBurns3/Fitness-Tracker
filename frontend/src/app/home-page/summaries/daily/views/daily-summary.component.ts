@@ -14,6 +14,7 @@ export class DailySummaryComponent implements OnInit {
   dailyExerciseInfo!: IExerciseInfo;
   exercisePercentage!: number[];
   eatingPercentage!: number[];
+  eatingTotalsAndGoals!: { total: number; goal: number }[];
   colors: string[] = [
     'bg-red-400',
     'bg-blue-400',
@@ -48,6 +49,14 @@ export class DailySummaryComponent implements OnInit {
     'Fiber',
     'Added Sugar',
   ];
+  macroUnits: { [key: string]: string } = {
+    Calories: 'kcal',
+    Protein: 'g',
+    Carbs: 'g',
+    Fat: 'g',
+    Fiber: 'g',
+    'Added Sugar': 'g',
+  };
   hoverIndex: number = -1;
 
   constructor(
@@ -79,6 +88,7 @@ export class DailySummaryComponent implements OnInit {
 
   getEatingPercentage(): number[] {
     const percentages: number[] = [];
+    this.eatingTotalsAndGoals = [];
     const eatingTotals = Object.values(this.dailyEatingInfo.totals);
     const eatingGoals = Object.values(this.dailyEatingInfo.goals);
     const eatingInfoLength = eatingTotals.length;
@@ -87,6 +97,10 @@ export class DailySummaryComponent implements OnInit {
       if (percentage !== 0) {
         percentages.push(percentage);
       }
+      this.eatingTotalsAndGoals.push({
+        total: parseFloat(eatingTotals[i].toFixed(2)),
+        goal: parseFloat(eatingGoals[i].toFixed(2)),
+      });
     }
     return percentages;
   }

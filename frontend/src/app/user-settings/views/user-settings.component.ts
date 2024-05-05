@@ -6,6 +6,7 @@ import { IPersonalInformation } from '../models/personal-information';
 import { IPhysicalMeasurements } from '../models/physical-measurements';
 import { IActivityGoal } from '../models/activity-goals';
 import validator from 'validator';
+import { DailyEatingInfoService } from 'src/app/home-page/summaries/daily/services/daily-eating-info.service';
 
 @Component({
   selector: 'user-settings',
@@ -18,7 +19,10 @@ export class UserSettingsComponent implements OnInit {
   pageValid: boolean = true;
   validEmail: boolean = true;
 
-  constructor(private userSettingsService: UserSettingsService) {}
+  constructor(
+    private userSettingsService: UserSettingsService,
+    private dailyEatingInfoService: DailyEatingInfoService
+  ) {}
 
   ngOnInit(): void {
     this.userSettings = {
@@ -92,6 +96,7 @@ export class UserSettingsComponent implements OnInit {
   saveSettings(): void {
     this.userSettingsService.updateUserSettings(this.userSettings);
     this.userSettingsChanged = false;
+    this.dailyEatingInfoService.calculateMacros(this.userSettings);
   }
 
   cancelSettings(): void {

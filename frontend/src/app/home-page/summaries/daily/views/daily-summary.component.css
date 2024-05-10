@@ -2,3 +2,10 @@
   font-weight: bolder;
   font-size: 0.9em;
 }
+
+@media (max-width: 1307px) {
+  .exercise-text {
+    display: block;
+    width: 100%;
+  }
+}

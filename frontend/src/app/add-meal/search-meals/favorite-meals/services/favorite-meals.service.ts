@@ -21,7 +21,6 @@ export class FavoriteMealsService {
         carbs: 25,
         fat: 0.3,
         fiber: 4.4,
-        sugar: 1,
       },
     },
     {
@@ -38,7 +37,6 @@ export class FavoriteMealsService {
         carbs: 27,
         fat: 0.4,
         fiber: 3.1,
-        sugar: 1,
       },
     },
     {
@@ -55,7 +53,6 @@ export class FavoriteMealsService {
         carbs: 15,
         fat: 0.2,
         fiber: 3.1,
-        sugar: 0,
       },
     },
     {
@@ -72,7 +69,6 @@ export class FavoriteMealsService {
         carbs: 15,
         fat: 0.2,
         fiber: 3.1,
-        sugar: 0,
       },
     },
     {
@@ -89,7 +85,6 @@ export class FavoriteMealsService {
         carbs: 15,
         fat: 0.2,
         fiber: 3.1,
-        sugar: 0,
       },
     },
     {
@@ -106,7 +101,6 @@ export class FavoriteMealsService {
         carbs: 15,
         fat: 0.2,
         fiber: 3.1,
-        sugar: 0,
       },
     },
     {
@@ -123,7 +117,6 @@ export class FavoriteMealsService {
         carbs: 15,
         fat: 0.2,
         fiber: 3.1,
-        sugar: 0,
       },
     },
     {
@@ -140,7 +133,6 @@ export class FavoriteMealsService {
         carbs: 15,
         fat: 0.2,
         fiber: 3.1,
-        sugar: 0,
       },
     },
     {
@@ -157,7 +149,6 @@ export class FavoriteMealsService {
         carbs: 15,
         fat: 0.2,
         fiber: 3.1,
-        sugar: 0,
       },
     },
     {
@@ -174,7 +165,6 @@ export class FavoriteMealsService {
         carbs: 15,
         fat: 0.2,
         fiber: 3.1,
-        sugar: 0,
       },
     },
     {
@@ -191,7 +181,6 @@ export class FavoriteMealsService {
         carbs: 15,
         fat: 0.2,
         fiber: 3.1,
-        sugar: 0,
       },
     },
     {
@@ -208,7 +197,6 @@ export class FavoriteMealsService {
         carbs: 15,
         fat: 0.2,
         fiber: 3.1,
-        sugar: 0,
       },
     },
   ];

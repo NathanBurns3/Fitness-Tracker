@@ -4,7 +4,6 @@ export const Nutrient_Ids = {
   Carbs: 1005,
   Fat: 1004,
   Fiber: 1079,
-  Sugar: 1235,
 };
 
 export interface IFood {
@@ -21,6 +20,5 @@ export interface IFood {
     carbs: number;
     fat: number;
     fiber: number;
-    sugar: number;
   };
 }

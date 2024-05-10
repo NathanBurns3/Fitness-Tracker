@@ -41,21 +41,13 @@ export class DailySummaryComponent implements OnInit {
     'Back',
     'Abs',
   ];
-  macros: string[] = [
-    'Calories',
-    'Protein',
-    'Carbs',
-    'Fat',
-    'Fiber',
-    'Added Sugar',
-  ];
+  macros: string[] = ['Calories', 'Protein', 'Carbs', 'Fat', 'Fiber'];
   macroUnits: { [key: string]: string } = {
     Calories: 'kcal',
     Protein: 'g',
     Carbs: 'g',
     Fat: 'g',
     Fiber: 'g',
-    'Added Sugar': 'g',
   };
   hoverIndex: number = -1;
 

@@ -19,7 +19,6 @@ export class CustomMealDetailsComponent {
     carbs: 0,
     fat: 0,
     fiber: 0,
-    sugar: 0,
   };
   foods: IFood[] = [];
   mealOptions: IFood[] = [];
@@ -43,7 +42,6 @@ export class CustomMealDetailsComponent {
       carbs: 0,
       fat: 0,
       fiber: 0,
-      sugar: 0,
     },
   };
   clonedMeal: ICustomMeal;
@@ -101,7 +99,6 @@ export class CustomMealDetailsComponent {
       carbs: 0,
       fat: 0,
       fiber: 0,
-      sugar: 0,
     };
     food.forEach((f) => {
       totalNutritions.calories = Number(
@@ -118,9 +115,6 @@ export class CustomMealDetailsComponent {
       );
       totalNutritions.fiber = Number(
         (totalNutritions.fiber + (f.nutritions.fiber ?? 0)).toFixed(2)
-      );
-      totalNutritions.sugar = Number(
-        (totalNutritions.sugar + (f.nutritions.sugar ?? 0)).toFixed(2)
       );
     });
     return totalNutritions;
@@ -211,12 +205,6 @@ export class CustomMealDetailsComponent {
         fiber: Number(
           (
             (this.foodChosen.nutritions.fiber ?? 0) *
-            (Number(amount) / this.foodChosen.servingSize)
-          ).toFixed(2)
-        ),
-        sugar: Number(
-          (
-            (this.foodChosen.nutritions.sugar ?? 0) *
             (Number(amount) / this.foodChosen.servingSize)
           ).toFixed(2)
         ),

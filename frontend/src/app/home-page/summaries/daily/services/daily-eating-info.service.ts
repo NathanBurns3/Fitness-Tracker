@@ -19,7 +19,6 @@ export class DailyEatingInfoService {
       carbsGoal: 210,
       fatGoal: 100,
       fiberGoal: 70,
-      sugarGoal: 2750,
     },
     totals: {
       calories: 4000,
@@ -27,7 +26,6 @@ export class DailyEatingInfoService {
       carbs: 200,
       fat: 50,
       fiber: 30,
-      sugar: 2300,
     },
   };
 
@@ -83,6 +81,5 @@ export class DailyEatingInfoService {
     this.eatingInfo.goals.carbsGoal = carbs;
     this.eatingInfo.goals.fatGoal = fat;
     this.eatingInfo.goals.fiberGoal = (calories / 1000) * 14;
-    this.eatingInfo.goals.sugarGoal = calories * 0.08;
   }
 }

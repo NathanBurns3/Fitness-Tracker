@@ -44,7 +44,6 @@ export class MealLookupService {
           carbs: nutrients[Nutrient_Ids.Carbs],
           fat: nutrients[Nutrient_Ids.Fat],
           fiber: nutrients[Nutrient_Ids.Fiber],
-          sugar: nutrients[Nutrient_Ids.Sugar],
         },
       };
       this.meals.push(meal);
@@ -75,9 +74,6 @@ export class MealLookupService {
         : 0,
       fiber: data[0].labelNutrients.fiber
         ? Math.ceil(data[0].labelNutrients.fiber.value)
-        : 0,
-      sugar: data[0].labelNutrients.addedSugar
-        ? Math.ceil(data[0].labelNutrients.addedSugar.value)
         : 0,
     };
   }

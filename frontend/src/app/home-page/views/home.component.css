@@ -1,0 +1,145 @@
+.main-container {
+  display: flex;
+  width: 100%;
+  position: relative;
+}
+
+.ProfileSection {
+  width: 23%;
+}
+
+.HomeSection {
+  width: 73%;
+}
+
+.toggle-button {
+  position: absolute;
+  top: 0;
+  z-index: 100;
+}
+
+#SignOutButton {
+  transition: opacity 0.5s linear;
+  opacity: 1;
+}
+
+#SignOutButton.hide {
+  opacity: 0;
+  pointer-events: none;
+}
+
+@media (max-width: 1023px) {
+  .ProfileSection,
+  .HomeSection {
+    margin: 0;
+    padding: 0;
+    height: auto;
+  }
+
+  body {
+    display: flex;
+    justify-content: center;
+  }
+
+  .ProfileSection {
+    width: 0;
+    overflow: hidden;
+    transition: width 0.35s ease-in-out;
+  }
+
+  .HomeSection {
+    width: 100%;
+    transition: width 0.35s ease-in-out;
+    transition-delay: 0.15s;
+    margin: 0 auto;
+  }
+
+  .ProfileSection.hide {
+    width: 100%;
+    overflow: show;
+    transition: width 0.35s ease-in-out;
+    transition-delay: 0.15s;
+    margin: 0 auto;
+  }
+
+  .HomeSection.hide {
+    width: 0;
+    overflow: hidden;
+    transition: width 0.35s ease-in-out;
+    margin: 0 auto;
+  }
+
+  .Profile-Picture {
+    width: 22%;
+    height: auto;
+  }
+}
+
+@media (max-width: 799px) {
+  .Profile-Picture {
+    width: 30%;
+    height: auto;
+  }
+}
+
+@media (max-width: 675px) {
+  .hide-on-small {
+    display: none;
+  }
+  .show-on-small {
+    display: inline;
+  }
+}
+
+@media (min-width: 676px) {
+  .hide-on-small {
+    display: inline;
+  }
+  .show-on-small {
+    display: none;
+  }
+}
+
+@media (max-width: 550px) {
+  #Title {
+    font-size: 2.5rem;
+  }
+
+  #WelcomeMessage {
+    font-size: 1.5rem;
+  }
+
+  #Date {
+    font-size: 1rem;
+  }
+
+  .add-buttons {
+    font-size: 0.75rem;
+    width: 7rem;
+  }
+
+  .Profile-Picture {
+    width: 40%;
+    height: auto;
+  }
+}
+
+@media (max-width: 450px) {
+  #Title {
+    font-size: 2.2rem;
+  }
+  .summary-button {
+    font-size: 0.75rem;
+  }
+
+  .summary-bubble {
+    padding: 0.5rem;
+    width: 65%;
+  }
+}
+
+@media (max-width: 390px) {
+  #SignOutButtonRoute {
+    right: 1rem;
+  }
+}

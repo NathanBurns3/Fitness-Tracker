@@ -1,9 +1,18 @@
 <body class="h-screen bg-zinc-300 text-center">
   <div class="flex justify-center">
+    <!--PROFILE SECTION-->
     <div
-      class="relative box-border m-2 bg-neutral-50 w-3/12 h-[calc(100vh-16px)] rounded-lg shadow-2xl overflow-auto"
+      id="ProfileSection"
+      class="ProfileSection relative box-border m-2 bg-neutral-50 h-[calc(100vh-16px)] rounded-lg shadow-2xl overflow-auto lg:block transform transition-transform duration-200 lg:translate-x-0 z-40"
+      [ngClass]="{ hide: hideHome }"
     >
       <div #ProfileHeader>
+        <button
+          (click)="toggleHome()"
+          class="toggle-button lg:hidden absolute top-0 left-5 m-3 px-1 bg-blue-700 text-white rounded z-50 hover:bg-blue-700 hover:cursor-pointer transition-colors duration-200 ease-in-out"
+        >
+          |||
+        </button>
         <a>
           <h3
             routerLink="/user-settings"
@@ -12,13 +21,15 @@
             EDIT
           </h3>
         </a>
-        <h1 class="justify-center text-5xl font-bold text-blue-800 pb-4 pt-14">
+        <h1
+          class="ProfileTitle justify-center text-5xl font-bold text-blue-800 pb-4 pt-14"
+        >
           Profile
         </h1>
       </div>
       <div #ProfilePicture>
         <img
-          class="w-8/12 h-8/12 rounded-full mx-auto border-4 border-blue-800 mb-7 shadow-lg"
+          class="Profile-Picture w-8/12 h-8/12 rounded-full mx-auto border-4 border-blue-800 mb-7 shadow-lg"
           [src]="profileInfo.profileImage"
           alt="Avatar"
         />
@@ -67,22 +78,36 @@
         </div>
       </div>
     </div>
+    <!--HOME SECTION-->
     <div
-      class="box-border m-2 bg-neutral-50 w-8/12 h-[calc(100vh-16px)] rounded shadow-lg overflow-auto"
+      class="HomeSection relative box-border m-2 bg-neutral-50 h-[calc(100vh-16px)] rounded shadow-lg overflow-auto"
+      id="HomeSection"
+      [ngClass]="{ hide: hideHome }"
     >
       <div #Title class="pt-5">
-        <a>
+        <button
+          (click)="toggleHome()"
+          class="toggle-button lg:hidden absolute top-0 left-5 mt-3 px-1 bg-blue-700 text-white rounded z-50 hover:bg-blue-700 hover:cursor-pointer transition-colors duration-200 ease-in-out"
+        >
+          |||
+        </button>
+        <a id="SignOutButton" [ngClass]="{ hide: hideHome }">
           <h3
-            routerLink="/"
-            class="absolute top-2 right-16 mt-3 text-orange-700 hover:cursor-default px-1 border border-orange-700 rounded ease-in-out transform hover:bg-orange-700 hover:text-white transition-colors duration-200"
+            routerLink="/user-settings"
+            class="absolute top-0 right-8 mt-3 text-orange-700 cursor-default px-1 border border-orange-700 rounded transform hover:bg-orange-700 hover:text-white transition-colors duration-200"
+            id="SignOutButtonRoute"
           >
-            Sign Out
+            <span class="show-on-small">X</span>
+            <span class="hide-on-small">Sign Out</span>
           </h3>
         </a>
-        <h1 class="justify-center text-6xl font-bold text-blue-800">
+        <h1 id="Title" class="justify-center text-6xl font-bold text-blue-800">
           Fitness Tracker
         </h1>
-        <h1 class="justify-center text-2xl text-orange-700 font-bold pt-4">
+        <h1
+          id="WelcomeMessage"
+          class="justify-center text-2xl text-orange-700 font-bold pt-4"
+        >
           Welcome {{ profileInfo.firstName }}!
         </h1>
       </div>
@@ -94,13 +119,15 @@
       <div #AddItems class="pt-6">
         <button
           routerLink="/add-exercise"
-          class="w-48 text-center rounded-3xl border font-bold p-2.5 text-white shadow-lg transition duration-500 ease-in-out transform bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-700 hover:to-blue-900 hover:-translate-y-0.5 hover:scale-105 cursor-pointer mr-16"
+          #AddExerciseButton
+          class="add-buttons w-48 text-center rounded-3xl border font-bold p-2.5 text-white shadow-lg transition duration-500 ease-in-out transform bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-700 hover:to-blue-900 hover:-translate-y-0.5 hover:scale-105 cursor-pointer mr-16"
         >
           Add Exercise
         </button>
         <button
           routerLink="/add-meal"
-          class="w-48 text-center rounded-3xl border font-bold p-2.5 text-white shadow-lg transition duration-500 ease-in-out transform bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-700 hover:to-blue-900 hover:-translate-y-0.5 hover:scale-105 cursor-pointer"
+          #AddMealButton
+          class="add-buttons w-48 text-center rounded-3xl border font-bold p-2.5 text-white shadow-lg transition duration-500 ease-in-out transform bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-700 hover:to-blue-900 hover:-translate-y-0.5 hover:scale-105 cursor-pointer"
         >
           Add Meal
         </button>
@@ -108,12 +135,13 @@
       <div #SummaryNav class="pt-6">
         <h1 class="text-lg text-blue-950 font-bold">Summary</h1>
         <div
-          class="w-1/2 mx-auto rounded-full border border-zinc-300 p-2 shadow-sm"
+          class="summary-bubble w-1/2 mx-auto rounded-full border border-zinc-300 p-2 shadow-sm"
         >
           <ul class="flex">
             <li class="flex-1 mr-2">
               <a
                 (click)="selectSummary('Daily')"
+                class="summary-button"
                 [ngClass]="
                   selectedSummary === 'Daily'
                     ? 'text-center block border border-blue-900 rounded-3xl py-1 px-2 transform bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-700 hover:to-blue-900 text-white text-sm'
@@ -125,6 +153,7 @@
             <li class="flex-1 mr-2">
               <a
                 (click)="selectSummary('Monthly')"
+                class="summary-button"
                 [ngClass]="
                   selectedSummary === 'Monthly'
                     ? 'text-center block border border-blue-900 rounded-3xl py-1 px-2 transform bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-700 hover:to-blue-900 text-white text-sm'
@@ -136,6 +165,7 @@
             <li class="text-center flex-1">
               <a
                 (click)="selectSummary('Yearly')"
+                class="summary-button"
                 [ngClass]="
                   selectedSummary === 'Yearly'
                     ? 'text-center block border border-blue-900 rounded-3xl py-1 px-2 transform bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-700 hover:to-blue-900 text-white text-sm'

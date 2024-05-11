@@ -6,6 +6,7 @@ import { WeightGoalEnum } from 'src/app/user-settings/models/weight-goal-enum';
 @Component({
   selector: 'home',
   templateUrl: './home.component.html',
+  styleUrls: ['./home.component.css'],
   providers: [ProfileInfoService],
 })
 export class HomeComponent implements OnInit {
@@ -16,6 +17,7 @@ export class HomeComponent implements OnInit {
   })} ${this.today.getDate()}, ${this.today.getFullYear()}`;
   selectedSummary: string = 'Daily';
   formattedHeight!: string;
+  hideHome = false;
   weightGoalLabels = {
     [WeightGoalEnum.Maintain]: 'Maintain',
     [WeightGoalEnum.MildWeightLoss]: 'Mild Lose',
@@ -42,5 +44,9 @@ export class HomeComponent implements OnInit {
     let feet = Math.floor(heightInInches / 12);
     let inches = heightInInches % 12;
     return `${feet}' ${inches}"`;
+  }
+
+  toggleHome() {
+    this.hideHome = !this.hideHome;
   }
 }

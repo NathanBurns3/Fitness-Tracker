@@ -2,9 +2,7 @@
   <h1 class="font-bold text-2xl text-blue-950">Exercise</h1>
   <div #ExerciseBar>
     <div class="relative pt-1 mx-5 flex justify-center">
-      <div
-        class="bg-gray-200 rounded-full dark:bg-gray-700 w-full flex flex-row shadow-lg"
-      >
+      <div class="bg-gray-200 rounded-full w-full flex flex-row shadow-lg">
         <div
           *ngFor="let percentage of exercisePercentage; let i = index"
           [style.width.%]="percentage"
@@ -55,7 +53,7 @@
       </span>
     </h1>
     <div class="flex justify-center">
-      <div class="bg-gray-200 rounded-full dark:bg-gray-300 w-full shadow-3xl">
+      <div class="bg-gray-200 rounded-full w-full shadow-3xl">
         <div
           [class]="
             eatingPercentage[i] > 100

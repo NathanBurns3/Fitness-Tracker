@@ -9,3 +9,9 @@
     width: 100%;
   }
 }
+
+@media (max-width: 370px) {
+  .myChart {
+    max-width: 200px;
+  }
+}

@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { IDailyEatingInfo } from '../models/daily-eating-info';
 import { IExerciseInfo } from '../models/exercise-info';
 import { DailyEatingInfoService } from '../services/daily-eating-info.service';
 import { DailyExerciseInfoService } from '../services/daily-exercise-info.service';
+import { Chart, ChartConfiguration } from 'chart.js';
 
 @Component({
   selector: 'DailySummaryComponent',
@@ -10,6 +11,7 @@ import { DailyExerciseInfoService } from '../services/daily-exercise-info.servic
   styleUrls: ['./daily-summary.component.css'],
 })
 export class DailySummaryComponent implements OnInit {
+  @HostListener('window:resize', ['$event'])
   dailyEatingInfo!: IDailyEatingInfo;
   dailyExerciseInfo!: IExerciseInfo;
   exercisePercentage!: number[];
@@ -27,6 +29,19 @@ export class DailySummaryComponent implements OnInit {
     'bg-sky-400',
     'bg-indigo-400',
     'bg-teal-400',
+  ];
+  colorsHex: string[] = [
+    '#f87171', // bg-red-400
+    '#60a5fa', // bg-blue-400
+    '#facc15', // bg-yellow-400
+    '#a78bfa', // bg-purple-400
+    '#fb923c', // bg-orange-400
+    '#34d399', // bg-green-400
+    '#ec4899', // bg-pink-400
+    '#84cc16', // bg-lime-400
+    '#3b82f6', // bg-sky-400
+    '#6366f1', // bg-indigo-400
+    '#14b8a6', // bg-teal-400
   ];
   exercises: string[] = [
     'Chest',
@@ -50,11 +65,19 @@ export class DailySummaryComponent implements OnInit {
     Fiber: 'g',
   };
   hoverIndex: number = -1;
+  screenWidth!: number;
+  chart!: Chart;
 
   constructor(
     private dailyEatingInfoService: DailyEatingInfoService,
     private dailyExerciseInfoService: DailyExerciseInfoService
-  ) {}
+  ) {
+    this.onResize();
+  }
+
+  isSmallScreen() {
+    return this.screenWidth < 450;
+  }
 
   ngOnInit(): void {
     this.dailyEatingInfo = this.dailyEatingInfoService.getDailyEatingInfo();
@@ -62,6 +85,15 @@ export class DailySummaryComponent implements OnInit {
       this.dailyExerciseInfoService.getDailyExerciseInfo();
     this.exercisePercentage = this.getExercisePercentage();
     this.eatingPercentage = this.getEatingPercentage();
+  }
+
+  ngAfterViewInit(): void {
+    this.createChart();
+  }
+
+  onResize() {
+    this.screenWidth = window.innerWidth;
+    this.createChart();
   }
 
   getExercisePercentage(): number[] {
@@ -95,5 +127,38 @@ export class DailySummaryComponent implements OnInit {
       });
     }
     return percentages;
+  }
+
+  createChart(): void {
+    if (this.chart) {
+      this.chart.destroy();
+    }
+    if (this.isSmallScreen()) {
+      let xValues = this.exercises;
+      let yValues = this.exercisePercentage;
+      let barColors = this.colorsHex;
+
+      let config: ChartConfiguration = {
+        type: 'pie',
+        data: {
+          labels: xValues,
+          datasets: [
+            {
+              backgroundColor: barColors,
+              data: yValues,
+            },
+          ],
+        },
+        options: {
+          plugins: {
+            legend: {
+              display: false,
+            },
+          },
+        },
+      };
+
+      this.chart = new Chart('myChart', config);
+    }
   }
 }

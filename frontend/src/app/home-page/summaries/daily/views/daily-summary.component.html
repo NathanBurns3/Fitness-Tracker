@@ -1,6 +1,6 @@
 <div #Exercise>
   <h1 class="font-bold text-2xl text-blue-950">Exercise</h1>
-  <div #ExerciseBar>
+  <div #ExerciseBar *ngIf="!isSmallScreen()">
     <div class="relative pt-1 mx-5 flex justify-center">
       <div class="bg-gray-200 rounded-full w-full flex flex-row shadow-lg">
         <div
@@ -20,6 +20,14 @@
       </div>
     </div>
   </div>
+
+  <canvas
+    id="myChart"
+    class="mx-auto"
+    style="max-width: 250px"
+    *ngIf="isSmallScreen()"
+  ></canvas>
+
   <div class="relative pt-1 mx-5 flex justify-center">
     <div class="w-23/24">
       <div #ColorKey class="flex justify-center">

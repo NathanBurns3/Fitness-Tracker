@@ -11,7 +11,6 @@ import { Chart, ChartConfiguration } from 'chart.js';
   styleUrls: ['./daily-summary.component.css'],
 })
 export class DailySummaryComponent implements OnInit {
-  @HostListener('window:resize', ['$event'])
   dailyEatingInfo!: IDailyEatingInfo;
   dailyExerciseInfo!: IExerciseInfo;
   exercisePercentage!: number[];
@@ -75,10 +74,6 @@ export class DailySummaryComponent implements OnInit {
     this.onResize();
   }
 
-  isSmallScreen() {
-    return this.screenWidth < 450;
-  }
-
   ngOnInit(): void {
     this.dailyEatingInfo = this.dailyEatingInfoService.getDailyEatingInfo();
     this.dailyExerciseInfo =
@@ -91,9 +86,14 @@ export class DailySummaryComponent implements OnInit {
     this.createChart();
   }
 
+  @HostListener('window:resize', ['$event'])
   onResize() {
     this.screenWidth = window.innerWidth;
     this.createChart();
+  }
+
+  isSmallScreen() {
+    return this.screenWidth < 450;
   }
 
   getExercisePercentage(): number[] {

@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { IMonthlyBreakdownInfo } from '../models/monthly-breakdown-info';
 import { MonthlyBreakdownInfoService } from '../services/monthly-breakdown-info.service';
 import { IExerciseInfo } from '../../daily/models/exercise-info';
 import { MonthlyExerciseInfoService } from '../services/monthly-exercise-info.service';
+import { Chart, ChartConfiguration } from 'chart.js';
 
 @Component({
   selector: 'MonthlySummaryComponent',
@@ -26,6 +27,19 @@ export class MonthlySummaryComponent implements OnInit {
     'bg-indigo-400',
     'bg-teal-400',
   ];
+  colorsHex: string[] = [
+    '#f87171', // bg-red-400
+    '#60a5fa', // bg-blue-400
+    '#facc15', // bg-yellow-400
+    '#a78bfa', // bg-purple-400
+    '#fb923c', // bg-orange-400
+    '#34d399', // bg-green-400
+    '#ec4899', // bg-pink-400
+    '#84cc16', // bg-lime-400
+    '#3b82f6', // bg-sky-400
+    '#6366f1', // bg-indigo-400
+    '#14b8a6', // bg-teal-400
+  ];
   exercises: string[] = [
     'Chest',
     'Calves',
@@ -46,11 +60,15 @@ export class MonthlySummaryComponent implements OnInit {
   });
   hoverIndex: number = -1;
   daysOfMonth: IMonthlyBreakdownInfo[] = [];
+  screenWidth!: number;
+  chart!: Chart;
 
   constructor(
     private monthlyBreakdownInfoService: MonthlyBreakdownInfoService,
     private monthlyExerciseInfoService: MonthlyExerciseInfoService
-  ) {}
+  ) {
+    this.onResize();
+  }
 
   ngOnInit(): void {
     this.monthlyBreakdownInfo =
@@ -62,6 +80,20 @@ export class MonthlySummaryComponent implements OnInit {
       this.date.getFullYear(),
       this.date.getMonth()
     );
+  }
+
+  ngAfterViewInit(): void {
+    this.createChart();
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize() {
+    this.screenWidth = window.innerWidth;
+    this.createChart();
+  }
+
+  isSmallScreen() {
+    return this.screenWidth < 450;
   }
 
   generateDaysOfMonth(year: number, month: number): IMonthlyBreakdownInfo[] {
@@ -95,5 +127,38 @@ export class MonthlySummaryComponent implements OnInit {
       }
     }
     return percentages;
+  }
+
+  createChart(): void {
+    if (this.chart) {
+      this.chart.destroy();
+    }
+    if (this.isSmallScreen()) {
+      let xValues = this.exercises;
+      let yValues = this.exercisePercentage;
+      let barColors = this.colorsHex;
+
+      let config: ChartConfiguration = {
+        type: 'pie',
+        data: {
+          labels: xValues,
+          datasets: [
+            {
+              backgroundColor: barColors,
+              data: yValues,
+            },
+          ],
+        },
+        options: {
+          plugins: {
+            legend: {
+              display: false,
+            },
+          },
+        },
+      };
+
+      this.chart = new Chart('myChart', config);
+    }
   }
 }

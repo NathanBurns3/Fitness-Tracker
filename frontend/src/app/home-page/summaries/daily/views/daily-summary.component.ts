@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { IDailyEatingInfo } from '../models/daily-eating-info';
 import { IExerciseInfo } from '../models/exercise-info';
 import { DailyEatingInfoService } from '../services/daily-eating-info.service';
@@ -10,7 +10,7 @@ import { Chart, ChartConfiguration } from 'chart.js';
   templateUrl: './daily-summary.component.html',
   styleUrls: ['./daily-summary.component.css'],
 })
-export class DailySummaryComponent implements OnInit {
+export class DailySummaryComponent implements OnInit, OnDestroy {
   dailyEatingInfo!: IDailyEatingInfo;
   dailyExerciseInfo!: IExerciseInfo;
   exercisePercentage!: number[];
@@ -84,6 +84,12 @@ export class DailySummaryComponent implements OnInit {
 
   ngAfterViewInit(): void {
     this.createChart();
+  }
+
+  ngOnDestroy(): void {
+    if (this.chart) {
+      this.chart.destroy();
+    }
   }
 
   @HostListener('window:resize', ['$event'])

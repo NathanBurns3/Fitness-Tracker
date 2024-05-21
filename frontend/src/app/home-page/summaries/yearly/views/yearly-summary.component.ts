@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Chart, registerables } from 'chart.js';
 import { YearlyEatingGoalsService } from '../services/yearly-eating-goals.service';
 import { YearlyExercisesService } from '../services/yearly-exercise.service';
@@ -9,9 +9,10 @@ Chart.register(...registerables);
   templateUrl: './yearly-summary.component.html',
   styleUrls: ['./yearly-summary.component.css'],
 })
-export class YearlySummaryComponent implements OnInit {
+export class YearlySummaryComponent implements OnInit, OnDestroy {
   ExercisesCompleted!: number[];
   EatingGoalsCompleted!: number[];
+  myChart!: Chart | null;
 
   constructor(
     private yearlyExercisesService: YearlyExercisesService,
@@ -22,7 +23,19 @@ export class YearlySummaryComponent implements OnInit {
     this.ExercisesCompleted = this.yearlyExercisesService.getYearlyExercises();
     this.EatingGoalsCompleted =
       this.yearlyEatingGoalsService.getYearlyEatingGoals();
+  }
 
+  ngAfterViewInit(): void {
+    this.createChart();
+  }
+
+  ngOnDestroy(): void {
+    if (this.myChart) {
+      this.myChart.destroy();
+    }
+  }
+
+  createChart(): void {
     var ctx = document.getElementById('myChart') as HTMLCanvasElement;
     var gradient1 = ctx?.getContext('2d')?.createLinearGradient(0, 0, 0, 400);
     gradient1?.addColorStop(0, 'rgba(21, 101, 192, 0.5)');

@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { IMonthlyBreakdownInfo } from '../models/monthly-breakdown-info';
 import { MonthlyBreakdownInfoService } from '../services/monthly-breakdown-info.service';
 import { IExerciseInfo } from '../../daily/models/exercise-info';
@@ -10,7 +10,7 @@ import { Chart, ChartConfiguration } from 'chart.js';
   templateUrl: './monthly-summary.component.html',
   styleUrls: ['./monthly-summary.component.css'],
 })
-export class MonthlySummaryComponent implements OnInit {
+export class MonthlySummaryComponent implements OnInit, OnDestroy {
   monthlyBreakdownInfo!: IMonthlyBreakdownInfo[];
   monthlyExerciseInfo!: IExerciseInfo;
   exercisePercentage!: number[];
@@ -84,6 +84,12 @@ export class MonthlySummaryComponent implements OnInit {
 
   ngAfterViewInit(): void {
     this.createChart();
+  }
+
+  ngOnDestroy(): void {
+    if (this.chart) {
+      this.chart.destroy();
+    }
   }
 
   @HostListener('window:resize', ['$event'])

@@ -3,6 +3,7 @@
     <select
       [(ngModel)]="selectedMuscleGroup"
       (change)="onMuscleGroupChange()"
+      id="muscleGroupSelector"
       class="w-96 block rounded-lg border p-2.5 text-sm bg-gradient-to-r from-blue-500 to-blue-700 text-white focus:ring-2 focus:ring-orange-500 shadow-lg transition duration-500 ease-in-out transform hover:-translate-y-0.5 hover:scale-105"
     >
       <option [value]="'Choose a Muscle Group'" selected disabled>
@@ -16,6 +17,7 @@
       <select
         [(ngModel)]="selectedExercise"
         [disabled]="selectedMuscleGroup === 'Choose a Muscle Group'"
+        id="exerciseSelector"
         class="w-96 block rounded-lg border p-2.5 text-sm bg-gradient-to-r from-blue-500 to-blue-700 text-white focus:ring-2 focus:ring-orange-500 shadow-lg transition duration-500 ease-in-out transform"
         [ngClass]="{
           'hover:-translate-y-0.5 hover:scale-105':
@@ -36,6 +38,7 @@
       <input
         [formControl]="sets"
         name="sets"
+        id="setsInput"
         class="rounded-lg border p-2.5 text-sm bg-white text-black focus:ring-2 focus:ring-blue-500 w-48 mb-5 shadow-lg transition duration-500 ease-in-out transform hover:-translate-y-0.5 hover:scale-105"
         type="number"
         placeholder="Number of Sets"
@@ -43,6 +46,7 @@
       />
     </form>
     <button
+      id="addExerciseButton"
       (click)="onAddExercise(selectedExercise)"
       [disabled]="
         selectedMuscleGroup === 'Choose a Muscle Group' ||
@@ -67,12 +71,14 @@
 </div>
 <div class="mt-8 flex space-x-4 justify-center">
   <button
+    id="addNewExerciseButton"
     class="rounded-lg border w-36 p-2.5 text-sm bg-gradient-to-r from-blue-500 to-blue-700 text-white hover:from-blue-700 hover:to-blue-900 shadow-lg transition duration-500 ease-in-out transform hover:-translate-y-0.5 hover:scale-105"
     (click)="openAddNewExerciseDialog()"
   >
     Add New Exercise
   </button>
   <button
+    id="deleteExerciseButton"
     class="rounded-lg border w-36 p-2.5 text-sm bg-gradient-to-r from-orange-500 to-orange-700 text-white hover:from-orange-700 hover:to-orange-900 shadow-lg transition duration-500 ease-in-out transform hover:-translate-y-0.5 hover:scale-105"
     (click)="openDeleteExerciseDialog()"
   >

@@ -16,6 +16,7 @@ import { FormControl, Validators } from '@angular/forms';
 @Component({
   selector: 'exercise-selector',
   templateUrl: './exercise-selector.component.html',
+  styleUrls: ['./exercise-selector.component.css'],
 })
 export class ExerciseSelectorComponent {
   @Output() muscleGroupChange = new EventEmitter<string>();

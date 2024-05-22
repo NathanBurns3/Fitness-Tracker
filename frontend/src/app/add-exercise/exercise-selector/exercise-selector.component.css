@@ -1,0 +1,23 @@
+@media (max-width: 1200px) {
+  #muscleGroupSelector,
+  #exerciseSelector {
+    width: 15rem;
+  }
+
+  #setsInput,
+  #addExerciseButton {
+    width: 8rem;
+  }
+}
+
+@media (max-width: 960px) {
+  #muscleGroupSelector,
+  #exerciseSelector {
+    width: 12rem;
+  }
+
+  #setsInput,
+  #addExerciseButton {
+    width: 7.5rem;
+  }
+}

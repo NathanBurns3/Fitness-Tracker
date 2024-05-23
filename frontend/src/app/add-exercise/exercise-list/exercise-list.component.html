@@ -1,17 +1,27 @@
-<h1 class="text-center text-3xl font-extrabold text-blue-800 mt-4 mb-6">
+<h1
+  id="title"
+  class="text-center text-3xl font-extrabold text-blue-800 mt-4 mb-6"
+>
   Exercises Completed Today
 </h1>
 
 <div class="overflow-auto max-h-[calc(100vh-16.75rem)]">
   <div
     *ngFor="let exercise of exercises"
+    id="listItem"
     class="bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-700 hover:to-blue-900 rounded-lg shadow-md p-4 my-4 mx-6 flex items-center justify-between transition-all duration-200 transform hover:scale-105"
     (click)="openExerciseDetails(exercise)"
   >
-    <h1 class="text-xl font-bold text-white w-10/12 truncate text-left">
+    <h1
+      id="exerciseName"
+      class="text-xl font-bold text-white w-10/12 truncate text-left"
+    >
       {{ exercise.exerciseName }}
     </h1>
-    <h1 class="text-xl font-bold text-white w-2/12 truncate text-right">
+    <h1
+      id="setsCount"
+      class="text-xl font-bold text-white w-2/12 truncate text-right"
+    >
       x{{ exercise.sets }}
     </h1>
   </div>

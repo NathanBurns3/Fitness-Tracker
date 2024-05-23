@@ -8,6 +8,7 @@ import { DailyExercisesService } from '../services/daily-exercises.service';
 @Component({
   selector: 'exercise-list',
   templateUrl: './exercise-list.component.html',
+  styleUrls: ['./exercise-list.component.css'],
 })
 export class ExerciseListComponent implements OnInit {
   exercises: IExercise[] = [];

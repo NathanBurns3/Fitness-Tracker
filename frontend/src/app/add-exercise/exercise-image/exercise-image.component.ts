@@ -8,6 +8,7 @@ import { Component, Input } from '@angular/core';
 @Component({
   selector: 'exercise-image',
   templateUrl: './exercise-image.component.html',
+  styleUrls: ['./exercise-image.component.css'],
 })
 export class ExerciseImageComponent {
   @Input() selectedMuscleGroup: string = '';

@@ -1,0 +1,25 @@
+#exerciseImage {
+  width: 48%;
+  height: auto;
+}
+
+@media screen and (max-width: 1100px) {
+  #exerciseImage {
+    width: 53%;
+    height: auto;
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  #exerciseImage {
+    width: 60%;
+    height: auto;
+  }
+}
+
+@media screen and (max-width: 900px) {
+  #exerciseImage {
+    width: 67%;
+    height: auto;
+  }
+}

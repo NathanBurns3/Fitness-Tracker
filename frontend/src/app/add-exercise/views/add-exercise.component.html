@@ -17,25 +17,27 @@
     </div>
 
     <div #MainBody>
-      <div class="grid grid-cols-8 gap-4 m-4">
+      <div class="grid grid-cols-2 gap-4 m-4">
+        <div class="grid col-span-1 gap-4">
+          <div
+            class="border border-zinc-300 rounded-lg shadow-lg flex items-center justify-center p-4"
+          >
+            <exercise-selector
+              (muscleGroupChange)="onMuscleGroupChange($event)"
+            ></exercise-selector>
+          </div>
+          <div
+            class="border border-zinc-300 rounded-lg shadow-lg h-[calc(100vh-377px)] p-4"
+          >
+            <exercise-image
+              [selectedMuscleGroup]="selectedMuscleGroup"
+            ></exercise-image>
+          </div>
+        </div>
         <div
-          class="border border-zinc-300 rounded-lg shadow-lg h-[calc(100vh-150px)] col-span-4 row-span-2 overflow-y-auto p-4"
+          class="border border-zinc-300 rounded-lg shadow-lg h-[calc(100vh-150px)] col-span-1 row-span-2 overflow-y-auto p-4"
         >
           <exercise-list></exercise-list>
-        </div>
-        <div
-          class="border border-zinc-300 rounded-lg shadow-lg col-span-4 flex items-center justify-center p-4"
-        >
-          <exercise-selector
-            (muscleGroupChange)="onMuscleGroupChange($event)"
-          ></exercise-selector>
-        </div>
-        <div
-          class="border border-zinc-300 rounded-lg shadow-lg max-h-[450px] col-span-4 p-4"
-        >
-          <exercise-image
-            [selectedMuscleGroup]="selectedMuscleGroup"
-          ></exercise-image>
         </div>
       </div>
     </div>

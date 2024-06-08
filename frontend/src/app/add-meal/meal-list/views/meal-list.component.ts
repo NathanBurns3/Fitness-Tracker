@@ -7,6 +7,7 @@ import { MealDetailsComponent } from '../../meal-details/meal-details.component'
 @Component({
   selector: 'meal-list',
   templateUrl: './meal-list.component.html',
+  styleUrls: ['./meal-list.component.css'],
 })
 export class MealListComponent {
   foods: IFood[] = [];

@@ -7,6 +7,7 @@ import { MatDialog } from '@angular/material/dialog';
 @Component({
   selector: 'all-meals',
   templateUrl: './all-meals.component.html',
+  styleUrls: ['./all-meals.component.css'],
 })
 export class AllMealsComponent {
   mealSearch: string = '';

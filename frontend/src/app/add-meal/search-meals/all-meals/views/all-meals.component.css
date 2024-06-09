@@ -1,0 +1,6 @@
+@media screen and (max-width: 1050px) {
+  .search-list {
+    height: 290px;
+    overflow-y: auto;
+  }
+}

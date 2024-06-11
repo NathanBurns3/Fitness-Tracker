@@ -9,6 +9,7 @@ import { ICustomMeal } from 'src/app/add-meal/models/custom-meal';
 @Component({
   selector: 'custom-meals',
   templateUrl: './custom-meals.component.html',
+  styleUrls: ['./custom-meals.component.css'],
 })
 export class CustomMealsComponent implements OnInit {
   customMeals: ICustomMeal[] = [];

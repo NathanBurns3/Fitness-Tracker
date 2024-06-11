@@ -1,5 +1,23 @@
 @media screen and (max-width: 1050px) {
   .meal-list {
-    height: 70%;
+    height: 80%;
+  }
+
+  .meal-description,
+  .meal-serving {
+    font-size: 14px;
+  }
+
+  .meal-tile {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+
+  .meal-title {
+    font-size: 24px;
+    margin-bottom: 10px;
+    margin-top: 5px;
   }
 }

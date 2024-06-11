@@ -1,17 +1,23 @@
-<h1 class="text-center text-3xl font-extrabold text-blue-800 mt-4 mb-6">
+<h1
+  class="meal-title text-center text-3xl font-extrabold text-blue-800 mt-4 mb-6"
+>
   Meals Eaten Today
 </h1>
 
 <div class="meal-list overflow-auto max-h-[calc(100vh-16.75rem)]">
   <div
     *ngFor="let food of foods"
-    class="bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-700 hover:to-blue-900 rounded-lg shadow-md p-4 my-4 mx-6 flex items-center justify-between transition-all duration-200 transform hover:scale-105"
+    class="meal-tile bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-700 hover:to-blue-900 rounded-lg shadow-md p-4 my-4 mx-6 flex items-center justify-between transition-all duration-200 transform hover:scale-105"
     (click)="openFoodDetails(food)"
   >
-    <h1 class="text-xl font-bold text-white w-10/12 truncate text-left">
+    <h1
+      class="meal-description text-xl font-bold text-white w-10/12 truncate text-left"
+    >
       {{ food.description }}
     </h1>
-    <h1 class="text-xl font-bold text-white w-3/12 truncate text-right">
+    <h1
+      class="meal-serving text-xl font-bold text-white w-3/12 truncate text-right"
+    >
       {{ food.servingSize }} {{ food.servingUnit }}
     </h1>
   </div>

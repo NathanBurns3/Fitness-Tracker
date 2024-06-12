@@ -1,6 +1,26 @@
 @media screen and (max-width: 1050px) {
   .search-list {
-    height: 290px;
+    height: 200px;
     overflow-y: auto;
+  }
+
+  .meal-tile {
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+
+  .meal-title {
+    font-size: 14px;
+    margin-bottom: 0;
+  }
+
+  .meal-ingredients {
+    font-size: 10px;
+  }
+}
+
+@media screen and (max-width: 540px) {
+  .search-meal {
+    width: 75%;
   }
 }

@@ -3,7 +3,7 @@
     type="search"
     placeholder="Search foods..."
     [(ngModel)]="mealSearch"
-    class="self-center w-1/2 h-8 rounded-xl mr-2 focus:outline-none text-sm px-8 shadow-sm border-2 border-gray-200"
+    class="search-meal self-center w-1/2 h-8 rounded-xl mr-2 focus:outline-none text-sm px-8 shadow-sm border-2 border-gray-200"
   />
   <button
     class="bg-blue-500 border border-blue-750 shadow-sm h-7 w-7 rounded-full overflow-hidden text-white flex items-center justify-center hover:bg-blue-700 hover:border-blue-900 hover:shadow-md hover:scale-102"
@@ -28,15 +28,15 @@
 <div class="search-list overflow-auto max-h-[calc(100vh-15.75rem)]">
   <div
     *ngFor="let meal of meals"
-    class="bg-zinc-100 border border-zinc-300 mt-3 mx-6 p-4 rounded-lg shadow-md transition-all duration-200 transform hover:scale-105 hover:shadow-lg"
+    class="meal-tile bg-zinc-100 border border-zinc-300 mt-3 mx-6 p-4 rounded-lg shadow-md transition-all duration-200 transform hover:scale-105 hover:shadow-lg"
     (click)="openFoodDetails(meal)"
   >
-    <h5 class="text-md font-bold text-blue-900 mb-2 truncate">
+    <h5 class="meal-title text-md font-bold text-blue-900 mb-2 truncate">
       <span *ngIf="meal.brandName">{{ meal.brandName }} - </span>
       {{ meal.description }}
       <span *ngIf="meal.packageWeight">- {{ meal.packageWeight }}</span>
     </h5>
-    <p class="text-xs text-zinc-600">
+    <p class="meal-ingredients text-xs text-zinc-600">
       {{ meal.ingredients }}
     </p>
   </div>

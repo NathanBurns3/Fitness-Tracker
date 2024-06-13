@@ -12,6 +12,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   selector: 'add-new-exercise',
   templateUrl: './add-new-exercise.component.html',
+  styleUrls: ['./add-new-exercise.component.css'],
 })
 export class AddNewExerciseComponent {
   muscleGroup!: muscleGroupsEnum;

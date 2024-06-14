@@ -13,6 +13,7 @@ import { muscleGroupsEnum } from '../models/muscle-groups-enum';
 @Component({
   selector: 'delete-exercise',
   templateUrl: './delete-exercise.component.html',
+  styleUrls: ['./delete-exercise.component.css'],
 })
 export class DeleteExerciseComponent {
   muscleGroup!: muscleGroupsEnum | string;

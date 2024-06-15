@@ -1,7 +1,7 @@
 <div
   class="flex flex-row items-center justify-center text-center bg-gradient-to-r from-blue-500 to-blue-700 pb-3 shadow-lg"
 >
-  <h1 class="text-4xl font-extrabold text-white mt-4">{{ title }}</h1>
+  <h1 class="title text-4xl font-extrabold text-white mt-4">{{ title }}</h1>
   <button
     class="absolute top-3 right-3 bg-red-500 hover:bg-red-700 text-xs font-medium py-1 px-2 rounded-full text-white"
     (click)="closeCustomMealDetails()"
@@ -12,22 +12,24 @@
 
 <div class="grid place-items-center h-full -mt-3 justify-center">
   <div
-    class="flex flex-col items-center border border-zinc-200 rounded-xl p-10 shadow-sm m-10 -mb-3"
+    class="tile flex flex-col items-center border border-zinc-200 rounded-xl p-10 shadow-sm m-10 -mb-3"
   >
     <input
       type="text"
-      class="text-3xl font-semibold text-blue-900 mb-5 -mt-7 text-center rounded-lg border focus:ring-2 shadow-sm transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-102 placeholder-gray-400 placeholder-opacity-50"
+      class="meal-title text-3xl font-semibold text-blue-900 mb-5 -mt-7 text-center rounded-lg border focus:ring-2 shadow-sm transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-102 placeholder-gray-400 placeholder-opacity-50"
       [(ngModel)]="clonedMeal.name"
       placeholder="custom food name"
     />
 
     <div class="flex items-center mb-4">
-      <h2 class="text-xl font-bold text-blue-800 mr-2">Serving Size:</h2>
+      <h2 class="amount-label text-xl font-bold text-blue-800 mr-2">
+        Serving Size:
+      </h2>
       <form>
         <input
           [(ngModel)]="clonedMeal.servingSize"
           name="servingSize"
-          class="rounded-lg border p-2 text-lg text-orange-800 focus:ring-2 focus:ring-orange-500 w-20 shadow-sm transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-102 text-right"
+          class="amount rounded-lg border p-2 text-lg text-orange-800 focus:ring-2 focus:ring-orange-500 w-20 shadow-sm transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-102 text-right"
           type="number"
           min="1"
           placeholder="{{ clonedMeal.servingSize }}"
@@ -36,7 +38,7 @@
       </form>
       <select
         [(ngModel)]="clonedMeal.servingUnit"
-        class="text-lg p-2 font-bold text-blue-800 ml-2 border rounded-lg focus:ring-2 focus:ring-orange-500 w-20 shadow-sm transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-102 text-right"
+        class="amount-label text-lg p-2 font-bold text-blue-800 ml-2 border rounded-lg focus:ring-2 focus:ring-orange-500 w-20 shadow-sm transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-102 text-right"
       >
         <option value="" disabled selected>Unit</option>
         <option *ngFor="let unit of servingUnits">{{ unit }}</option>
@@ -44,33 +46,35 @@
     </div>
 
     <div
-      class="border border-zinc-200 rounded-xl p-2 shadow-sm flex flex-wrap justify-between space-x-4"
+      class="nutritions border border-zinc-200 rounded-xl p-2 shadow-sm flex flex-wrap justify-between space-x-4"
     >
-      <h2 class="text-xl font-bold text-blue-800">
+      <h2 class="label text-xl font-bold text-blue-800">
         Calories:
-        <span class="text-orange-800 text-lg"
+        <span class="nutrition text-orange-800 text-lg"
           >{{ totalNutritions.calories }}kcal</span
         >
       </h2>
-      <h2 class="text-xl font-bold text-blue-800">
+      <h2 class="label text-xl font-bold text-blue-800">
         Carbs:
-        <span class="text-orange-800 text-lg"
+        <span class="nutrition text-orange-800 text-lg"
           >{{ totalNutritions.carbs }}g</span
         >
       </h2>
-      <h2 class="text-xl font-bold text-blue-800">
+      <h2 class="label text-xl font-bold text-blue-800">
         Fat:
-        <span class="text-orange-800 text-lg">{{ totalNutritions.fat }}g</span>
+        <span class="nutrition text-orange-800 text-lg"
+          >{{ totalNutritions.fat }}g</span
+        >
       </h2>
-      <h2 class="text-xl font-bold text-blue-800">
+      <h2 class="label text-xl font-bold text-blue-800">
         Fiber:
-        <span class="text-orange-800 text-lg"
+        <span class="nutrition text-orange-800 text-lg"
           >{{ totalNutritions.fiber }}g</span
         >
       </h2>
-      <h2 class="text-xl font-bold text-blue-800">
+      <h2 class="label text-xl font-bold text-blue-800">
         Protein:
-        <span class="text-orange-800 text-lg"
+        <span class="nutrition text-orange-800 text-lg"
           >{{ totalNutritions.protein }}g</span
         >
       </h2>
@@ -85,7 +89,7 @@
         <div class="w-8/12 flex items-center">
           <input
             type="text"
-            class="w-full text-sm font-semibold text-blue-900 text-center rounded-lg shadow-sm placeholder-gray-400 placeholder-opacity-50 outline-none"
+            class="meal-search w-full text-sm font-semibold text-blue-900 text-center rounded-lg shadow-sm placeholder-gray-400 placeholder-opacity-50 outline-none"
             placeholder="food name"
             [(ngModel)]="mealSearch"
             (input)="showDropdown = false"
@@ -150,12 +154,12 @@
         </div>
         <div
           *ngIf="showDropdown && !loading"
-          class="absolute bg-white shadow-md rounded-lg p-1 w-1/5 h-24 overflow-auto mt-28 z-10"
+          class="food-dropdown absolute bg-white shadow-md rounded-lg p-1 w-1/5 h-24 overflow-auto mt-28 z-10"
           style="margin-left: -1px"
         >
           <div
             *ngFor="let meal of mealOptions"
-            class="p-1 hover:bg-blue-200 cursor-pointer text-sm"
+            class="meal-options p-1 hover:bg-blue-200 cursor-pointer text-sm"
             (click)="selectFood(meal); showDropdown = false"
           >
             {{ meal.description }}
@@ -169,15 +173,19 @@
         *ngFor="let food of clonedMeal.food"
         class="bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-700 hover:to-blue-900 rounded-lg shadow-md p-2 my-4 mx-6 flex items-center justify-between"
       >
-        <h1 class="text-base font-bold text-white w-9/12 truncate">
+        <h1
+          class="meal-description text-base font-bold text-white w-9/12 truncate"
+        >
           {{ food.description }}
         </h1>
         <div class="flex justify-end items-center space-x-4">
-          <h1 class="text-base font-bold text-white w-9/12 truncate">
+          <h1
+            class="meal-serving text-base font-bold text-white w-9/12 truncate"
+          >
             {{ food.servingSize }} {{ food.servingUnit }}
           </h1>
           <button
-            class="bg-red-500 hover:bg-red-700 text-white text-xs font-medium py-1 px-2 rounded-full"
+            class="delete-button bg-red-500 hover:bg-red-700 text-white text-xs font-medium py-1 px-2 rounded-full"
             (click)="deleteFood(food)"
           >
             Delete

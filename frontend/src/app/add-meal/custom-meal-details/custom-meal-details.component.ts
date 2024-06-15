@@ -9,6 +9,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   selector: 'custom-meal-details',
   templateUrl: './custom-meal-details.component.html',
+  styleUrls: ['./custom-meal-details.component.css'],
 })
 export class CustomMealDetailsComponent {
   title: string;

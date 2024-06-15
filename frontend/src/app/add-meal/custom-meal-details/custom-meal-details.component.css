@@ -1,0 +1,105 @@
+@media screen and (max-width: 1200px) {
+  .label {
+    font-size: 16px;
+  }
+
+  .nutrition {
+    font-size: 14px;
+  }
+
+  .food-dropdown {
+    width: 200px;
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .tile {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .label {
+    font-size: 13px;
+  }
+
+  .nutrition {
+    font-size: 11px;
+  }
+
+  .amount-label {
+    font-size: 16px;
+  }
+
+  .amount {
+    font-size: 14px;
+  }
+
+  .meal-title {
+    font-size: 24px;
+  }
+
+  .meal-serving,
+  .meal-options,
+  .meal-description,
+  .meal-serving,
+  .delete-button {
+    font-size: 12px;
+  }
+}
+
+@media screen and (max-width: 700px) {
+  .label {
+    display: grid;
+  }
+
+  .food-dropdown {
+    width: 115px;
+  }
+
+  .meal-serving,
+  .meal-options,
+  .meal-description,
+  .meal-serving,
+  .delete-button {
+    font-size: 10px;
+  }
+
+  .meal-search {
+    width: 100px;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .tile {
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+
+  .meal-title {
+    font-size: 18px;
+  }
+
+  .title {
+    font-size: 24px;
+  }
+
+  .amount-label {
+    font-size: 14px;
+  }
+
+  .amount {
+    font-size: 12px;
+    width: 50px;
+  }
+
+  .tile {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+}
+
+/* meal-search
+meal-options
+meal-description
+meal-serving
+delete-button */

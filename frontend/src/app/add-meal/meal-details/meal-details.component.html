@@ -12,28 +12,28 @@
 
 <div class="grid place-items-center h-full mx-8 -mt-3 justify-center">
   <div
-    class="flex flex-col items-center border border-zinc-200 rounded-xl p-10 shadow-sm m-10"
+    class="tile flex flex-col items-center border border-zinc-200 rounded-xl p-10 shadow-sm m-10"
   >
     <h1
-      class="text-3xl font-semibold text-blue-900 mb-5 -mt-7 text-center truncate overflow-auto break-words max-w-lg mx-auto"
+      class="title text-3xl font-semibold text-blue-900 mb-5 -mt-7 text-center truncate overflow-auto break-words max-w-lg mx-auto"
     >
       {{ food.description }}
     </h1>
 
     <div class="flex items-center mb-4">
-      <h2 class="text-xl font-bold text-blue-800 mr-2">Amount:</h2>
+      <h2 class="amount-label text-xl font-bold text-blue-800 mr-2">Amount:</h2>
       <form>
         <input
           [(ngModel)]="clonedFood.servingSize"
           name="servingSize"
-          class="rounded-lg border p-2 text-lg bg-white text-orange-800 focus:ring-2 focus:ring-orange-500 w-20 shadow-sm transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-102 text-right"
+          class="amount rounded-lg border p-2 text-lg bg-white text-orange-800 focus:ring-2 focus:ring-orange-500 w-20 shadow-sm transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-102 text-right"
           type="number"
           min="1"
           placeholder="{{ food.servingSize }}"
           (ngModelChange)="updateNutritions($event)"
         />
       </form>
-      <h2 class="text-xl font-bold text-blue-800 ml-2">
+      <h2 class="amount-label text-xl font-bold text-blue-800 ml-2">
         {{ food.servingUnit }}(s)
       </h2>
     </div>
@@ -41,33 +41,33 @@
     <div
       class="grid grid-cols-2 gap-4 border border-zinc-200 rounded-xl p-5 shadow-sm"
     >
-      <h2 class="text-xl font-bold text-blue-800 mb-2">
+      <h2 class="label text-xl font-bold text-blue-800 mb-2">
         Calories:
-        <span class="text-orange-800 text-lg"
+        <span class="nutrition text-orange-800 text-lg"
           >{{ clonedFood.nutritions.calories }}kcal</span
         >
       </h2>
-      <h2 class="text-xl font-bold text-blue-800 mb-2">
+      <h2 class="label text-xl font-bold text-blue-800 mb-2">
         Carbs:
-        <span class="text-orange-800 text-lg"
+        <span class="nutrition text-orange-800 text-lg"
           >{{ clonedFood.nutritions.carbs }}g</span
         >
       </h2>
-      <h2 class="text-xl font-bold text-blue-800 mb-2">
+      <h2 class="label text-xl font-bold text-blue-800 mb-2">
         Fat:
-        <span class="text-orange-800 text-lg"
+        <span class="nutrition text-orange-800 text-lg"
           >{{ clonedFood.nutritions.fat }}g</span
         >
       </h2>
-      <h2 class="text-xl font-bold text-blue-800 mb-2">
+      <h2 class="label text-xl font-bold text-blue-800 mb-2">
         Fiber:
-        <span class="text-orange-800 text-lg"
+        <span class="nutrition text-orange-800 text-lg"
           >{{ clonedFood.nutritions.fiber }}g</span
         >
       </h2>
-      <h2 class="text-xl font-bold text-blue-800 mb-2">
+      <h2 class="label text-xl font-bold text-blue-800 mb-2">
         Protein:
-        <span class="text-orange-800 text-lg"
+        <span class="nutrition text-orange-800 text-lg"
           >{{ clonedFood.nutritions.protein }}g</span
         >
       </h2>
@@ -79,6 +79,7 @@
   <button
     *ngFor="let button of buttons"
     [ngClass]="buttonStyles[button.action]"
+    class="buttons"
     (click)="executeAction(button.action)"
   >
     {{ button.text }}

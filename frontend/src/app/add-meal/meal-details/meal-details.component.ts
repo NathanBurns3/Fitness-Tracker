@@ -16,6 +16,7 @@ import { ICustomMeal } from '../models/custom-meal';
 @Component({
   selector: 'meal-details',
   templateUrl: './meal-details.component.html',
+  styleUrls: ['./meal-details.component.css'],
 })
 export class MealDetailsComponent {
   food: IFood;

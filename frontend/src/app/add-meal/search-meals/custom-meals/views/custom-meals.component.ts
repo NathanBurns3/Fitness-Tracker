@@ -33,7 +33,7 @@ export class CustomMealsComponent implements OnInit {
     };
     this.dialog.open(CustomMealDetailsComponent, {
       data: { meal: customMeal, title: 'Add Custom Meal' },
-      width: '900px',
+      width: '950px',
       height: '750px',
     });
   }

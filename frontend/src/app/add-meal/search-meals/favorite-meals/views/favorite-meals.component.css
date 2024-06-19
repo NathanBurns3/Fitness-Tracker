@@ -1,0 +1,21 @@
+@media screen and (max-width: 1050px) {
+  .favorite-list {
+    height: 200px;
+    overflow-y: auto;
+  }
+
+  .star-image {
+    height: 20px;
+    width: 20px;
+  }
+
+  .meal-tile {
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+
+  .meal-title,
+  .meal-ingredients {
+    font-size: 12px;
+  }
+}

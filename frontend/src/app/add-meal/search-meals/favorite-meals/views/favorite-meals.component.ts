@@ -7,6 +7,7 @@ import { MealDetailsComponent } from 'src/app/add-meal/meal-details/meal-details
 @Component({
   selector: 'favorite-meals',
   templateUrl: './favorite-meals.component.html',
+  styleUrls: ['./favorite-meals.component.css'],
 })
 export class FavoriteMealsComponent implements OnInit {
   favoriteMeals: IFood[] = [];

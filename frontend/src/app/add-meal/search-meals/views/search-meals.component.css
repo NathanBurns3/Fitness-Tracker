@@ -1,0 +1,17 @@
+@media screen and (max-width: 768px) {
+  .body {
+    width: 50%;
+  }
+}
+
+@media screen and (max-width: 620px) {
+  .body {
+    width: 60%;
+  }
+}
+
+@media screen and (max-width: 460px) {
+  .body {
+    width: 70%;
+  }
+}

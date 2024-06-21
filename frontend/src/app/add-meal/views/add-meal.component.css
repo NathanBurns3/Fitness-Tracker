@@ -36,3 +36,31 @@
   opacity: 1;
   left: 0;
 }
+
+@media screen and (max-width: 1050px) {
+  .main-body {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .meal-list {
+    margin-top: 1rem;
+    height: 250px;
+  }
+
+  .search-meals {
+    height: 300px;
+  }
+
+  .title {
+    font-size: 45px;
+  }
+}
+
+@media screen and (max-width: 540px) {
+  .button {
+    width: 50px;
+    font-size: 12px;
+    padding: 3px;
+  }
+}

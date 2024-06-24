@@ -1,0 +1,115 @@
+@media screen and (max-width: 1200px) {
+  .profile-image {
+    width: 130px;
+    height: 130px;
+    margin-bottom: 10px;
+  }
+}
+
+@media screen and (max-width: 1050px) {
+  .first-name,
+  .last-name {
+    width: 10rem;
+  }
+
+  .gender,
+  .age {
+    width: 5.5rem;
+  }
+
+  .names {
+    width: 80%;
+  }
+
+  .profile-image {
+    width: 120px;
+    height: 120px;
+  }
+
+  .profile-image-section {
+    margin-left: -2.5em;
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .title {
+    font-size: 1.25em;
+  }
+
+  .sub-title {
+    font-size: 1em;
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .first-name,
+  .last-name {
+    width: 8.5rem;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .first-name,
+  .last-name {
+    width: 7rem;
+  }
+
+  .profile-image-section {
+    margin-left: -1em;
+  }
+
+  .names {
+    margin-left: -0.5em;
+  }
+
+  .characteristics {
+    margin-left: -1.2em;
+  }
+
+  .profile-image {
+    width: 100px;
+    height: 100px;
+  }
+}
+
+@media screen and (max-width: 475px) {
+  .details {
+    grid-template-columns: repeat(1, minmax(0, 1fr)) !important;
+  }
+
+  .profile-image-section {
+    margin-left: 0em;
+    margin-top: 2em;
+    margin-bottom: 2em;
+  }
+
+  .profile-image {
+    width: 150px;
+    height: 150px;
+  }
+
+  .names,
+  .characteristics {
+    width: 100%;
+    display: grid;
+    margin-left: 0;
+    grid-template-columns: 1fr; /* Adjust to a single column layout */
+    grid-template-rows: auto; /* Adjust for automatic row height */
+  }
+
+  .first-name,
+  .last-name,
+  .gender,
+  .age {
+    width: 100%; /* Ensure inputs take full width of the grid column */
+    justify-self: start; /* Aligns items to the start of the grid area */
+  }
+
+  /* Additional styles to vertically center the text of labels with inputs */
+  .names h1,
+  .characteristics h1 {
+    display: flex;
+    align-items: center; /* Centers label text vertically */
+    margin: 0; /* Adjust or remove margin as needed for alignment */
+  }
+}

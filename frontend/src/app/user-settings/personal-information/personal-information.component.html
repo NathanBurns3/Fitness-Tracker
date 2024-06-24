@@ -1,17 +1,21 @@
-<h1 class="text-2xl font-bold text-blue-900 -mb-4 -mt-2">
+<h1 class="title text-2xl font-bold text-blue-900 -mb-4 -mt-2">
   Personal Information
 </h1>
-<div class="grid grid-cols-5 h-full">
-  <div class="col-span-2 flex flex-col items-center justify-center">
-    <h1 class="text-lg font-bold text-blue-800 mb-1">Profile Picture:</h1>
+<div class="details grid grid-cols-5 h-full">
+  <div
+    class="profile-image-section col-span-2 flex flex-col items-center justify-center"
+  >
+    <h1 class="sub-title text-lg font-bold text-blue-800 mb-1">
+      Profile Picture:
+    </h1>
     <img
       [src]="previewImage"
       alt="Image Preview"
-      class="w-44 h-44 rounded-full mx-auto border-2 border-blue-800 shadow-lg object-cover mb-4"
+      class="profile-image w-40 h-40 rounded-full mx-auto border-2 border-blue-800 shadow-sm object-cover mb-4"
       *ngIf="previewImage"
     />
     <label
-      class="rounded-lg border p-1 text-sm bg-white text-blue-950 focus:ring-2 focus:ring-blue-500 w-28 shadow-lg transition duration-500 ease-in-out transform hover:-translate-y-0.5 hover:scale-105 cursor-pointer"
+      class="rounded-lg border p-1 text-sm bg-white text-blue-950 focus:ring-2 focus:ring-blue-500 w-28 shadow-sm transition duration-500 ease-in-out transform hover:-translate-y-0.5 hover:scale-105 cursor-pointer"
     >
       Select Image
       <input
@@ -24,47 +28,47 @@
     </label>
   </div>
 
-  <div class="col-span-2 flex flex-col items-center justify-center">
-    <h1 class="text-lg font-bold text-blue-800 mb-1">First Name:</h1>
-
+  <div class="names col-span-2 flex flex-col items-center justify-center">
+    <h1 class="sub-title text-lg font-bold text-blue-800 mb-1">First Name:</h1>
     <input
       [(ngModel)]="personalInformation.firstName"
       (ngModelChange)="updatePersonalInformation()"
-      class="rounded-lg border p-2.5 text-sm bg-white text-blue-950 focus:ring-2 focus:ring-blue-500 w-48 mb-5 shadow-lg transition duration-500 ease-in-out transform hover:-translate-y-0.5 hover:scale-105"
+      class="first-name rounded-lg border p-2.5 text-sm bg-white text-blue-950 focus:ring-2 focus:ring-blue-500 w-48 mb-5 shadow-sm transition duration-500 ease-in-out transform hover:-translate-y-0.5 hover:scale-105"
       type="text"
       placeholder="{{ personalInformation.firstName }}"
     />
 
-    <h1 class="text-lg font-bold text-blue-800 mb-1">Last Name:</h1>
-
+    <h1 class="sub-title text-lg font-bold text-blue-800 mb-1">Last Name:</h1>
     <input
       [(ngModel)]="personalInformation.lastName"
       (ngModelChange)="updatePersonalInformation()"
-      class="rounded-lg border p-2.5 text-sm bg-white text-blue-950 focus:ring-2 focus:ring-blue-500 w-48 mb-5 shadow-lg transition duration-500 ease-in-out transform hover:-translate-y-0.5 hover:scale-105"
+      class="last-name rounded-lg border p-2.5 text-sm bg-white text-blue-950 focus:ring-2 focus:ring-blue-500 w-48 mb-5 shadow-sm transition duration-500 ease-in-out transform hover:-translate-y-0.5 hover:scale-105"
       type="text"
       placeholder="{{ personalInformation.lastName }}"
     />
   </div>
 
-  <div class="col-span-1 flex flex-col items-center justify-center">
-    <h1 class="text-lg font-bold text-blue-800 mb-1">Gender:</h1>
+  <div
+    class="characteristics col-span-1 flex flex-col items-center justify-center"
+  >
+    <h1 class="sub-title text-lg font-bold text-blue-800 mb-1">Gender:</h1>
     <select
       [(ngModel)]="personalInformation.gender"
       (ngModelChange)="updatePersonalInformation()"
-      class="rounded-lg border p-2.5 text-sm bg-white text-blue-950 focus:ring-2 focus:ring-blue-500 w-28 mb-5 shadow-lg transition duration-500 ease-in-out transform hover:-translate-y-0.5 hover:scale-105"
+      class="gender rounded-lg border p-2.5 text-sm bg-white text-blue-950 focus:ring-2 focus:ring-blue-500 w-28 mb-5 shadow-sm transition duration-500 ease-in-out transform hover:-translate-y-0.5 hover:scale-105"
     >
       <option [value]="'Gender'" selected disabled>Gender</option>
       <option *ngFor="let gender of genderOptions" [value]="gender">
         {{ gender }}
       </option>
     </select>
-    <h1 class="text-lg font-bold text-blue-800 mb-1">Age:</h1>
 
+    <h1 class="sub-title text-lg font-bold text-blue-800 mb-1">Age:</h1>
     <input
       [(ngModel)]="personalInformation.age"
       (ngModelChange)="updatePersonalInformation()"
       (keypress)="numberOnly($event)"
-      class="rounded-lg border p-2.5 text-sm bg-white text-blue-950 focus:ring-2 focus:ring-blue-500 w-28 mb-5 shadow-lg transition duration-500 ease-in-out transform hover:-translate-y-0.5 hover:scale-105"
+      class="age rounded-lg border p-2.5 text-sm bg-white text-blue-950 focus:ring-2 focus:ring-blue-500 w-28 mb-5 shadow-sm transition duration-500 ease-in-out transform hover:-translate-y-0.5 hover:scale-105"
       type="number"
       placeholder="{{ personalInformation.age }}"
       min="0"

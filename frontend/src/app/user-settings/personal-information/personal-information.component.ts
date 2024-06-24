@@ -11,6 +11,7 @@ import { IPersonalInformation } from '../models/personal-information';
 @Component({
   selector: 'personal-information',
   templateUrl: './personal-information.component.html',
+  styleUrls: ['./personal-information.component.css'],
 })
 export class PersonalInformationComponent implements OnInit, OnChanges {
   @Input() originalPersonalInformation!: IPersonalInformation;

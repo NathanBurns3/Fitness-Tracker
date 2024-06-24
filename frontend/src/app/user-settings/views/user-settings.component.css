@@ -49,3 +49,17 @@
   opacity: 0 !important;
   left: -20px !important;
 }
+
+@media screen and (max-width: 800px) {
+  .sections {
+    grid-template-columns: repeat(1, 1fr);
+  }
+  .sections > div {
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  .content {
+    overflow: auto;
+  }
+}

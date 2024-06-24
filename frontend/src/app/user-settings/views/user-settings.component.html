@@ -1,5 +1,7 @@
 <body class="h-screen text-center bg-zinc-300 overflow-auto">
-  <div class="bg-neutral-50 rounded-lg shadow-2xl h-[calc(100vh-40px)] m-5 p-5">
+  <div
+    class="content bg-neutral-50 rounded-lg shadow-2xl h-[calc(100vh-40px)] m-5 p-5"
+  >
     <div #Title>
       <div class="min-h-[50px] relative mt-5 -mb-4">
         <div class="flex justify-between items-center">
@@ -38,10 +40,10 @@
       </div>
     </div>
 
-    <div class="m-4 grid grid-cols-8 h-[calc(100vh-10rem)]">
-      <div class="col-span-5 mx-3">
+    <div class="sections m-4 grid grid-cols-8 h-[calc(100vh-10rem)]">
+      <div class="section-1 col-span-5 mx-3">
         <div
-          class="border border-zinc-300 rounded-lg shadow-lg col-span-5 p-4 h-[45%] mb-4"
+          class="personal-information border border-zinc-300 rounded-lg shadow-lg col-span-5 p-4 h-[45%] mb-4"
         >
           <personal-information
             [originalPersonalInformation]="userSettings.personalInformation"
@@ -49,7 +51,7 @@
           ></personal-information>
         </div>
         <div
-          class="border border-zinc-300 rounded-lg shadow-lg col-span-5 p-4 h-[25%] mb-4"
+          class="contact-information border border-zinc-300 rounded-lg shadow-lg col-span-5 p-4 h-[25%] mb-4"
         >
           <contact-information
             [originalContactInformation]="userSettings.contactInformation"
@@ -57,7 +59,7 @@
           ></contact-information>
         </div>
         <div
-          class="border border-zinc-300 rounded-lg shadow-lg col-span-8 p-4 h-[25%]"
+          class="physical-measurements border border-zinc-300 rounded-lg shadow-lg col-span-8 p-4 h-[25%]"
         >
           <physical-measurements
             [originalPhysicalMeasurements]="userSettings.physicalMeasurements"
@@ -67,7 +69,7 @@
       </div>
       <div class="col-span-3 mx-3">
         <div
-          class="border border-zinc-300 rounded-lg shadow-lg col-span-3 p-4 h-[45%] mb-4"
+          class="activity-goal border border-zinc-300 rounded-lg shadow-lg col-span-3 p-4 h-[45%] mb-4"
         >
           <activity-goal
             [originalActivityGoal]="userSettings.activityGoal"
@@ -75,7 +77,7 @@
           ></activity-goal>
         </div>
         <div
-          class="border border-zinc-300 rounded-lg shadow-lg col-span-3 p-4 h-[20%] mb-4"
+          class="diet-selection border border-zinc-300 rounded-lg shadow-lg col-span-3 p-4 h-[20%] mb-4"
         >
           <diet-selection
             [originalDietSelection]="userSettings.dietPlan"
@@ -83,7 +85,7 @@
           ></diet-selection>
         </div>
         <div
-          class="border border-zinc-300 rounded-lg shadow-lg col-span-3 p-4 h-[30%]"
+          class="account-management border border-zinc-300 rounded-lg shadow-lg col-span-3 p-4 h-[30%]"
         >
           <account-management></account-management>
         </div>

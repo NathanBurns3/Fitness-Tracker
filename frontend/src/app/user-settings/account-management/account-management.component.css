@@ -1,0 +1,45 @@
+@media screen and (max-width: 1200px) {
+  .button-group {
+    display: grid;
+  }
+
+  .change-password {
+    margin-right: 0;
+    margin-bottom: -1.75em;
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .title {
+    font-size: 1.25em;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .button-group {
+    display: flex;
+  }
+
+  .change-password {
+    margin-right: 3em;
+    margin-bottom: 0;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .button {
+    padding-left: 0.35em;
+    padding-right: 0.35em;
+    width: 9.5em;
+  }
+
+  .change-password {
+    margin-right: 2em;
+  }
+}
+
+@media screen and (max-width: 430px) {
+  .change-password {
+    margin-right: 1em;
+  }
+}

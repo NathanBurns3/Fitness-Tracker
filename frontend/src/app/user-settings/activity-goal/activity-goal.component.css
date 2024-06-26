@@ -1,0 +1,72 @@
+@media screen and (max-width: 900px) {
+  .title {
+    font-size: 1.25em;
+  }
+
+  .sub-title {
+    font-size: 1em;
+  }
+
+  .selector {
+    font-size: 0.9em;
+    width: 10em;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .selectors {
+    display: ruby;
+  }
+
+  .activity {
+    margin-right: 2.5em;
+  }
+
+  .goal {
+    margin-left: 2.5em;
+  }
+}
+
+@media screen and (max-width: 540px) {
+  .activity {
+    margin-right: 1.5em;
+  }
+
+  .goal {
+    margin-left: 1.5em;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .activity {
+    margin-right: 1em;
+  }
+
+  .goal {
+    margin-left: 1em;
+  }
+}
+
+@media screen and (max-width: 475px) {
+  .activity {
+    margin-right: 0em;
+  }
+
+  .goal {
+    margin-left: 0em;
+  }
+
+  .selectors {
+    display: grid;
+    place-items: center;
+    margin: 0 auto;
+  }
+
+  .activity-section {
+    margin-top: -1em;
+  }
+
+  .goal-section {
+    margin-top: -2em;
+  }
+}

@@ -13,6 +13,7 @@ import { IActivityGoal } from '../models/activity-goals';
 @Component({
   selector: 'activity-goal',
   templateUrl: './activity-goal.component.html',
+  styleUrls: ['./activity-goal.component.css'],
 })
 export class ActivityGoalComponent implements OnInit, OnChanges {
   @Input() originalActivityGoal!: IActivityGoal;

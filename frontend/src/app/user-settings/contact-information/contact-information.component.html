@@ -1,22 +1,26 @@
-<h1 class="text-2xl font-bold text-blue-900 -mt-2">Contact Information</h1>
-<div class="flex space-x-20 h-full w-full justify-center items-center">
-  <div class="flex flex-col items-center justify-center">
-    <h1 class="text-lg font-bold text-blue-800 mb-1">Email:</h1>
+<h1 class="title text-2xl font-bold text-blue-900 -mt-2">
+  Contact Information
+</h1>
+<div class="contact flex h-full w-full justify-center items-center">
+  <div class="email-section flex flex-col items-center justify-center mr-20">
+    <h1 class="sub-title text-lg font-bold text-blue-800 mb-1">Email:</h1>
     <input
       [(ngModel)]="contactInformation.email"
       (ngModelChange)="updateContactInformation()"
-      class="rounded-lg border p-2.5 text-sm bg-white text-blue-950 focus:ring-2 focus:ring-blue-500 w-48 mb-5 shadow-lg transition duration-500 ease-in-out transform hover:-translate-y-0.5 hover:scale-105"
+      class="email rounded-lg border p-2.5 text-sm bg-white text-blue-950 focus:ring-2 focus:ring-blue-500 w-48 mb-5 shadow-sm transition duration-500 ease-in-out transform hover:-translate-y-0.5 hover:scale-105"
       type="text"
       placeholder="{{ contactInformation.email }}"
     />
   </div>
 
   <div class="flex flex-col items-center justify-center">
-    <h1 class="text-lg font-bold text-blue-800 mb-1">Phone Number:</h1>
+    <h1 class="sub-title text-lg font-bold text-blue-800 mb-1">
+      Phone Number:
+    </h1>
     <input
       [(ngModel)]="contactInformation.phoneNumber"
       (ngModelChange)="updateContactInformation()"
-      class="rounded-lg border p-2.5 text-sm bg-white text-blue-950 focus:ring-2 focus:ring-blue-500 w-48 mb-5 shadow-lg transition duration-500 ease-in-out transform hover:-translate-y-0.5 hover:scale-105"
+      class="phone rounded-lg border p-2.5 text-sm bg-white text-blue-950 focus:ring-2 focus:ring-blue-500 w-48 mb-5 shadow-sm transition duration-500 ease-in-out transform hover:-translate-y-0.5 hover:scale-105"
       type="text"
       placeholder="{{ contactInformation.phoneNumber }}"
     />

@@ -11,6 +11,7 @@ import { IContactInformation } from '../models/contact-information';
 @Component({
   selector: 'contact-information',
   templateUrl: './contact-information.component.html',
+  styleUrls: ['./contact-information.component.css'],
 })
 export class ContactInformationComponent implements OnInit, OnChanges {
   @Input() originalContactInformation!: IContactInformation;

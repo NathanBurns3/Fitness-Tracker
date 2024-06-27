@@ -1,0 +1,79 @@
+@media screen and (max-width: 950px) {
+  .email-section {
+    margin-right: 2em;
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .title {
+    font-size: 1.25em;
+  }
+
+  .sub-title {
+    font-size: 1em;
+  }
+}
+
+@media screen and (max-width: 850px) {
+  .email {
+    width: 11.5em;
+  }
+
+  .phone {
+    width: 8em;
+  }
+}
+
+@media screen and (max-width: 475px) {
+  .contact {
+    display: grid;
+  }
+
+  .email-section {
+    margin-right: 0em;
+    margin-bottom: -3em;
+  }
+
+  .email,
+  .phone {
+    width: 100%;
+    justify-self: start;
+  }
+
+  .email-section,
+  .phone-section {
+    width: 100%;
+    justify-self: start;
+  }
+
+  .email-section h1,
+  .phone-section h1 {
+    display: flex;
+    align-items: center;
+    margin: 0;
+  }
+
+  .names,
+  .characteristics {
+    width: 100%;
+    display: grid;
+    margin-left: 0;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+  }
+
+  .first-name,
+  .last-name,
+  .gender,
+  .age {
+    width: 100%;
+    justify-self: start;
+  }
+
+  .names h1,
+  .characteristics h1 {
+    display: flex;
+    align-items: center;
+    margin: 0;
+  }
+}

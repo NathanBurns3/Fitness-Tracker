@@ -1,0 +1,10 @@
+@media screen and (max-width: 900px) {
+  .title {
+    font-size: 1.25em;
+  }
+
+  .selector {
+    font-size: 0.9em;
+    width: 10em;
+  }
+}

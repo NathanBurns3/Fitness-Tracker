@@ -11,6 +11,7 @@ import { DietEnum } from '../models/diet-enum';
 @Component({
   selector: 'diet-selection',
   templateUrl: './diet-selection.component.html',
+  styleUrls: ['./diet-selection.component.css'],
 })
 export class DietSelectionComponent implements OnInit, OnChanges {
   @Input() originalDietSelection!: string;

@@ -93,23 +93,38 @@
     width: 100%;
     display: grid;
     margin-left: 0;
-    grid-template-columns: 1fr; /* Adjust to a single column layout */
-    grid-template-rows: auto; /* Adjust for automatic row height */
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+  }
+
+  .gender {
+    width: 10em;
+  }
+
+  .age {
+    width: 5em;
+    text-align: center;
   }
 
   .first-name,
-  .last-name,
-  .gender,
-  .age {
-    width: 100%; /* Ensure inputs take full width of the grid column */
-    justify-self: start; /* Aligns items to the start of the grid area */
+  .last-name {
+    width: 14em;
   }
 
-  /* Additional styles to vertically center the text of labels with inputs */
+  .names input,
+  .characteristics input,
+  .names select,
+  .characteristics select {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
   .names h1,
   .characteristics h1 {
     display: flex;
-    align-items: center; /* Centers label text vertically */
-    margin: 0; /* Adjust or remove margin as needed for alignment */
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    width: 100%;
   }
 }

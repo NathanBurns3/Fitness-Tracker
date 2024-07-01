@@ -1,0 +1,22 @@
+@media screen and (max-width: 900px) {
+  .title {
+    font-size: 1.25em;
+  }
+
+  .sub-title {
+    font-size: 1em;
+  }
+}
+
+@media screen and (max-width: 475px) {
+  .measurements {
+    display: grid;
+    place-items: center;
+    margin: 0 auto;
+  }
+
+  .weight-selector {
+    margin-left: 0;
+    margin-top: -3em;
+  }
+}

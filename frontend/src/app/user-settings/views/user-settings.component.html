@@ -7,18 +7,18 @@
         <div class="flex justify-between items-center">
           <button
             routerLink="/"
-            class="button absolute left-6 bg-zinc-300 hover:bg-zinc-400 text-white font-bold py-2 px-4 rounded bg-gradient-to-r from-orange-500 to-orange-700"
+            class="back button absolute left-6 bg-zinc-300 hover:bg-zinc-400 text-white font-bold py-2 px-4 rounded bg-gradient-to-r from-orange-500 to-orange-700"
           >
             <span>Back</span>
           </button>
           <h1
-            class="text-6xl font-bold text-blue-800 absolute left-1/2 transform -translate-x-1/2"
+            class="title text-6xl font-bold text-blue-800 absolute left-1/2 transform -translate-x-1/2"
           >
             Settings
           </h1>
-          <div class="absolute right-5">
+          <div *ngIf="!mobile" class="absolute right-5">
             <button
-              class="rounded-lg border text-center p-2 w-20 mr-2 font-bold bg-gradient-to-r from-blue-500 to-blue-700 text-white hover:from-blue-700 hover:to-blue-900 shadow-lg transition duration-500 ease-in-out transform hover:-translate-y-0.5 hover:scale-105"
+              class="button rounded-lg border text-center p-2 w-20 mr-2 font-bold bg-gradient-to-r from-blue-500 to-blue-700 text-white hover:from-blue-700 hover:to-blue-900 shadow-lg transition duration-500 ease-in-out transform hover:-translate-y-0.5 hover:scale-105"
               (click)="saveSettings()"
               [class.opacity-50]="!userSettingsChanged || !pageValid"
               [class.pointer-events-none]="!userSettingsChanged || !pageValid"
@@ -27,7 +27,7 @@
               Save
             </button>
             <button
-              class="rounded-lg border text-center p-2 w-20 mr-2 font-bold bg-gradient-to-r from-orange-500 to-orange-700 text-white hover:from-orange-700 hover:to-orange-900 shadow-lg transition duration-500 ease-in-out transform hover:-translate-y-0.5 hover:scale-105"
+              class="button rounded-lg border text-center p-2 w-20 mr-2 font-bold bg-gradient-to-r from-orange-500 to-orange-700 text-white hover:from-orange-700 hover:to-orange-900 shadow-lg transition duration-500 ease-in-out transform hover:-translate-y-0.5 hover:scale-105"
               (click)="cancelSettings()"
               [class.opacity-50]="!userSettingsChanged"
               [class.pointer-events-none]="!userSettingsChanged"
@@ -67,7 +67,7 @@
           ></physical-measurements>
         </div>
       </div>
-      <div class="col-span-3 mx-3">
+      <div class="section-2 col-span-3 mx-3">
         <div
           class="activity-goal border border-zinc-300 rounded-lg shadow-lg col-span-3 p-4 h-[45%] mb-4"
         >
@@ -90,6 +90,26 @@
           <account-management></account-management>
         </div>
       </div>
+    </div>
+    <div *ngIf="mobile" class="space-x-5">
+      <button
+        class="rounded-lg border text-center p-2 w-20 mr-2 font-bold bg-gradient-to-r from-blue-500 to-blue-700 text-white hover:from-blue-700 hover:to-blue-900 shadow-lg transition duration-500 ease-in-out transform hover:-translate-y-0.5 hover:scale-105"
+        (click)="saveSettings()"
+        [class.opacity-50]="!userSettingsChanged || !pageValid"
+        [class.pointer-events-none]="!userSettingsChanged || !pageValid"
+        [disabled]="!userSettingsChanged || !pageValid"
+      >
+        Save
+      </button>
+      <button
+        class="rounded-lg border text-center p-2 w-20 mr-2 font-bold bg-gradient-to-r from-orange-500 to-orange-700 text-white hover:from-orange-700 hover:to-orange-900 shadow-lg transition duration-500 ease-in-out transform hover:-translate-y-0.5 hover:scale-105"
+        (click)="cancelSettings()"
+        [class.opacity-50]="!userSettingsChanged"
+        [class.pointer-events-none]="!userSettingsChanged"
+        [disabled]="!userSettingsChanged"
+      >
+        Cancel
+      </button>
     </div>
   </div>
 </body>

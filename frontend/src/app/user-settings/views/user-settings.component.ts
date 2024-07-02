@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { IUserSettings } from '../models/user-settings';
 import { UserSettingsService } from '../services/user-settings.service';
 import { IContactInformation } from '../models/contact-information';
@@ -18,6 +18,12 @@ export class UserSettingsComponent implements OnInit {
   userSettingsChanged: boolean = false;
   pageValid: boolean = true;
   validEmail: boolean = true;
+  mobile: boolean = window.innerWidth < 700;
+
+  @HostListener('window:resize', ['$event'])
+  onResize() {
+    this.mobile = window.innerWidth < 700;
+  }
 
   constructor(
     private userSettingsService: UserSettingsService,

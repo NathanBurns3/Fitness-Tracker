@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { Chart, registerables } from 'chart.js';
 import { YearlyEatingGoalsService } from '../services/yearly-eating-goals.service';
 import { YearlyExercisesService } from '../services/yearly-exercise.service';
@@ -12,12 +12,15 @@ Chart.register(...registerables);
 export class YearlySummaryComponent implements OnInit, OnDestroy {
   ExercisesCompleted!: number[];
   EatingGoalsCompleted!: number[];
-  myChart!: Chart | null;
+  myChart!: Chart;
+  screenWidth!: number;
 
   constructor(
     private yearlyExercisesService: YearlyExercisesService,
     private yearlyEatingGoalsService: YearlyEatingGoalsService
-  ) {}
+  ) {
+    this.onResize();
+  }
 
   ngOnInit(): void {
     this.ExercisesCompleted = this.yearlyExercisesService.getYearlyExercises();
@@ -35,7 +38,23 @@ export class YearlySummaryComponent implements OnInit, OnDestroy {
     }
   }
 
+  @HostListener('window:resize', ['$event'])
+  onResize() {
+    this.screenWidth = window.innerWidth;
+    this.debouncedCreateChart();
+  }
+
+  isSmallScreen() {
+    return this.screenWidth < 450;
+  }
+
+  debouncedCreateChart = this.debounce(() => this.createChart(), 200);
+
   createChart(): void {
+    if (this.myChart) {
+      this.myChart.destroy();
+    }
+
     var ctx = document.getElementById('myChart') as HTMLCanvasElement;
     var gradient1 = ctx?.getContext('2d')?.createLinearGradient(0, 0, 0, 400);
     gradient1?.addColorStop(0, 'rgba(21, 101, 192, 0.5)');
@@ -97,5 +116,17 @@ export class YearlySummaryComponent implements OnInit, OnDestroy {
         maintainAspectRatio: false,
       },
     });
+  }
+
+  debounce(func: Function, wait: number) {
+    let timeout: any;
+    return function (...args: any) {
+      const later = () => {
+        clearTimeout(timeout);
+        func(...args);
+      };
+      clearTimeout(timeout);
+      timeout = setTimeout(later, wait);
+    };
   }
 }

@@ -95,12 +95,14 @@ export class MonthlySummaryComponent implements OnInit, OnDestroy {
   @HostListener('window:resize', ['$event'])
   onResize() {
     this.screenWidth = window.innerWidth;
-    this.createChart();
+    this.debouncedCreateChart();
   }
 
   isSmallScreen() {
     return this.screenWidth < 450;
   }
+
+  debouncedCreateChart = this.debounce(() => this.createChart(), 200);
 
   generateDaysOfMonth(year: number, month: number): IMonthlyBreakdownInfo[] {
     const daysInMonth = new Date(year, month + 1, 0).getDate();
@@ -124,14 +126,38 @@ export class MonthlySummaryComponent implements OnInit, OnDestroy {
   getExercisePercentage(): number[] {
     const percentages: number[] = [];
     const exerciseInfo = Object.values(this.monthlyExerciseInfo);
-    const exerciseInfoLength = exerciseInfo.length - 1;
-    const totalSets = exerciseInfo[exerciseInfoLength];
-    for (let i = 0; i < exerciseInfoLength; i++) {
-      const percentage = Math.round((exerciseInfo[i] / totalSets) * 100);
-      if (percentage !== 0) {
+    const exerciseNames = Object.keys(this.monthlyExerciseInfo);
+    const filteredExercisesSet: Set<string> = new Set();
+    const totalSets = exerciseInfo.reduce((acc, curr) => acc + curr, 0);
+    let totalPercentage = 0;
+
+    for (let i = 0; i < exerciseInfo.length; i++) {
+      if (exerciseInfo[i] !== 0) {
+        const percentage = parseFloat(
+          ((exerciseInfo[i] / totalSets) * 100).toFixed(1)
+        );
         percentages.push(percentage);
+        totalPercentage += percentage;
+
+        let exerciseName = exerciseNames[i].toLowerCase();
+
+        if (exerciseName.includes('ab')) {
+          exerciseName = 'Abs';
+        } else if (exerciseName.includes('back')) {
+          exerciseName = 'Back';
+        } else {
+          exerciseName = exerciseName.replace('sets', '');
+          exerciseName =
+            exerciseName.charAt(0).toUpperCase() + exerciseName.slice(1);
+          exerciseName += 's';
+        }
+
+        filteredExercisesSet.add(exerciseName);
       }
     }
+
+    this.exercises = [...filteredExercisesSet];
+
     return percentages;
   }
 
@@ -166,5 +192,17 @@ export class MonthlySummaryComponent implements OnInit, OnDestroy {
 
       this.chart = new Chart('myChart', config);
     }
+  }
+
+  debounce(func: Function, wait: number) {
+    let timeout: any;
+    return function (...args: any) {
+      const later = () => {
+        clearTimeout(timeout);
+        func(...args);
+      };
+      clearTimeout(timeout);
+      timeout = setTimeout(later, wait);
+    };
   }
 }

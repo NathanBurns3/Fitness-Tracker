@@ -7,6 +7,7 @@ import { IPhysicalMeasurements } from '../models/physical-measurements';
 import { IActivityGoal } from '../models/activity-goals';
 import validator from 'validator';
 import { DailyEatingInfoService } from 'src/app/home-page/summaries/daily/services/daily-eating-info.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'user-settings',
@@ -27,7 +28,8 @@ export class UserSettingsComponent implements OnInit {
 
   constructor(
     private userSettingsService: UserSettingsService,
-    private dailyEatingInfoService: DailyEatingInfoService
+    private dailyEatingInfoService: DailyEatingInfoService,
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -103,10 +105,16 @@ export class UserSettingsComponent implements OnInit {
     this.userSettingsService.updateUserSettings(this.userSettings);
     this.userSettingsChanged = false;
     this.dailyEatingInfoService.calculateMacros(this.userSettings);
+    this.snackBar.open('Your settings was updated!', '', {
+      duration: 2000,
+    });
   }
 
   cancelSettings(): void {
     this.ngOnInit();
     this.userSettingsChanged = false;
+    this.snackBar.open('Your changes were canceled!', '', {
+      duration: 2000,
+    });
   }
 }

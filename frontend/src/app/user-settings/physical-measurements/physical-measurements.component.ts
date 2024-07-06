@@ -46,11 +46,43 @@ export class PhysicalMeasurementsComponent implements OnInit, OnChanges {
     this.physicalMeasurementsChange.emit(this.physicalMeasurements);
   }
 
-  numberOnly(event: KeyboardEvent): boolean {
-    const charCode = event.which ? event.which : event.keyCode;
-    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
-      return false;
+  preventInvalidCharacters(event: KeyboardEvent) {
+    if (event.key === '-' || event.key === '.' || event.key === 'e') {
+      event.preventDefault();
     }
-    return true;
+  }
+
+  checkMaxLengthFeet(event: any): void {
+    const maxLength = 1;
+    let value = Number(event.target.value);
+    if (value.toString().length > maxLength) {
+      let truncatedValue = Number(value.toString().slice(0, maxLength));
+      event.target.value = truncatedValue;
+      this.heightFeet = Math.trunc(truncatedValue);
+    }
+    this.updatePhysicalMeasurements();
+  }
+
+  checkMaxLengthInches(event: any): void {
+    const maxLength = 2;
+    let value = Number(event.target.value);
+    if (value.toString().length > maxLength || value > 11) {
+      let truncatedValue =
+        value > 11 ? 11 : Number(value.toString().slice(0, maxLength));
+      event.target.value = truncatedValue;
+      this.heightInches = Math.trunc(truncatedValue);
+    }
+    this.updatePhysicalMeasurements();
+  }
+
+  checkMaxLengthWeight(event: any): void {
+    const maxLength = 3;
+    let value = Number(event.target.value);
+    if (value.toString().length > maxLength) {
+      let truncatedValue = Number(value.toString().slice(0, maxLength));
+      event.target.value = truncatedValue;
+      this.physicalMeasurements.weight = Math.trunc(truncatedValue);
+    }
+    this.updatePhysicalMeasurements();
   }
 }

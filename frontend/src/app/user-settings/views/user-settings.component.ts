@@ -40,6 +40,7 @@ export class UserSettingsComponent implements OnInit {
       activityGoal: this.userSettingsService.getActivityGoal(),
       dietPlan: this.userSettingsService.getDietPlan(),
     };
+    console.log(this.userSettings.activityGoal);
   }
 
   updateContactInformation(

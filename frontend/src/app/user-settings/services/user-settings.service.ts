@@ -7,6 +7,7 @@ import { WeightGoalEnum } from '../models/weight-goal-enum';
 import { IPhysicalMeasurements } from '../models/physical-measurements';
 import { IUserSettings } from '../models/user-settings';
 import { DietEnum } from '../models/diet-enum';
+import { GenderEnum } from '../models/gender-enum';
 
 @Injectable({
   providedIn: 'root',
@@ -15,7 +16,7 @@ export class UserSettingsService {
   personalInformation: IPersonalInformation = {
     firstName: 'John',
     lastName: 'Doe',
-    gender: 'Male',
+    gender: GenderEnum.Male,
     age: 21,
     profilePicture: './assets/testProfilePicture.jpg',
   };

@@ -7,6 +7,7 @@ import {
   Output,
 } from '@angular/core';
 import { IPersonalInformation } from '../models/personal-information';
+import { GenderEnum } from '../models/gender-enum';
 
 @Component({
   selector: 'personal-information',
@@ -20,7 +21,12 @@ export class PersonalInformationComponent implements OnInit, OnChanges {
 
   personalInformation!: IPersonalInformation;
   previewImage: string = '';
-  genderOptions: string[] = ['Male', 'Female', 'Other'];
+  genderLabels = {
+    [GenderEnum.Male]: 'Male',
+    [GenderEnum.Female]: 'Female',
+    [GenderEnum.Other]: 'Other',
+  };
+  //genderOptions: string[] = ['Male', 'Female', 'Other'];
 
   ngOnInit(): void {
     this.personalInformation = { ...this.originalPersonalInformation };
@@ -52,11 +58,20 @@ export class PersonalInformationComponent implements OnInit, OnChanges {
     this.personalInformationChange.emit(this.personalInformation);
   }
 
-  numberOnly(event: KeyboardEvent): boolean {
-    const charCode = event.which ? event.which : event.keyCode;
-    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
-      return false;
+  preventInvalidCharacters(event: KeyboardEvent) {
+    if (event.key === '-' || event.key === '.' || event.key === 'e') {
+      event.preventDefault();
     }
-    return true;
+  }
+
+  checkMaxLength(event: any): void {
+    const maxLength = 3;
+    let value = Number(event.target.value);
+    if (value.toString().length > maxLength) {
+      let truncatedValue = Number(value.toString().slice(0, maxLength));
+      event.target.value = truncatedValue;
+      this.personalInformation.age = Math.trunc(truncatedValue);
+    }
+    this.updatePersonalInformation();
   }
 }

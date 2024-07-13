@@ -95,24 +95,50 @@ export class DailySummaryComponent implements OnInit, OnDestroy {
   @HostListener('window:resize', ['$event'])
   onResize() {
     this.screenWidth = window.innerWidth;
-    this.createChart();
+    this.debouncedCreateChart();
   }
 
   isSmallScreen() {
     return this.screenWidth < 450;
   }
 
+  debouncedCreateChart = this.debounce(() => this.createChart(), 200);
+
   getExercisePercentage(): number[] {
     const percentages: number[] = [];
     const exerciseInfo = Object.values(this.dailyExerciseInfo);
-    const exerciseInfoLength = exerciseInfo.length - 1;
-    const totalSets = exerciseInfo[exerciseInfoLength];
-    for (let i = 0; i < exerciseInfoLength; i++) {
-      const percentage = Math.round((exerciseInfo[i] / totalSets) * 100);
-      if (percentage !== 0) {
+    const exerciseNames = Object.keys(this.dailyExerciseInfo);
+    const filteredExercisesSet: Set<string> = new Set();
+    const totalSets = exerciseInfo.reduce((acc, curr) => acc + curr, 0);
+    let totalPercentage = 0;
+
+    for (let i = 0; i < exerciseInfo.length; i++) {
+      if (exerciseInfo[i] !== 0) {
+        const percentage = parseFloat(
+          ((exerciseInfo[i] / totalSets) * 100).toFixed(1)
+        );
         percentages.push(percentage);
+        totalPercentage += percentage;
+
+        let exerciseName = exerciseNames[i].toLowerCase();
+
+        if (exerciseName.includes('ab')) {
+          exerciseName = 'Abs';
+        } else if (exerciseName.includes('back')) {
+          exerciseName = 'Back';
+        } else {
+          exerciseName = exerciseName.replace('sets', '');
+          exerciseName =
+            exerciseName.charAt(0).toUpperCase() + exerciseName.slice(1);
+          exerciseName += 's';
+        }
+
+        filteredExercisesSet.add(exerciseName);
       }
     }
+
+    this.exercises = [...filteredExercisesSet];
+
     return percentages;
   }
 
@@ -136,35 +162,57 @@ export class DailySummaryComponent implements OnInit, OnDestroy {
   }
 
   createChart(): void {
-    if (this.chart) {
-      this.chart.destroy();
-    }
-    if (this.isSmallScreen()) {
-      let xValues = this.exercises;
-      let yValues = this.exercisePercentage;
-      let barColors = this.colorsHex;
+    setTimeout(() => {
+      const canvas = document.getElementById('myChart') as HTMLCanvasElement;
+      if (canvas) {
+        const context = canvas.getContext('2d');
+        if (context) {
+          if (this.chart) {
+            this.chart.destroy();
+          }
+          if (this.isSmallScreen()) {
+            let xValues = this.exercises;
+            let yValues = this.exercisePercentage;
+            let barColors = this.colorsHex;
 
-      let config: ChartConfiguration = {
-        type: 'pie',
-        data: {
-          labels: xValues,
-          datasets: [
-            {
-              backgroundColor: barColors,
-              data: yValues,
-            },
-          ],
-        },
-        options: {
-          plugins: {
-            legend: {
-              display: false,
-            },
-          },
-        },
+            let config: ChartConfiguration = {
+              type: 'pie',
+              data: {
+                labels: xValues,
+                datasets: [
+                  {
+                    backgroundColor: barColors,
+                    data: yValues,
+                  },
+                ],
+              },
+              options: {
+                plugins: {
+                  legend: {
+                    display: false,
+                  },
+                },
+              },
+            };
+
+            this.chart = new Chart(context, config);
+          }
+        } else {
+          console.error('Failed to acquire context from the given item');
+        }
+      }
+    }, 0);
+  }
+
+  debounce(func: Function, wait: number) {
+    let timeout: any;
+    return function (...args: any) {
+      const later = () => {
+        clearTimeout(timeout);
+        func(...args);
       };
-
-      this.chart = new Chart('myChart', config);
-    }
+      clearTimeout(timeout);
+      timeout = setTimeout(later, wait);
+    };
   }
 }

@@ -7,18 +7,17 @@ import { IExerciseInfo } from '../models/exercise-info';
 export class DailyExerciseInfoService {
   getDailyExerciseInfo(): IExerciseInfo {
     return {
-      chestSets: 3,
-      calvesSets: 3,
-      hamstringSets: 1,
-      quadSets: 2,
-      gluteSets: 1,
-      shoulderSets: 1,
-      tricepSets: 1,
-      forearmsSets: 2,
+      chestSets: 1,
+      calveSets: 2,
+      hamstringSets: 3,
+      quadSets: 4,
+      gluteSets: 2,
+      shoulderSets: 3,
+      tricepSets: 2,
+      forearmSets: 5,
       bicepSets: 1,
-      backSets: 1,
-      absSets: 1,
-      totalSets: 10,
+      backSets: 4,
+      abSets: 1,
     };
   }
 }

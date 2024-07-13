@@ -1,14 +1,13 @@
 export interface IExerciseInfo {
   chestSets: number;
-  calvesSets: number;
+  calveSets: number;
   hamstringSets: number;
   quadSets: number;
   gluteSets: number;
   shoulderSets: number;
   tricepSets: number;
-  forearmsSets: number;
+  forearmSets: number;
   bicepSets: number;
   backSets: number;
-  absSets: number;
-  totalSets: number;
+  abSets: number;
 }

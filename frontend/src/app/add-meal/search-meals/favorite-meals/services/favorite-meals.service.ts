@@ -231,4 +231,8 @@ export class FavoriteMealsService {
       duration: 2000,
     });
   }
+
+  getNumberOfFavoriteMeals(): number {
+    return this.favoriteMeals.length;
+  }
 }

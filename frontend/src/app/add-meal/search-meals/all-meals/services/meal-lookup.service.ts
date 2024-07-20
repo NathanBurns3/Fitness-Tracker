@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { DailyFoodService } from 'src/app/add-meal/meal-list/services/daily-food.service';
 import { IFood, Nutrient_Ids } from 'src/app/add-meal/models/food';
 @Injectable({
@@ -11,7 +12,8 @@ export class MealLookupService {
 
   constructor(
     private http: HttpClient,
-    private dailyFoodService: DailyFoodService
+    private dailyFoodService: DailyFoodService,
+    private snackBar: MatSnackBar
   ) {}
 
   searchMeals(meal: string) {

@@ -24,15 +24,16 @@ export class CustomMealsComponent implements OnInit {
   }
 
   addCustomMeal(): void {
+    //will need to give it an id
     const customMeal: ICustomMeal = {
-      id: 100, // generate a new id
-      name: '', // set initial name
-      servingSize: 1, // set initial serving size
-      servingUnit: '', // set initial serving unit
-      food: [], // set initial food
+      id: 100,
+      name: '',
+      servingSize: 1,
+      servingUnit: '',
+      food: [],
     };
     this.dialog.open(CustomMealDetailsComponent, {
-      data: { meal: customMeal, title: 'Add Custom Meal' },
+      data: { meal: customMeal, title: 'Add Custom Meal', action: 'add' },
       width: '950px',
       height: '750px',
     });

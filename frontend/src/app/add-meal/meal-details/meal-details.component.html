@@ -30,7 +30,10 @@
           type="number"
           min="1"
           placeholder="{{ food.servingSize }}"
-          (ngModelChange)="updateNutritions($event)"
+          min="1"
+          step="1"
+          (keydown)="preventInvalidCharacters($event)"
+          (input)="checkMaxLength($event)"
         />
       </form>
       <h2 class="amount-label text-xl font-bold text-blue-800 ml-2">
@@ -81,6 +84,18 @@
     [ngClass]="buttonStyles[button.action]"
     class="buttons"
     (click)="executeAction(button.action)"
+    [disabled]="
+      !this.clonedFood.servingSize &&
+      (button.action === 'saveFood' || button.action === 'addFood')
+    "
+    [class.opacity-50]="
+      !this.clonedFood.servingSize &&
+      (button.action === 'saveFood' || button.action === 'addFood')
+    "
+    [class.pointer-events-none]="
+      !this.clonedFood.servingSize &&
+      (button.action === 'saveFood' || button.action === 'addFood')
+    "
   >
     {{ button.text }}
   </button>

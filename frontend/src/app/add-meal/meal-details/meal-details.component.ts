@@ -12,6 +12,7 @@ import { MealLookupService } from '../search-meals/all-meals/services/meal-looku
 import { DailyFoodService } from '../meal-list/services/daily-food.service';
 import { CustomMealDetailsComponent } from '../custom-meal-details/custom-meal-details.component';
 import { ICustomMeal } from '../models/custom-meal';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'meal-details',
@@ -47,7 +48,8 @@ export class MealDetailsComponent {
     private customMealService: CustomMealService,
     private mealLookupService: MealLookupService,
     private dailyFoodService: DailyFoodService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private snackBar: MatSnackBar
   ) {
     this.food = this.setValues(this.data.food);
     this.clonedFood = JSON.parse(JSON.stringify(this.food));
@@ -133,11 +135,23 @@ export class MealDetailsComponent {
   }
 
   addFood() {
+    if (this.dailyFoodService.getNumberOfFoods() >= 50) {
+      this.snackBar.open('Maxed out the amount of meals for the day!', '', {
+        duration: 2000,
+      });
+      return;
+    }
     this.mealLookupService.addMeal(this.clonedFood);
     this.closeMealDetails();
   }
 
   addFavoriteFood() {
+    if (this.favoriteMealsService.getNumberOfFavoriteMeals() >= 50) {
+      this.snackBar.open('Maxed out the amount of favorite meals!', '', {
+        duration: 2000,
+      });
+      return;
+    }
     this.favoriteMealsService.addFavoriteMeal(this.food);
   }
 
@@ -179,5 +193,22 @@ export class MealDetailsComponent {
   removeFood() {
     this.dailyFoodService.deleteFood(this.food);
     this.closeMealDetails();
+  }
+
+  preventInvalidCharacters(event: KeyboardEvent) {
+    if (event.key === '-' || event.key === '.' || event.key === 'e') {
+      event.preventDefault();
+    }
+  }
+
+  checkMaxLength(event: any): void {
+    const maxLength = 4;
+    let value = Number(event.target.value);
+    if (value.toString().length > maxLength) {
+      let truncatedValue = Number(value.toString().slice(0, maxLength));
+      event.target.value = truncatedValue;
+      this.clonedFood.servingSize = Math.trunc(truncatedValue);
+    }
+    this.updateNutritions(this.clonedFood.servingSize);
   }
 }

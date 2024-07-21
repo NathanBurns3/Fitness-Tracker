@@ -314,11 +314,22 @@ export class CustomMealService {
     }
   }
 
-  updateCustomMeal(meal: ICustomMeal): void {
+  updateCustomMeal(meal: ICustomMeal, action: string): void {
+    if (action === 'add') {
+      this.customMeals.push(meal);
+      this.snackBar.open(meal.name + ' was added!', '', {
+        duration: 2000,
+      });
+      return;
+    }
     const index: number = this.customMeals.findIndex((m) => m.id === meal.id);
     this.customMeals[index] = meal;
     this.snackBar.open(meal.name + ' was updated!', '', {
       duration: 2000,
     });
+  }
+
+  getNumberOfCustomMeals(): number {
+    return this.customMeals.length;
   }
 }

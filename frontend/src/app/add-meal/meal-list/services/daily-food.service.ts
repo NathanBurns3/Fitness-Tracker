@@ -232,4 +232,8 @@ export class DailyFoodService {
       duration: 2000,
     });
   }
+
+  getNumberOfFoods(): number {
+    return this.foods.length;
+  }
 }

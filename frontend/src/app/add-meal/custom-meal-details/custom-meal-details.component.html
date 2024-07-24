@@ -19,26 +19,20 @@
       class="meal-title text-3xl font-semibold text-blue-900 mb-5 -mt-7 text-center rounded-lg border focus:ring-2 shadow-sm transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-102 placeholder-gray-400 placeholder-opacity-50"
       [(ngModel)]="clonedMeal.name"
       placeholder="custom food name"
+      maxlength="50"
     />
 
     <div class="flex items-center mb-4">
       <h2 class="amount-label text-xl font-bold text-blue-800 mr-2">
         Serving Size:
       </h2>
-      <form>
-        <input
-          [(ngModel)]="clonedMeal.servingSize"
-          name="servingSize"
-          class="amount rounded-lg border p-2 text-lg text-orange-800 focus:ring-2 focus:ring-orange-500 w-20 shadow-sm transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-102 text-right"
-          type="number"
-          min="1"
-          placeholder="{{ clonedMeal.servingSize }}"
-          (ngModelChange)="updateNutritions($event)"
-        />
-      </form>
+      <h2 class="amount-label text-xl font-bold text-orange-800 mr-2">
+        {{ clonedMeal.servingSize }}
+      </h2>
       <select
         [(ngModel)]="clonedMeal.servingUnit"
         class="amount-label text-lg p-2 font-bold text-blue-800 ml-2 border rounded-lg focus:ring-2 focus:ring-orange-500 w-20 shadow-sm transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-102 text-right"
+        (ngModelChange)="updateServingSize()"
       >
         <option value="" disabled selected>Unit</option>
         <option *ngFor="let unit of servingUnits">{{ unit }}</option>
@@ -84,6 +78,15 @@
       class="w-full overflow-auto max-h-[calc(100vh-33rem)] border border-zinc-200 rounded-xl shadow-sm mt-5 -mb-5"
     >
       <div
+        *ngIf="maxedFood"
+        class="bg-gray-500 rounded-lg shadow-md p-2 my-4 mx-6 flex items-center justify-center"
+      >
+        <h1 class="text-sm font-bold text-white text-center">
+          You have maxed out the amount of food items for a single meal.
+        </h1>
+      </div>
+      <div
+        *ngIf="!maxedFood"
         class="bg-gradient-to-r from-blue-500 to-blue-700 rounded-lg shadow-md p-2 my-4 mx-6 flex items-center justify-between space-x-2"
       >
         <div class="w-8/12 flex items-center">
@@ -93,11 +96,35 @@
             placeholder="food name"
             [(ngModel)]="mealSearch"
             (input)="showDropdown = false"
+            [class.opacity-50]="
+              clonedMeal.servingUnit === '' || clonedMeal.servingUnit == null
+            "
+            [class.cursor-not-allowed]="
+              clonedMeal.servingUnit === '' || clonedMeal.servingUnit == null
+            "
+            [disabled]="
+              clonedMeal.servingUnit === '' || clonedMeal.servingUnit == null
+            "
           />
           <button
-            [disabled]="!mealSearch"
+            [disabled]="
+              !mealSearch ||
+              clonedMeal.servingUnit === '' ||
+              clonedMeal.servingUnit == null
+            "
+            [class.cursor-not-allowed]="
+              !mealSearch ||
+              clonedMeal.servingUnit === '' ||
+              clonedMeal.servingUnit == null
+            "
+            [class]="
+              !mealSearch ||
+              clonedMeal.servingUnit === '' ||
+              clonedMeal.servingUnit == null
+                ? 'bg-white shadow-sm h-5 w-5 -ml-2 rounded-r-lg overflow-hidden text-blue-500 flex items-center justify-center'
+                : 'bg-white shadow-sm h-5 w-5 -ml-2 rounded-r-lg overflow-hidden text-blue-500 flex items-center justify-center hover:shadow-md hover:scale-105'
+            "
             (click)="Lookup(mealSearch); showDropdown = !showDropdown"
-            class="bg-white shadow-sm h-5 w-5 -ml-2 rounded-r-lg overflow-hidden text-blue-500 flex items-center justify-center hover:shadow-md hover:scale-105"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -123,6 +150,8 @@
             [(ngModel)]="amount"
             (input)="showDropdown = false"
             min="1"
+            (keydown)="preventInvalidCharacters($event)"
+            (input)="checkMaxLengthAddingFood($event)"
           />
           <div class="text-white mr-3">
             {{ foodChosen.servingUnit }}

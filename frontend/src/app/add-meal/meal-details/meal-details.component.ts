@@ -43,7 +43,7 @@ export class MealDetailsComponent {
   constructor(
     public dialogRef: MatDialogRef<MealDetailsComponent>,
     @Inject(MAT_DIALOG_DATA)
-    public data: { food: IFood; buttons: Ibutton[]; customFoodID: number },
+    public data: { food: IFood; buttons: Ibutton[]; customFoodID: string },
     private favoriteMealsService: FavoriteMealsService,
     private customMealService: CustomMealService,
     private mealLookupService: MealLookupService,
@@ -105,7 +105,7 @@ export class MealDetailsComponent {
 
   convertCustomFoodToFood(meal: ICustomMeal): IFood {
     return {
-      fdcID: meal.id,
+      fdcID: +meal.id,
       description: meal.name,
       brandName: 'Custom',
       servingSize: meal.servingSize,

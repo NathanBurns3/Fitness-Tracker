@@ -1,7 +1,7 @@
 import { IFood } from './food';
 
 export interface ICustomMeal {
-  id: number;
+  id: string;
   name: string;
   servingUnit: string;
   servingSize: number;

@@ -5,6 +5,7 @@ import { IFood } from '../models/food';
 import { MealLookupService } from '../search-meals/all-meals/services/meal-lookup.service';
 import { CustomMealService } from '../search-meals/custom-meals/services/custom-meals.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { convertUnit } from 'src/app/helpers/unit-converter';
 
 @Component({
   selector: 'custom-meal-details',
@@ -14,6 +15,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class CustomMealDetailsComponent {
   title: string;
   customFood: ICustomMeal;
+  action: string = '';
   totalNutritions: IFood['nutritions'] = {
     calories: 0,
     protein: 0,
@@ -29,6 +31,9 @@ export class CustomMealDetailsComponent {
   submitButtonPressed: boolean = false;
   foodSelected: boolean = false;
   amount: string = '';
+  previousServingSize: number = 0;
+  previousServingUnit: string = '';
+  maxedFood: boolean = false;
   foodChosen: IFood = {
     fdcID: 0,
     description: '',
@@ -66,31 +71,20 @@ export class CustomMealDetailsComponent {
   constructor(
     public dialogRef: MatDialogRef<CustomMealDetailsComponent>,
     @Inject(MAT_DIALOG_DATA)
-    public data: { meal: ICustomMeal; title: string },
+    public data: { meal: ICustomMeal; title: string; action: string },
     private mealLookupService: MealLookupService,
     private customMealService: CustomMealService,
     private snackBar: MatSnackBar
   ) {
     this.title = data.title;
     this.customFood = data.meal;
+    this.action = data.action;
     this.clonedMeal = JSON.parse(JSON.stringify(this.customFood));
     this.foods = this.clonedMeal.food;
     this.totalNutritions = this.calculateTotalNutritions(this.clonedMeal.food);
-  }
-
-  updateNutritions(servingSize: number) {
-    if (servingSize <= 0) {
-      return;
-    }
-    const servingRatio = servingSize / this.customFood.servingSize;
-    this.clonedMeal.servingSize = servingSize;
-    for (const key in this.totalNutritions) {
-      const updatedNutrition =
-        this.totalNutritions[key as keyof typeof this.totalNutritions] *
-        servingRatio;
-      this.totalNutritions[key as keyof typeof this.totalNutritions] =
-        +parseFloat(updatedNutrition.toFixed(2));
-    }
+    this.previousServingSize = this.customFood.servingSize;
+    this.previousServingUnit = this.customFood.servingUnit;
+    this.maxedFood = this.foods.length >= 25;
   }
 
   calculateTotalNutritions(food: IFood[]): IFood['nutritions'] {
@@ -166,10 +160,10 @@ export class CustomMealDetailsComponent {
     food = await this.mealLookupService.updateNutritions(food);
     this.foodSelected = true;
     this.foodChosen = food;
+    this.mealSearch = food.description;
   }
 
   addFood(amount: string) {
-    console.log(this.foodChosen);
     let food: IFood = {
       fdcID: this.foodChosen.fdcID,
       description: this.foodChosen.description,
@@ -212,11 +206,12 @@ export class CustomMealDetailsComponent {
       },
     };
     this.clonedMeal.food.push(food);
-    console.log(food);
     this.snackBar.open(food.description + ' was added!', '', {
       duration: 2000,
     });
     this.totalNutritions = this.calculateTotalNutritions(this.foods);
+    this.updateServingSize(food, 'add');
+    this.maxedFood = this.clonedMeal.food.length >= 25;
   }
 
   closeCustomMealDetails() {
@@ -224,7 +219,15 @@ export class CustomMealDetailsComponent {
   }
 
   saveCustomMeal() {
-    this.customMealService.updateCustomMeal(this.clonedMeal);
+    if (this.action === 'add') {
+      if (this.customMealService.getNumberOfCustomMeals() >= 50) {
+        this.snackBar.open('Maxed out the amount of custom meals!', '', {
+          duration: 2000,
+        });
+        return;
+      }
+    }
+    this.customMealService.updateCustomMeal(this.clonedMeal, this.action);
     this.dialogRef.close(this.clonedMeal);
   }
 
@@ -233,6 +236,62 @@ export class CustomMealDetailsComponent {
     if (index > -1) {
       this.clonedMeal.food.splice(index, 1);
     }
+    this.snackBar.open(food.description + ' was removed!', '', {
+      duration: 2000,
+    });
     this.totalNutritions = this.calculateTotalNutritions(this.foods);
+    this.updateServingSize(food, 'delete');
+    this.maxedFood = this.clonedMeal.food.length >= 25;
+  }
+
+  preventInvalidCharacters(event: KeyboardEvent) {
+    if (event.key === '-' || event.key === 'e') {
+      event.preventDefault();
+    }
+  }
+
+  checkMaxLengthAddingFood(event: any): void {
+    const maxLength = 4;
+    let value = Number(event.target.value);
+    if (value.toString().length > maxLength) {
+      let truncatedValue = Number(value.toString().slice(0, maxLength));
+      event.target.value = truncatedValue;
+      this.amount = Math.trunc(truncatedValue).toString();
+    }
+  }
+
+  updateServingSize(food?: IFood, action?: string) {
+    let servingSizeChange = 0;
+    if (food) {
+      const servingSizeDelta =
+        food?.servingUnit === this.previousServingUnit
+          ? food.servingSize
+          : this.convertUnits(food);
+      servingSizeChange =
+        action === 'add' ? servingSizeDelta : -servingSizeDelta;
+
+      this.clonedMeal.servingSize += servingSizeChange;
+      this.previousServingUnit = food.servingUnit;
+    } else if (this.clonedMeal.servingUnit != this.previousServingUnit) {
+      this.clonedMeal.servingSize = this.convertUnits();
+      this.previousServingUnit = this.clonedMeal.servingUnit;
+    }
+    this.previousServingSize = this.clonedMeal.servingSize;
+  }
+
+  convertUnits(food?: IFood): number {
+    if (food) {
+      return convertUnit(
+        food.servingSize,
+        food.servingUnit,
+        this.clonedMeal.servingUnit
+      );
+    } else {
+      return convertUnit(
+        this.previousServingSize,
+        this.previousServingUnit,
+        this.clonedMeal.servingUnit
+      );
+    }
   }
 }

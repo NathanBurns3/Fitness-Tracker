@@ -26,7 +26,7 @@ export class CustomMealsComponent implements OnInit {
   addCustomMeal(): void {
     //will need to give it an id
     const customMeal: ICustomMeal = {
-      id: 100,
+      id: '100',
       name: '',
       servingSize: 1,
       servingUnit: '',
@@ -58,7 +58,7 @@ export class CustomMealsComponent implements OnInit {
 
   convertToIFood(meal: ICustomMeal): IFood {
     return {
-      fdcID: meal.id,
+      fdcID: +meal.id,
       description: meal.name,
       brandName: 'Custom',
       servingSize: meal.servingSize,

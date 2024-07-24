@@ -9,7 +9,7 @@ import { IFood } from 'src/app/add-meal/models/food';
 export class CustomMealService {
   customMeals: ICustomMeal[] = [
     {
-      id: 1,
+      id: '1',
       name: 'Custom Meal 1',
       servingUnit: 'g',
       servingSize: 1,
@@ -49,7 +49,7 @@ export class CustomMealService {
       ],
     },
     {
-      id: 2,
+      id: '2',
       name: 'Custom Meal 2',
       servingUnit: 'g',
       servingSize: 50,
@@ -89,7 +89,7 @@ export class CustomMealService {
       ],
     },
     {
-      id: 3,
+      id: '3',
       name: 'Custom Meal 3',
       servingUnit: 'g',
       servingSize: 10,
@@ -129,7 +129,7 @@ export class CustomMealService {
       ],
     },
     {
-      id: 4,
+      id: '4',
       name: 'Custom Meal 4',
       servingUnit: 'g',
       servingSize: 100,
@@ -169,7 +169,7 @@ export class CustomMealService {
       ],
     },
     {
-      id: 5,
+      id: '5',
       name: 'Custom Meal 5',
       servingUnit: 'g',
       servingSize: 1,
@@ -209,7 +209,7 @@ export class CustomMealService {
       ],
     },
     {
-      id: 6,
+      id: '6',
       name: 'Custom Meal 6',
       servingUnit: 'g',
       servingSize: 1,
@@ -249,7 +249,7 @@ export class CustomMealService {
       ],
     },
     {
-      id: 7,
+      id: '7',
       name: 'Custom Meal 7',
       servingUnit: 'g',
       servingSize: 1,
@@ -296,11 +296,11 @@ export class CustomMealService {
     return this.customMeals;
   }
 
-  getCustomMeal(id: number): ICustomMeal | undefined {
+  getCustomMeal(id: string): ICustomMeal | undefined {
     return this.customMeals.find((m) => m.id === id);
   }
 
-  deleteCustomMeal(id: number): void {
+  deleteCustomMeal(id: string): void {
     const meal: ICustomMeal | undefined = this.customMeals.find(
       (m) => m.id === id
     );

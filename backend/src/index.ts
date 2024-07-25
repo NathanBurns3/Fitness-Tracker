@@ -6,6 +6,7 @@ import bodyParser from 'body-parser';
 import connectDB from './config/db';
 import { port } from './config/env';
 import homeRouter from './api/routes/homeRoutes';
+import exerciseRouter from './api/routes/exerciseRoutes';
 
 const app = express();
 
@@ -14,6 +15,7 @@ app.use(bodyParser.json());
 connectDB();
 
 app.use('/home', homeRouter);
+app.use('/exercise', exerciseRouter);
 
 app.get('/', (req, res) => {
   console.log('Root endpoint hit');

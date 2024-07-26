@@ -122,11 +122,30 @@ export class ExercisesService {
     return this.exercises[selectedMuscleGroup];
   }
 
-  addExercise(muscleGroup: muscleGroupsEnum, exercise: string) {
+  addExercise(muscleGroup: muscleGroupsEnum, exercise: string): boolean {
+    if (this.countExercises(muscleGroup) >= 50) {
+      this.snackBar.open(
+        'Maxed out the amount of exercises for this muscle group!',
+        '',
+        {
+          duration: 2000,
+        }
+      );
+      return false;
+    }
+
+    if (this.exerciseExists(muscleGroup, exercise)) {
+      this.snackBar.open(exercise + ' already exists!', '', {
+        duration: 2000,
+      });
+      return false;
+    }
+
     this.exercises[muscleGroup].push(exercise);
     this.snackBar.open(exercise + ' was added!', '', {
       duration: 2000,
     });
+    return true;
   }
 
   deleteExercise(muscleGroup: muscleGroupsEnum, exercise: string) {
@@ -141,5 +160,9 @@ export class ExercisesService {
     return this.exercises[muscleGroup]
       .map((e) => e.toLowerCase())
       .includes(exercise.toLowerCase());
+  }
+
+  countExercises(muscleGroup: muscleGroupsEnum): number {
+    return this.exercises[muscleGroup].length;
   }
 }

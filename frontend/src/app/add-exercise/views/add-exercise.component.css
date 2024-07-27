@@ -20,7 +20,7 @@
 }
 
 .button span:before {
-  content: "\00ab"; /* Use a left-pointing arrow */
+  content: "\00ab";
   position: absolute;
   opacity: 0;
   top: 0;
@@ -29,7 +29,7 @@
 }
 
 .button:hover span {
-  padding-left: 25px; /* Increase padding on the left side */
+  padding-left: 25px;
 }
 
 .button:hover span:before {

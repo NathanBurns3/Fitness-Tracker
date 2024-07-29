@@ -21,7 +21,7 @@ export class DietSelectionComponent implements OnInit, OnChanges {
     [DietEnum.Balanced]: 'Balanced',
     [DietEnum.LowFat]: 'Low Fat',
     [DietEnum.LowCarbs]: 'Low Carb',
-    [DietEnum.highProtein]: 'High Protein',
+    [DietEnum.HighProtein]: 'High Protein',
   };
   selectedDiet!: DietEnum;
   diet!: string;

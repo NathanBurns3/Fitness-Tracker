@@ -1,6 +1,6 @@
 export enum ActivityLevelEnum {
-  Sedentary = '2',
-  Exercise1To3TimesPerWeek = '3',
-  Exercise4To5TimesPerWeek = '4',
-  IntenseExercise6To7TimesPerWeek = '6',
+  Sedentary = 1.2,
+  Exercise1To3TimesPerWeek = 1.375,
+  Exercise4To5TimesPerWeek = 1.55,
+  IntenseExercise6To7TimesPerWeek = 1.725,
 }

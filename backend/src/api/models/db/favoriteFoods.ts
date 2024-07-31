@@ -1,6 +1,6 @@
 import mongoose, { Schema, Document } from 'mongoose';
 
-interface IFavoriteFoods extends Document {
+interface IFavoriteFoodsDB extends Document {
   userID: mongoose.Types.ObjectId;
   foods: Array<{
     fdcID: number;
@@ -20,34 +20,48 @@ interface IFavoriteFoods extends Document {
   }>;
 }
 
-const FavoriteFoodsSchema: Schema = new Schema({
-  userID: { type: Schema.Types.ObjectId, required: true },
-  foods: [
-    {
-      fdcID: { type: Number, required: true },
-      description: { type: String, required: true },
-      brandName: { type: String, required: true },
-      servingSize: { type: Schema.Types.Mixed, required: true }, // Mixed type for double and int
-      servingUnit: { type: String, required: true },
-      packageWeight: String,
-      ingredients: { type: String, required: true },
-      nutritions: {
-        calories: { type: Schema.Types.Mixed, required: true }, // Mixed type for double and int
-        protein: { type: Schema.Types.Mixed, required: true },
-        carbs: { type: Schema.Types.Mixed, required: true },
-        fat: { type: Schema.Types.Mixed, required: true },
-        fiber: { type: Schema.Types.Mixed, required: true },
-      },
+const FavoriteFoodsSchema: Schema = new Schema(
+  {
+    userID: { type: Schema.Types.ObjectId, required: true },
+    foods: {
+      type: [
+        {
+          _id: false,
+          fdcID: { type: Number, required: true },
+          description: { type: String, required: true },
+          brandName: { type: String, required: true },
+          servingSize: { type: Number, required: true },
+          servingUnit: { type: String, required: true },
+          packageWeight: { type: String },
+          ingredients: { type: String, required: true },
+          nutritions: {
+            type: new Schema(
+              {
+                calories: { type: Number, required: true },
+                protein: { type: Number, required: true },
+                carbs: { type: Number, required: true },
+                fat: { type: Number, required: true },
+                fiber: { type: Number, required: true },
+              },
+              { _id: false }
+            ),
+            required: true,
+          },
+        },
+      ],
+      validate: [arrayLimit50, '{PATH} exceeds the limit of 50'],
     },
-  ],
-  validate: [arrayLimit50, '{PATH} exceeds the limit of 50'],
-});
+  },
+  {
+    collection: 'FavoriteFoods',
+  }
+);
 
 function arrayLimit50(val: any) {
   return val.length <= 50;
 }
 
-export default mongoose.model<IFavoriteFoods>(
+export default mongoose.model<IFavoriteFoodsDB>(
   'FavoriteFoods',
   FavoriteFoodsSchema
 );

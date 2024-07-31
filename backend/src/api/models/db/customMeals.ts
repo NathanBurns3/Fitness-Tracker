@@ -1,8 +1,9 @@
 import mongoose, { Schema, Document } from 'mongoose';
 
-interface ICustomMeals extends Document {
+interface ICustomMealsDB extends Document {
   userID: mongoose.Types.ObjectId;
   meals: Array<{
+    mealID: mongoose.Types.ObjectId;
     mealName: string;
     servingUnit: string;
     foods: Array<{
@@ -24,37 +25,53 @@ interface ICustomMeals extends Document {
   }>;
 }
 
-const CustomMealsSchema: Schema = new Schema({
-  userID: { type: Schema.Types.ObjectId, required: true },
-  meals: [
-    {
-      mealName: { type: String, required: true },
-      servingUnit: { type: String, required: true },
-      foods: [
-        {
-          fdcID: { type: Number, required: true },
-          description: { type: String, required: true },
-          brandName: { type: String, required: true },
-          servingSize: { type: Number, required: true },
-          servingUnit: { type: String, required: true },
-          packageWeight: String,
-          ingredients: { type: String, required: true },
-          nutritions: {
-            calories: { type: Number, required: true },
-            protein: { type: Number, required: true },
-            carbs: { type: Number, required: true },
-            fat: { type: Number, required: true },
-            fiber: { type: Number, required: true },
-          },
+const CustomMealsSchema: Schema = new Schema(
+  {
+    userID: { type: Schema.Types.ObjectId, required: true },
+    meals: [
+      {
+        _id: false,
+        mealID: { type: Schema.Types.ObjectId, required: true },
+        mealName: { type: String, required: true },
+        servingUnit: { type: String, required: true },
+        foods: {
+          type: [
+            {
+              _id: false,
+              fdcID: { type: Number, required: true },
+              description: { type: String, required: true },
+              brandName: { type: String, required: true },
+              servingSize: { type: Number, required: true },
+              servingUnit: { type: String, required: true },
+              packageWeight: { type: String },
+              ingredients: { type: String, required: true },
+              nutritions: {
+                type: new Schema(
+                  {
+                    calories: { type: Number, required: true },
+                    protein: { type: Number, required: true },
+                    carbs: { type: Number, required: true },
+                    fat: { type: Number, required: true },
+                    fiber: { type: Number, required: true },
+                  },
+                  { _id: false }
+                ),
+                required: true,
+              },
+            },
+          ],
+          validate: [arrayLimit50, '{PATH} exceeds the limit of 50'],
         },
-      ],
-      validate: [arrayLimit50, '{PATH} exceeds the limit of 50'],
-    },
-  ],
-});
+      },
+    ],
+  },
+  {
+    collection: 'CustomMeals',
+  }
+);
 
 function arrayLimit50(val: any) {
   return val.length <= 50;
 }
 
-export default mongoose.model<ICustomMeals>('CustomMeals', CustomMealsSchema);
+export default mongoose.model<ICustomMealsDB>('CustomMeals', CustomMealsSchema);

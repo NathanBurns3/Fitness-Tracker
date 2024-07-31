@@ -1,8 +1,9 @@
 import mongoose, { Schema, Document } from 'mongoose';
 
-interface IExercises extends Document {
+interface IExercisesDB extends Document {
   userID: mongoose.Types.ObjectId;
   items: Array<{
+    exerciseID: mongoose.Types.ObjectId;
     muscleGroup:
       | 'Abs'
       | 'Back'
@@ -19,30 +20,37 @@ interface IExercises extends Document {
   }>;
 }
 
-const ExercisesSchema: Schema = new Schema({
-  userID: { type: Schema.Types.ObjectId, required: true },
-  items: [
-    {
-      muscleGroup: {
-        type: String,
-        required: true,
-        enum: [
-          'Abs',
-          'Back',
-          'Biceps',
-          'Calves',
-          'Chest',
-          'Forearms',
-          'Glutes',
-          'Hamstrings',
-          'Quads',
-          'Shoulders',
-          'Triceps',
-        ],
+const ExercisesSchema: Schema = new Schema(
+  {
+    userID: { type: Schema.Types.ObjectId, required: true },
+    items: [
+      {
+        _id: false,
+        exerciseID: { type: Schema.Types.ObjectId, required: true },
+        muscleGroup: {
+          type: String,
+          required: true,
+          enum: [
+            'Abs',
+            'Back',
+            'Biceps',
+            'Calves',
+            'Chest',
+            'Forearms',
+            'Glutes',
+            'Hamstrings',
+            'Quads',
+            'Shoulders',
+            'Triceps',
+          ],
+        },
+        exerciseName: { type: String, required: true },
       },
-      exerciseName: { type: String, required: true },
-    },
-  ],
-});
+    ],
+  },
+  {
+    collection: 'Exercises',
+  }
+);
 
-export default mongoose.model<IExercises>('Exercises', ExercisesSchema);
+export default mongoose.model<IExercisesDB>('Exercises', ExercisesSchema);

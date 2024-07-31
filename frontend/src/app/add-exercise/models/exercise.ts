@@ -1,5 +1,5 @@
 export interface IExercise {
-  exerciseId: number;
+  exerciseID: string;
   muscleGroup: string;
   exerciseName: string;
   sets: number;

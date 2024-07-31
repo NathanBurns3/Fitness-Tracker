@@ -1,5 +1,7 @@
+import mongoose from 'mongoose';
+
 export interface IExercise {
-  exerciseId: number;
+  exerciseID: mongoose.Types.ObjectId;
   muscleGroup: string;
   exerciseName: string;
   sets: number;

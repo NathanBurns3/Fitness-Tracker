@@ -7,6 +7,8 @@ import connectDB from './config/db';
 import { port } from './config/env';
 import homeRouter from './api/routes/homeRoutes';
 import exerciseRouter from './api/routes/exerciseRoutes';
+import mealRouter from './api/routes/mealRouter';
+import settingsRouter from './api/routes/settingsRoutes';
 
 const app = express();
 
@@ -16,6 +18,8 @@ connectDB();
 
 app.use('/home', homeRouter);
 app.use('/exercise', exerciseRouter);
+app.use('/meal', mealRouter);
+app.use('/settings', settingsRouter);
 
 app.get('/', (req, res) => {
   console.log('Root endpoint hit');

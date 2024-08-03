@@ -4,6 +4,7 @@ import { ExercisesService } from '../services/exercises.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ExerciseDetailsComponent } from '../exercise-details/exercise-details.component';
 import { DailyExercisesService } from '../services/daily-exercises.service';
+import { switchMap } from 'rxjs';
 
 @Component({
   selector: 'exercise-list',
@@ -19,10 +20,16 @@ export class ExerciseListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.exercises = this.dailyExerciseService.getExercises();
-    this.dailyExerciseService.exerciseAdded.subscribe(() => {
-      this.exercises = this.dailyExerciseService.getExercises();
-    });
+    this.dailyExerciseService
+      .getExercises()
+      .subscribe((exercises: IExercise[]) => {
+        this.exercises = exercises;
+      });
+    this.dailyExerciseService.exerciseAdded
+      .pipe(switchMap(() => this.dailyExerciseService.getExercises()))
+      .subscribe((exercises: IExercise[]) => {
+        this.exercises = exercises;
+      });
   }
 
   openExerciseDetails(exercise: IExercise): void {

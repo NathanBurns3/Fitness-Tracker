@@ -1,8 +1,3 @@
-/*
-TODO:
-clean up the code
-*/
-
 import { Component, EventEmitter, Output } from '@angular/core';
 import { muscleGroupsEnum } from '../models/muscle-groups-enum';
 import { IExercise } from '../models/exercise';
@@ -12,6 +7,7 @@ import { AddNewExerciseComponent } from '../add-new-exercise/add-new-exercise.co
 import { DeleteExerciseComponent } from '../delete-exercise/delete-exercise.component';
 import { DailyExercisesService } from '../services/daily-exercises.service';
 import { FormControl, Validators } from '@angular/forms';
+import { map } from 'rxjs';
 
 @Component({
   selector: 'exercise-selector',
@@ -25,40 +21,62 @@ export class ExerciseSelectorComponent {
   selectedMuscleGroup = 'Choose a Muscle Group';
   selectedExercise = 'Choose a Exercise';
   exercises: string[] = [];
-  sets: FormControl;
+  sets: FormControl = new FormControl('');
 
   constructor(
     private exercisesService: ExercisesService,
     private dailyExercisesService: DailyExercisesService,
     private dialog: MatDialog
-  ) {
-    this.sets = new FormControl('', [
-      Validators.required,
-      Validators.min(1),
-      Validators.max(999),
-    ]);
-  }
+  ) {}
 
   onMuscleGroupChange() {
-    this.exercises = this.exercisesService.getExercisesById(
-      this.selectedMuscleGroup as muscleGroupsEnum
-    );
+    this.exercisesService
+      .getExercisesById(
+        muscleGroupsEnum[this.selectedMuscleGroup as muscleGroupsEnum]
+      )
+      .pipe(
+        map((exercises: IExercise[]) =>
+          exercises.map((exercise) => exercise.exerciseName)
+        )
+      )
+      .subscribe((exerciseNames: string[]) => {
+        this.exercises = exerciseNames;
+      });
     this.selectedExercise = 'Choose a Exercise';
     this.muscleGroupChange.emit(this.selectedMuscleGroup);
   }
 
   onAddExercise(exerciseName: string): void {
-    if (this.sets.valid) {
-      const newExercise: IExercise = {
-        exerciseId: this.dailyExercisesService.exercises.length + 1,
-        muscleGroup: this.selectedMuscleGroup,
-        exerciseName: exerciseName,
-        sets: this.sets.value,
-      };
-      this.dailyExercisesService.addExercise(newExercise);
-      this.selectedMuscleGroup = 'Choose a Muscle Group';
-      this.selectedExercise = 'Choose a Exercise';
-      this.sets.reset();
+    const newExercise: IExercise = {
+      exerciseID: 'test',
+      muscleGroup: this.selectedMuscleGroup,
+      exerciseName: exerciseName,
+      sets: this.sets.value,
+    };
+    this.dailyExercisesService
+      .addExercise(newExercise)
+      .subscribe((success: boolean) => {
+        if (success) {
+          this.selectedMuscleGroup = 'Choose a Muscle Group';
+          this.selectedExercise = 'Choose a Exercise';
+          this.sets.reset();
+        }
+      });
+  }
+
+  preventInvalidCharacters(event: KeyboardEvent) {
+    if (event.key === '-' || event.key === '.' || event.key === 'e') {
+      event.preventDefault();
+    }
+  }
+
+  checkMaxLength(event: any): void {
+    const maxLength = 3;
+    let value = Number(event.target.value);
+    if (value.toString().length > maxLength) {
+      let truncatedValue = Number(value.toString().slice(0, maxLength));
+      event.target.value = truncatedValue;
+      this.sets.setValue(truncatedValue, { emitEvent: false });
     }
   }
 

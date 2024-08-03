@@ -11,7 +11,7 @@ export const getExercises = async (
 ) => {
   try {
     const userID = req.user?.id;
-    const { muscleGroup } = req.body;
+    const { muscleGroup } = req.params;
     if (!userID || !mongoose.Types.ObjectId.isValid(userID)) {
       return res.status(400).json({ message: 'Invalid user ID.' });
     }
@@ -27,7 +27,7 @@ export const getExercises = async (
         'items.muscleGroup': muscleGroup,
       },
       {
-        'items.$': 1,
+        items: 1,
       }
     );
 
@@ -36,45 +36,17 @@ export const getExercises = async (
     }
 
     const exerciseNames: IExercise[] = exercises.flatMap((exercise) =>
-      exercise.items.map((item) => ({
-        exerciseID: item.exerciseID,
-        muscleGroup: muscleGroup,
-        exerciseName: item.exerciseName,
-        sets: 0,
-      }))
+      exercise.items
+        .filter((item) => item.muscleGroup === muscleGroup)
+        .map((item) => ({
+          exerciseID: item.exerciseID,
+          muscleGroup: muscleGroup,
+          exerciseName: item.exerciseName,
+          sets: 0,
+        }))
     );
 
     return res.status(200).json(exerciseNames);
-  } catch (error: Error | any) {
-    res.status(500).json({ message: error.message });
-  }
-};
-
-export const getExerciseExist = async (
-  req: AuthenticatedRequest,
-  res: Response
-) => {
-  try {
-    const userID = req.user?.id;
-    const { muscleGroup, exerciseName } = req.body;
-    if (!userID || !mongoose.Types.ObjectId.isValid(userID)) {
-      return res.status(400).json({ message: 'Invalid user ID.' });
-    }
-    if (!(muscleGroup in muscleGroupsEnum)) {
-      return res.status(400).json({ message: 'Invalid muscle group.' });
-    }
-
-    const exerciseExists = await Exercises.exists({
-      userID: userID,
-      items: {
-        $elemMatch: {
-          muscleGroup: muscleGroup,
-          exerciseName: exerciseName,
-        },
-      },
-    });
-
-    return res.status(200).json({ exists: !!exerciseExists });
   } catch (error: Error | any) {
     res.status(500).json({ message: error.message });
   }
@@ -85,10 +57,37 @@ export const addExercise = async (req: AuthenticatedRequest, res: Response) => {
     const userID = req.user?.id;
     const { muscleGroup, exerciseName } = req.body;
     if (!(muscleGroup in muscleGroupsEnum)) {
-      return res.status(400).json({ message: 'Invalid muscle group.' });
+      return res
+        .status(400)
+        .json({ message: 'Invalid muscle group.', success: false });
     }
     if (!userID || !mongoose.Types.ObjectId.isValid(userID)) {
-      return res.status(400).json({ message: 'Invalid user ID.' });
+      return res
+        .status(400)
+        .json({ message: 'Invalid user ID.', success: false });
+    }
+
+    const userExercises = await Exercises.findOne({ userID });
+    if (userExercises) {
+      const muscleGroupExercises = userExercises.items.filter(
+        (exercise) => exercise.muscleGroup === muscleGroup
+      );
+      if (muscleGroupExercises.length >= 5) {
+        return res.status(400).json({
+          message: 'Maxed out the amount of exercises for this muscle group!',
+          success: false,
+        });
+      }
+
+      const exerciseExists = muscleGroupExercises.some(
+        (exercise) => exercise.exerciseName === exerciseName
+      );
+      if (exerciseExists) {
+        return res.status(400).json({
+          message: 'Exercise name already exists for this muscle group!',
+          success: false,
+        });
+      }
     }
 
     const newExercise = {
@@ -103,9 +102,9 @@ export const addExercise = async (req: AuthenticatedRequest, res: Response) => {
       { new: true, upsert: true }
     );
 
-    res.status(200).json(updatedExercises);
+    res.status(200).json({ exericses: updatedExercises, success: true });
   } catch (error: Error | any) {
-    res.status(500).json({ message: error.message });
+    res.status(500).json({ message: error.message, success: false });
   }
 };
 
@@ -117,13 +116,19 @@ export const deleteExercise = async (
     const userID = req.user?.id;
     const { muscleGroup, exerciseID } = req.params;
     if (!(muscleGroup in muscleGroupsEnum)) {
-      return res.status(400).json({ message: 'Invalid muscle group.' });
+      return res
+        .status(400)
+        .json({ message: 'Invalid muscle group.', success: false });
     }
     if (!userID || !mongoose.Types.ObjectId.isValid(userID)) {
-      return res.status(400).json({ message: 'Invalid user ID.' });
+      return res
+        .status(400)
+        .json({ message: 'Invalid user ID.', success: false });
     }
     if (!mongoose.Types.ObjectId.isValid(exerciseID)) {
-      return res.status(400).json({ message: 'Invalid exercise ID.' });
+      return res
+        .status(400)
+        .json({ message: 'Invalid exercise ID.', success: false });
     }
 
     const updatedExercises = await Exercises.findOneAndUpdate(
@@ -132,8 +137,8 @@ export const deleteExercise = async (
       { new: true }
     );
 
-    res.status(200).json(updatedExercises);
+    res.status(200).json({ exericses: updatedExercises, success: true });
   } catch (error: Error | any) {
-    res.status(500).json({ message: error.message });
+    res.status(500).json({ message: error.message, success: false });
   }
 };

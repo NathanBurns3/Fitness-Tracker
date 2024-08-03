@@ -2,7 +2,6 @@ import express from 'express';
 import {
   addExercise,
   deleteExercise,
-  getExerciseExist,
   getExercises,
 } from '../controllers/exercise/exercisesController';
 import {
@@ -15,13 +14,20 @@ import { verifyToken } from '../helpers/authMiddleware';
 
 const exerciseRouter = express.Router();
 
-exerciseRouter.get('/exercises', verifyToken, getExercises);
-exerciseRouter.get('/exerciseExist', verifyToken, getExerciseExist);
+exerciseRouter.get('/exercises/:muscleGroup', verifyToken, getExercises);
 exerciseRouter.post('/addExercise', verifyToken, addExercise);
-exerciseRouter.delete('/deleteExercise', verifyToken, deleteExercise);
+exerciseRouter.delete(
+  '/deleteExercise/:muscleGroup/:exerciseID',
+  verifyToken,
+  deleteExercise
+);
 exerciseRouter.get('/dailyExercises', verifyToken, getDailyExercises);
 exerciseRouter.post('/addDailyExercise', verifyToken, addDailyExercise);
 exerciseRouter.put('/updateDailyExercise', verifyToken, updateDailyExercise);
-exerciseRouter.delete('/deleteDailyExercise', verifyToken, deleteDailyExercise);
+exerciseRouter.delete(
+  '/deleteDailyExercise/:exerciseID',
+  verifyToken,
+  deleteDailyExercise
+);
 
 export default exerciseRouter;

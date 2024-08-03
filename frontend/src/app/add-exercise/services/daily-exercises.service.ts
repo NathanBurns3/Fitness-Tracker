@@ -54,8 +54,8 @@ export class DailyExercisesService {
       );
   }
 
-  updateExercise(exercise: IExercise): void {
-    this.http
+  updateExercise(exercise: IExercise): Observable<boolean> {
+    return this.http
       .put<{ success: Boolean; message: string }>(
         this.apiUrl + '/updateDailyExercise',
         { exercise },
@@ -86,8 +86,8 @@ export class DailyExercisesService {
       );
   }
 
-  deleteExercise(exercise: IExercise): void {
-    this.http
+  deleteExercise(exercise: IExercise): Observable<boolean> {
+    return this.http
       .delete<{ success: Boolean; message: string }>(
         this.apiUrl + '/deleteDailyExercise',
         {

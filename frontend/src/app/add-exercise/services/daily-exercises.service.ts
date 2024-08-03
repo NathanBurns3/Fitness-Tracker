@@ -1,7 +1,7 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { IExercise } from '../models/exercise';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { environment } from 'src/environments/environment.prod';
+import { environment } from 'src/environments/environment';
 import { catchError, map, Observable, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { getHeaders } from 'src/utils/http-headers.util';
@@ -89,8 +89,9 @@ export class DailyExercisesService {
   deleteExercise(exercise: IExercise): void {
     this.http
       .delete<{ success: Boolean; message: string }>(
-        `${this.apiUrl}/deleteDailyExercise/${exercise.exerciseID}`,
+        `${this.apiUrl}/deleteDailyExercise`,
         {
+          params: { exerciseID: exercise.exerciseID },
           headers: getHeaders(),
         }
       )

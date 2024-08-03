@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { IExercise } from '../models/exercise';
-import { ExercisesService } from '../services/exercises.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ExerciseDetailsComponent } from '../exercise-details/exercise-details.component';
 import { DailyExercisesService } from '../services/daily-exercises.service';

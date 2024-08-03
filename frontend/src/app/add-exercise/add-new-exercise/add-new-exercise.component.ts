@@ -1,13 +1,7 @@
-/*
-TODO:
-clean up the code
-*/
-
 import { Component } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { ExercisesService } from '../services/exercises.service';
 import { muscleGroupsEnum } from '../models/muscle-groups-enum';
-import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'add-new-exercise',
@@ -21,8 +15,7 @@ export class AddNewExerciseComponent {
 
   constructor(
     public dialogRef: MatDialogRef<AddNewExerciseComponent>,
-    private exercisesService: ExercisesService,
-    private snackBar: MatSnackBar
+    private exercisesService: ExercisesService
   ) {}
 
   closeAddNewExercise() {
@@ -30,15 +23,12 @@ export class AddNewExerciseComponent {
   }
 
   saveExercise() {
-    if (
-      !this.exercisesService.exerciseExists(this.muscleGroup, this.exercise)
-    ) {
-      this.exercisesService.addExercise(this.muscleGroup, this.exercise);
-      this.dialogRef.close();
-    } else {
-      this.snackBar.open(this.exercise + ' already exists!', '', {
-        duration: 2000,
+    this.exercisesService
+      .addExercise(this.muscleGroup, this.exercise)
+      .subscribe((success: boolean) => {
+        if (success) {
+          this.dialogRef.close();
+        }
       });
-    }
   }
 }

@@ -89,7 +89,7 @@ export class DailyExercisesService {
   deleteExercise(exercise: IExercise): void {
     this.http
       .delete<{ success: Boolean; message: string }>(
-        `${this.apiUrl}/deleteDailyExercise`,
+        this.apiUrl + '/deleteDailyExercise',
         {
           params: { exerciseID: exercise.exerciseID },
           headers: getHeaders(),

@@ -1,168 +1,121 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { muscleGroupsEnum } from '../models/muscle-groups-enum';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { environment } from 'src/environments/environment';
+import { HttpClient } from '@angular/common/http';
+import { IExercise } from '../models/exercise';
+import { catchError, map, Observable, of } from 'rxjs';
+import { getHeaders } from 'src/utils/http-headers.util';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ExercisesService {
+  private apiUrl = environment.apiURL + '/exercise';
   exerciseAdded = new EventEmitter<void>();
 
-  exercises: Record<muscleGroupsEnum, string[]> = {
-    Abs: ['Crunches', 'Leg Raises', 'Plank'],
-    Back: [
-      'Deadlift',
-      'Bent Over Row',
-      'Pull Up',
-      'Lat Pulldown',
-      'Seated Row',
-      'T-Bar Row',
-      'Straight Arm Pulldown',
-      'Back Extension',
-      'Reverse Fly',
-      'Shrug',
-      'Pull Over',
-      'Pullover',
-      'Pulldown',
-    ],
-    Biceps: [
-      'Barbell Curl',
-      'Dumbbell Curl',
-      'Hammer Curl',
-      'Preacher Curl',
-      'Concentration Curl',
-      'Reverse Curl',
-      'Cable Curl',
-      'EZ Bar Curl',
-    ],
-    Calves: [
-      'Standing Calf Raise',
-      'Seated Calf Raise',
-      'Donkey Calf Raise',
-      'Calf Press',
-    ],
-    Chest: [
-      'Bench Press',
-      'Incline Bench Press',
-      'Decline Bench Press',
-      'Chest Fly',
-      'Cable Crossover',
-    ],
-    Forearms: ['Wrist Curl', 'Reverse Wrist Curl', 'Wrist Roller'],
-    Glutes: [
-      'Squat',
-      'Lunge',
-      'Leg Press',
-      'Deadlift',
-      'Hip Thrust',
-      'Bulgarian Split Squat',
-      'Step Up',
-      'Good Morning',
-      'Leg Extension',
-      'Leg Curl',
-    ],
-    Hamstrings: [
-      'Squat',
-      'Lunge',
-      'Leg Press',
-      'Deadlift',
-      'Hip Thrust',
-      'Bulgarian Split Squat',
-      'Step Up',
-      'Good Morning',
-      'Leg Extension',
-      'Leg Curl',
-    ],
-    Quads: [
-      'Squat',
-      'Lunge',
-      'Leg Press',
-      'Deadlift',
-      'Hip Thrust',
-      'Bulgarian Split Squat',
-      'Step Up',
-      'Good Morning',
-      'Leg Extension',
-      'Leg Curl',
-    ],
-    Shoulders: [
-      'Overhead Press',
-      'Lateral Raise',
-      'Front Raise',
-      'Rear Delt Fly',
-      'Shrug',
-      'Upright Row',
-      'Face Pull',
-      'Arnold Press',
-      'Lateral Raise',
-      'Front Raise',
-      'Rear Delt Fly',
-      'Shrug',
-      'Upright Row',
-      'Face Pull',
-      'Arnold Press',
-    ],
-    Triceps: [
-      'Close Grip Bench Press',
-      'Skullcrusher',
-      'Dip',
-      'Kickback',
-      'Pushdown',
-      'Close Grip Bench Press',
-      'Skullcrusher',
-      'Dip',
-      'Kickback',
-      'Pushdown',
-    ],
-  };
+  constructor(private http: HttpClient, private snackBar: MatSnackBar) {}
 
-  constructor(private snackBar: MatSnackBar) {}
-
-  getExercisesById(selectedMuscleGroup: muscleGroupsEnum): string[] {
-    return this.exercises[selectedMuscleGroup];
-  }
-
-  addExercise(muscleGroup: muscleGroupsEnum, exercise: string): boolean {
-    if (this.countExercises(muscleGroup) >= 50) {
-      this.snackBar.open(
-        'Maxed out the amount of exercises for this muscle group!',
-        '',
-        {
-          duration: 2000,
-        }
+  getExercisesById(
+    selectedMuscleGroup: muscleGroupsEnum
+  ): Observable<IExercise[]> {
+    return this.http
+      .get<IExercise[]>(this.apiUrl + '/exercises', {
+        params: { muscleGroup: selectedMuscleGroup },
+        headers: getHeaders(),
+      })
+      .pipe(
+        map((response) => {
+          if (response.length === 0) {
+            this.snackBar.open(
+              'No exercises found for this muscle group.',
+              '',
+              {
+                duration: 2000,
+              }
+            );
+            return response;
+          } else {
+            return response;
+          }
+        }),
+        catchError((error: Error | any) => {
+          this.snackBar.open(error.message, '', {
+            duration: 2000,
+          });
+          return of([]);
+        })
       );
-      return false;
-    }
-
-    if (this.exerciseExists(muscleGroup, exercise)) {
-      this.snackBar.open(exercise + ' already exists!', '', {
-        duration: 2000,
-      });
-      return false;
-    }
-
-    this.exercises[muscleGroup].push(exercise);
-    this.snackBar.open(exercise + ' was added!', '', {
-      duration: 2000,
-    });
-    return true;
   }
 
-  deleteExercise(muscleGroup: muscleGroupsEnum, exercise: string) {
-    const index = this.exercises[muscleGroup].indexOf(exercise);
-    this.exercises[muscleGroup].splice(index, 1);
-    this.snackBar.open(exercise + ' was deleted!', '', {
-      duration: 2000,
-    });
+  addExercise(
+    muscleGroup: muscleGroupsEnum,
+    exercise: string
+  ): Observable<boolean> {
+    return this.http
+      .post<{ success: Boolean; message: string }>(
+        this.apiUrl + '/addExercise',
+        { muscleGroup, exercise },
+        {
+          headers: getHeaders(),
+        }
+      )
+      .pipe(
+        map((response) => {
+          if (response.success) {
+            this.exerciseAdded.emit();
+            this.snackBar.open(exercise + ' was added!', '', {
+              duration: 2000,
+            });
+            return true;
+          } else {
+            this.snackBar.open(response.message, '', {
+              duration: 2000,
+            });
+            return false;
+          }
+        }),
+        catchError((error: Error | any) => {
+          this.snackBar.open(error.message, '', {
+            duration: 2000,
+          });
+          return of(false);
+        })
+      );
   }
 
-  exerciseExists(muscleGroup: muscleGroupsEnum, exercise: string): boolean {
-    return this.exercises[muscleGroup]
-      .map((e) => e.toLowerCase())
-      .includes(exercise.toLowerCase());
-  }
-
-  countExercises(muscleGroup: muscleGroupsEnum): number {
-    return this.exercises[muscleGroup].length;
+  deleteExercise(
+    muscleGroup: muscleGroupsEnum,
+    exercise: string
+  ): Observable<boolean> {
+    return this.http
+      .delete<{ success: Boolean; message: string }>(
+        this.apiUrl + '/deleteExercise',
+        {
+          params: { muscleGroup, exercise },
+          headers: getHeaders(),
+        }
+      )
+      .pipe(
+        map((response) => {
+          if (response.success) {
+            this.snackBar.open(exercise + ' was deleted!', '', {
+              duration: 2000,
+            });
+            return true;
+          } else {
+            this.snackBar.open(response.message, '', {
+              duration: 2000,
+            });
+            return false;
+          }
+        }),
+        catchError((error: Error | any) => {
+          this.snackBar.open(error.message, '', {
+            duration: 2000,
+          });
+          return of(false);
+        })
+      );
   }
 }

@@ -9,7 +9,6 @@ import {
   addFavoriteMeal,
   deleteFavoriteMeal,
   getFavoriteMeals,
-  getFavoriteMealsLimit,
 } from '../controllers/meals/favoriteMealsController';
 import {
   addCustomMeal,
@@ -37,7 +36,6 @@ mealRouter.delete(
   verifyToken,
   deleteFavoriteMeal
 );
-mealRouter.get('/favoriteMealsLimit', verifyToken, getFavoriteMealsLimit);
 mealRouter.get('/customMeals', verifyToken, getCustomMeals);
 mealRouter.get('/customMeal/:mealID', verifyToken, getCustomMeal);
 mealRouter.post('/addCustomMeal', verifyToken, addCustomMeal);

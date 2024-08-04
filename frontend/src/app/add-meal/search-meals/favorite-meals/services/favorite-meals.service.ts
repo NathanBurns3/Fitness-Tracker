@@ -1,238 +1,89 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { catchError, map, Observable, of } from 'rxjs';
 import { IFood } from 'src/app/add-meal/models/food';
+import { environment } from 'src/environments/environment';
+import { getHeaders } from 'src/utils/http-headers.util';
 
 @Injectable({
   providedIn: 'root',
 })
 export class FavoriteMealsService {
-  favoriteMeals: IFood[] = [
-    {
-      fdcID: 1,
-      description: 'Apple',
-      brandName: 'Generic',
-      servingSize: 1,
-      servingUnit: 'apple',
-      packageWeight: '18g',
-      ingredients: 'apple',
-      nutritions: {
-        calories: 95,
-        protein: 0.5,
-        carbs: 25,
-        fat: 0.3,
-        fiber: 4.4,
-      },
-    },
-    {
-      fdcID: 2,
-      description: 'Banana',
-      brandName: 'Generic',
-      servingSize: 1,
-      servingUnit: 'banana',
-      packageWeight: '18g',
-      ingredients: 'banana',
-      nutritions: {
-        calories: 105,
-        protein: 1.3,
-        carbs: 27,
-        fat: 0.4,
-        fiber: 3.1,
-      },
-    },
-    {
-      fdcID: 3,
-      description: 'Orange',
-      brandName: 'Generic',
-      servingSize: 1,
-      servingUnit: 'orange',
-      packageWeight: '18g',
-      ingredients: 'orange',
-      nutritions: {
-        calories: 62,
-        protein: 1.2,
-        carbs: 15,
-        fat: 0.2,
-        fiber: 3.1,
-      },
-    },
-    {
-      fdcID: 3,
-      description: 'Orange',
-      brandName: 'Generic',
-      servingSize: 1,
-      servingUnit: 'orange',
-      packageWeight: '18g',
-      ingredients: 'orange',
-      nutritions: {
-        calories: 62,
-        protein: 1.2,
-        carbs: 15,
-        fat: 0.2,
-        fiber: 3.1,
-      },
-    },
-    {
-      fdcID: 3,
-      description: 'Orange',
-      brandName: 'Generic',
-      servingSize: 1,
-      servingUnit: 'orange',
-      packageWeight: '18g',
-      ingredients: 'orange',
-      nutritions: {
-        calories: 62,
-        protein: 1.2,
-        carbs: 15,
-        fat: 0.2,
-        fiber: 3.1,
-      },
-    },
-    {
-      fdcID: 3,
-      description: 'Orange',
-      brandName: 'Generic',
-      servingSize: 1,
-      servingUnit: 'orange',
-      packageWeight: '18g',
-      ingredients: 'orange',
-      nutritions: {
-        calories: 62,
-        protein: 1.2,
-        carbs: 15,
-        fat: 0.2,
-        fiber: 3.1,
-      },
-    },
-    {
-      fdcID: 3,
-      description: 'Orange',
-      brandName: 'Generic',
-      servingSize: 1,
-      servingUnit: 'orange',
-      packageWeight: '18g',
-      ingredients: 'orange',
-      nutritions: {
-        calories: 62,
-        protein: 1.2,
-        carbs: 15,
-        fat: 0.2,
-        fiber: 3.1,
-      },
-    },
-    {
-      fdcID: 3,
-      description: 'Orange',
-      brandName: 'Generic',
-      servingSize: 1,
-      servingUnit: 'orange',
-      packageWeight: '18g',
-      ingredients: 'orange',
-      nutritions: {
-        calories: 62,
-        protein: 1.2,
-        carbs: 15,
-        fat: 0.2,
-        fiber: 3.1,
-      },
-    },
-    {
-      fdcID: 3,
-      description: 'Orange',
-      brandName: 'Generic',
-      servingSize: 1,
-      servingUnit: 'orange',
-      packageWeight: '18g',
-      ingredients: 'orange',
-      nutritions: {
-        calories: 62,
-        protein: 1.2,
-        carbs: 15,
-        fat: 0.2,
-        fiber: 3.1,
-      },
-    },
-    {
-      fdcID: 3,
-      description: 'Orange',
-      brandName: 'Generic',
-      servingSize: 1,
-      servingUnit: 'orange',
-      packageWeight: '18g',
-      ingredients: 'orange',
-      nutritions: {
-        calories: 62,
-        protein: 1.2,
-        carbs: 15,
-        fat: 0.2,
-        fiber: 3.1,
-      },
-    },
-    {
-      fdcID: 3,
-      description: 'Orange',
-      brandName: 'Generic',
-      servingSize: 1,
-      servingUnit: 'orange',
-      packageWeight: '18g',
-      ingredients: 'orange',
-      nutritions: {
-        calories: 62,
-        protein: 1.2,
-        carbs: 15,
-        fat: 0.2,
-        fiber: 3.1,
-      },
-    },
-    {
-      fdcID: 3,
-      description: 'Orange',
-      brandName: 'Generic',
-      servingSize: 1,
-      servingUnit: 'orange',
-      packageWeight: '18g',
-      ingredients: 'orange',
-      nutritions: {
-        calories: 62,
-        protein: 1.2,
-        carbs: 15,
-        fat: 0.2,
-        fiber: 3.1,
-      },
-    },
-  ];
+  private apiUrl = environment.apiURL + '/meal';
 
-  constructor(private snackBar: MatSnackBar) {}
+  constructor(private http: HttpClient, private snackBar: MatSnackBar) {}
 
-  getFavoriteMeals(): IFood[] {
-    return this.favoriteMeals;
-  }
-
-  deleteFavoriteMeal(meal: IFood): void {
-    const index = this.favoriteMeals.findIndex((x) => x.fdcID === meal.fdcID);
-    this.favoriteMeals.splice(index, 1);
-    this.snackBar.open(meal.description + ' was removed from favorites!', '', {
-      duration: 2000,
+  getFavoriteMeals(): Observable<IFood[]> {
+    return this.http.get<IFood[]>(this.apiUrl + '/favoriteMeals', {
+      headers: getHeaders(),
     });
   }
 
-  addFavoriteMeal(meal: IFood): void {
-    if (this.favoriteMeals.includes(meal)) {
-      this.snackBar.open(
-        meal.description + ' is already in your favorites!',
-        '',
+  deleteFavoriteMeal(meal: IFood): Observable<boolean> {
+    return this.http
+      .delete<{ success: boolean; message: string }>(
+        this.apiUrl + '/deleteFavoriteMeal/' + meal.fdcID,
         {
-          duration: 2000,
+          headers: getHeaders(),
         }
+      )
+      .pipe(
+        map((response) => {
+          if (response.success) {
+            this.snackBar.open(
+              meal.description + ' was removed from favorites!',
+              '',
+              {
+                duration: 2000,
+              }
+            );
+            return true;
+          } else {
+            this.snackBar.open(response.message, '', {
+              duration: 2000,
+            });
+            return false;
+          }
+        }),
+        catchError((error: Error | any) => {
+          this.snackBar.open(error.message, '', {
+            duration: 2000,
+          });
+          return of(false);
+        })
       );
-      return;
-    }
-    this.favoriteMeals.push(meal);
-    this.snackBar.open(meal.description + ' added to favorites!', '', {
-      duration: 2000,
-    });
   }
 
-  getNumberOfFavoriteMeals(): number {
-    return this.favoriteMeals.length;
+  addFavoriteMeal(meal: IFood): Observable<boolean> {
+    return this.http
+      .post<{ success: boolean; message: string }>(
+        this.apiUrl + '/addFavoriteMeal',
+        { food: meal },
+        {
+          headers: getHeaders(),
+        }
+      )
+      .pipe(
+        map((response) => {
+          if (response.success) {
+            this.snackBar.open(meal.description + ' added to favorites!', '', {
+              duration: 2000,
+            });
+            return true;
+          } else {
+            this.snackBar.open(response.message, '', {
+              duration: 2000,
+            });
+            return false;
+          }
+        }),
+        catchError((error: Error | any) => {
+          this.snackBar.open(error.message, '', {
+            duration: 2000,
+          });
+          return of(false);
+        })
+      );
   }
 }

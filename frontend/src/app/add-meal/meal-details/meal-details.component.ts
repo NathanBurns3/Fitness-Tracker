@@ -141,18 +141,23 @@ export class MealDetailsComponent {
   }
 
   addFavoriteFood() {
-    if (this.favoriteMealsService.getNumberOfFavoriteMeals() >= 50) {
-      this.snackBar.open('Maxed out the amount of favorite meals!', '', {
-        duration: 2000,
+    this.favoriteMealsService
+      .addFavoriteMeal(this.food)
+      .subscribe((success) => {
+        if (success) {
+          this.closeMealDetails();
+        }
       });
-      return;
-    }
-    this.favoriteMealsService.addFavoriteMeal(this.food);
   }
 
   removeFavoriteFood() {
-    this.favoriteMealsService.deleteFavoriteMeal(this.food);
-    this.closeMealDetails();
+    this.favoriteMealsService
+      .deleteFavoriteMeal(this.food)
+      .subscribe((success) => {
+        if (success) {
+          this.closeMealDetails();
+        }
+      });
   }
 
   editCustomFood() {

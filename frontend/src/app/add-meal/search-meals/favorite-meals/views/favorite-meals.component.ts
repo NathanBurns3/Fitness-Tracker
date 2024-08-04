@@ -19,7 +19,9 @@ export class FavoriteMealsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.favoriteMeals = this.favoriteMealsService.getFavoriteMeals();
+    this.favoriteMealsService.getFavoriteMeals().subscribe((meals) => {
+      this.favoriteMeals = meals;
+    });
   }
 
   openFoodDetails(food: IFood): void {

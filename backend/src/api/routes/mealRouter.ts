@@ -29,16 +29,20 @@ const mealRouter = express.Router();
 mealRouter.get('/dailyFoods', verifyToken, getDailyFoods);
 mealRouter.post('/addDailyFood', verifyToken, addDailyFood);
 mealRouter.put('/updateDailyFood', verifyToken, updateDailyFood);
-mealRouter.delete('/deleteDailyFood', verifyToken, deleteDailyFood);
+mealRouter.delete('/deleteDailyFood/:fdcID', verifyToken, deleteDailyFood);
 mealRouter.get('/favoriteMeals', verifyToken, getFavoriteMeals);
 mealRouter.post('/addFavoriteMeal', verifyToken, addFavoriteMeal);
-mealRouter.delete('/deleteFavoriteMeal', verifyToken, deleteFavoriteMeal);
+mealRouter.delete(
+  '/deleteFavoriteMeal/:fdcID',
+  verifyToken,
+  deleteFavoriteMeal
+);
 mealRouter.get('/favoriteMealsLimit', verifyToken, getFavoriteMealsLimit);
 mealRouter.get('/customMeals', verifyToken, getCustomMeals);
 mealRouter.get('/customMeal', verifyToken, getCustomMeal);
 mealRouter.post('/addCustomMeal', verifyToken, addCustomMeal);
 mealRouter.put('/updateCustomMeal', verifyToken, updateCustomMeal);
-mealRouter.delete('/deleteCustomMeal', verifyToken, deleteCustomMeal);
+mealRouter.delete('/deleteCustomMeal/:mealID', verifyToken, deleteCustomMeal);
 mealRouter.get('/searchFoods', verifyToken, searchMeals);
 mealRouter.put('/updateNutritions', verifyToken, updateNutritions);
 

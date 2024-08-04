@@ -220,8 +220,13 @@ export class CustomMealDetailsComponent {
   }
 
   saveCustomMeal() {
-    this.customMealService.updateCustomMeal(this.clonedMeal, this.action);
-    this.dialogRef.close(this.clonedMeal);
+    this.customMealService
+      .updateCustomMeal(this.clonedMeal, this.action)
+      .subscribe((success) => {
+        if (success) {
+          this.dialogRef.close(this.clonedMeal);
+        }
+      });
   }
 
   deleteFood(food: IFood) {

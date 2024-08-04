@@ -20,7 +20,9 @@ export class CustomMealsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.customMeals = this.customMealService.getCustomMeals();
+    this.customMealService.getCustomMeals().subscribe((meals) => {
+      this.customMeals = meals;
+    });
   }
 
   addCustomMeal(): void {

@@ -156,28 +156,35 @@ export class MealDetailsComponent {
   }
 
   editCustomFood() {
-    const customMeal: ICustomMeal | undefined =
-      this.customMealService.getCustomMeal(this.data.customFoodID);
-    if (customMeal) {
-      const dialogRef = this.dialog.open(CustomMealDetailsComponent, {
-        data: { meal: customMeal, title: 'Edit Custom Meal' },
-        width: '900px',
-        height: '750px',
-      });
+    this.customMealService
+      .getCustomMeal(this.data.customFoodID)
+      .subscribe((customMeal) => {
+        if (customMeal) {
+          const dialogRef = this.dialog.open(CustomMealDetailsComponent, {
+            data: { meal: customMeal, title: 'Edit Custom Meal' },
+            width: '900px',
+            height: '750px',
+          });
 
-      dialogRef.afterClosed().subscribe((result) => {
-        if (result) {
-          this.data.food = this.convertCustomFoodToFood(result);
-          this.food = this.setValues(this.data.food);
-          this.clonedFood = JSON.parse(JSON.stringify(this.food));
+          dialogRef.afterClosed().subscribe((result) => {
+            if (result) {
+              this.data.food = this.convertCustomFoodToFood(result);
+              this.food = this.setValues(this.data.food);
+              this.clonedFood = JSON.parse(JSON.stringify(this.food));
+            }
+          });
         }
       });
-    }
   }
 
   removeCustomFood() {
-    this.customMealService.deleteCustomMeal(this.data.customFoodID);
-    this.closeMealDetails();
+    this.customMealService
+      .deleteCustomMeal(this.data.customFoodID)
+      .subscribe((success) => {
+        if (success) {
+          this.closeMealDetails();
+        }
+      });
   }
 
   saveFood() {

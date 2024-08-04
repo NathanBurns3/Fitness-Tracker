@@ -8,7 +8,6 @@ import {
 import { Ibutton } from '../models/button';
 import { FavoriteMealsService } from '../search-meals/favorite-meals/services/favorite-meals.service';
 import { CustomMealService } from '../search-meals/custom-meals/services/custom-meals.service';
-import { MealLookupService } from '../search-meals/all-meals/services/meal-lookup.service';
 import { DailyFoodService } from '../meal-list/services/daily-food.service';
 import { CustomMealDetailsComponent } from '../custom-meal-details/custom-meal-details.component';
 import { ICustomMeal } from '../models/custom-meal';
@@ -46,7 +45,6 @@ export class MealDetailsComponent {
     public data: { food: IFood; buttons: Ibutton[]; customFoodID: string },
     private favoriteMealsService: FavoriteMealsService,
     private customMealService: CustomMealService,
-    private mealLookupService: MealLookupService,
     private dailyFoodService: DailyFoodService,
     private dialog: MatDialog,
     private snackBar: MatSnackBar
@@ -135,14 +133,11 @@ export class MealDetailsComponent {
   }
 
   addFood() {
-    if (this.dailyFoodService.getNumberOfFoods() >= 50) {
-      this.snackBar.open('Maxed out the amount of meals for the day!', '', {
-        duration: 2000,
-      });
-      return;
-    }
-    this.mealLookupService.addMeal(this.clonedFood);
-    this.closeMealDetails();
+    this.dailyFoodService.addFood(this.clonedFood).subscribe((success) => {
+      if (success) {
+        this.closeMealDetails();
+      }
+    });
   }
 
   addFavoriteFood() {
@@ -186,13 +181,19 @@ export class MealDetailsComponent {
   }
 
   saveFood() {
-    this.dailyFoodService.updateFood(this.clonedFood);
-    this.closeMealDetails();
+    this.dailyFoodService.updateFood(this.clonedFood).subscribe((success) => {
+      if (success) {
+        this.closeMealDetails();
+      }
+    });
   }
 
   removeFood() {
-    this.dailyFoodService.deleteFood(this.food);
-    this.closeMealDetails();
+    this.dailyFoodService.deleteFood(this.food).subscribe((success) => {
+      if (success) {
+        this.closeMealDetails();
+      }
+    });
   }
 
   preventInvalidCharacters(event: KeyboardEvent) {

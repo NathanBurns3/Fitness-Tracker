@@ -3,6 +3,7 @@ import { IFood } from '../../models/food';
 import { DailyFoodService } from '../services/daily-food.service';
 import { MatDialog } from '@angular/material/dialog';
 import { MealDetailsComponent } from '../../meal-details/meal-details.component';
+import { switchMap } from 'rxjs';
 
 @Component({
   selector: 'meal-list',
@@ -18,10 +19,14 @@ export class MealListComponent {
   ) {}
 
   ngOnInit(): void {
-    this.foods = this.dailyFoodService.getFoods();
-    this.dailyFoodService.foodAdded.subscribe(() => {
-      this.foods = this.dailyFoodService.getFoods();
+    this.dailyFoodService.getFoods().subscribe((foods) => {
+      this.foods = foods;
     });
+    this.dailyFoodService.foodAdded
+      .pipe(switchMap(() => this.dailyFoodService.getFoods()))
+      .subscribe((foods: IFood[]) => {
+        this.foods = foods;
+      });
   }
 
   openFoodDetails(food: IFood): void {

@@ -90,9 +90,8 @@ export class DailyFoodService {
   deleteFood(food: IFood): Observable<boolean> {
     return this.http
       .delete<{ success: Boolean; message: string }>(
-        this.apiUrl + '/deleteDailyFood',
+        this.apiUrl + '/deleteDailyFood/' + food.fdcID,
         {
-          params: { fdcID: food.fdcID.toString() },
           headers: getHeaders(),
         }
       )

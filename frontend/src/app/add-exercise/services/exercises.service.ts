@@ -20,8 +20,7 @@ export class ExercisesService {
     selectedMuscleGroup: muscleGroupsEnum
   ): Observable<IExercise[]> {
     return this.http
-      .get<IExercise[]>(this.apiUrl + '/exercises', {
-        params: { muscleGroup: selectedMuscleGroup },
+      .get<IExercise[]>(this.apiUrl + '/exercises/' + selectedMuscleGroup, {
         headers: getHeaders(),
       })
       .pipe(
@@ -90,9 +89,8 @@ export class ExercisesService {
   ): Observable<boolean> {
     return this.http
       .delete<{ success: Boolean; message: string }>(
-        this.apiUrl + '/deleteExercise',
+        this.apiUrl + '/deleteExercise/' + muscleGroup + '/' + exercise,
         {
-          params: { muscleGroup, exercise },
           headers: getHeaders(),
         }
       )

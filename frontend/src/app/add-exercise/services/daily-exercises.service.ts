@@ -89,9 +89,8 @@ export class DailyExercisesService {
   deleteExercise(exercise: IExercise): Observable<boolean> {
     return this.http
       .delete<{ success: Boolean; message: string }>(
-        this.apiUrl + '/deleteDailyExercise',
+        this.apiUrl + '/deleteDailyExercise/' + exercise.exerciseID,
         {
-          params: { exerciseID: exercise.exerciseID },
           headers: getHeaders(),
         }
       )

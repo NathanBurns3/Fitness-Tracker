@@ -1,239 +1,122 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { IFood } from '../../models/food';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
+import { catchError, map, Observable, of } from 'rxjs';
+import { getHeaders } from 'src/utils/http-headers.util';
 
 @Injectable({
   providedIn: 'root',
 })
 export class DailyFoodService {
+  private apiUrl = environment.apiURL + '/meal';
   foodAdded = new EventEmitter<void>();
 
-  foods: IFood[] = [
-    {
-      fdcID: 1,
-      description: 'Apple',
-      brandName: 'Generic',
-      servingSize: 1,
-      servingUnit: 'apple',
-      packageWeight: '18g',
-      ingredients: 'apple',
-      nutritions: {
-        calories: 95,
-        protein: 0.5,
-        carbs: 25,
-        fat: 0.3,
-        fiber: 4.4,
-      },
-    },
-    {
-      fdcID: 2,
-      description: 'Banana',
-      brandName: 'Generic',
-      servingSize: 1,
-      servingUnit: 'banana',
-      packageWeight: '18g',
-      ingredients: 'banana',
-      nutritions: {
-        calories: 105,
-        protein: 1.3,
-        carbs: 27,
-        fat: 0.4,
-        fiber: 3.1,
-      },
-    },
-    {
-      fdcID: 3,
-      description: 'Orange',
-      brandName: 'Generic',
-      servingSize: 1,
-      servingUnit: 'orange',
-      packageWeight: '18g',
-      ingredients: 'orange',
-      nutritions: {
-        calories: 62,
-        protein: 1.2,
-        carbs: 15,
-        fat: 0.2,
-        fiber: 3.1,
-      },
-    },
-    {
-      fdcID: 3,
-      description: 'Orange',
-      brandName: 'Generic',
-      servingSize: 1,
-      servingUnit: 'orange',
-      packageWeight: '18g',
-      ingredients: 'orange',
-      nutritions: {
-        calories: 62,
-        protein: 1.2,
-        carbs: 15,
-        fat: 0.2,
-        fiber: 3.1,
-      },
-    },
-    {
-      fdcID: 3,
-      description: 'Orange',
-      brandName: 'Generic',
-      servingSize: 1,
-      servingUnit: 'orange',
-      packageWeight: '18g',
-      ingredients: 'orange',
-      nutritions: {
-        calories: 62,
-        protein: 1.2,
-        carbs: 15,
-        fat: 0.2,
-        fiber: 3.1,
-      },
-    },
-    {
-      fdcID: 3,
-      description: 'Orange',
-      brandName: 'Generic',
-      servingSize: 1,
-      servingUnit: 'orange',
-      packageWeight: '18g',
-      ingredients: 'orange',
-      nutritions: {
-        calories: 62,
-        protein: 1.2,
-        carbs: 15,
-        fat: 0.2,
-        fiber: 3.1,
-      },
-    },
-    {
-      fdcID: 3,
-      description: 'Orange',
-      brandName: 'Generic',
-      servingSize: 1,
-      servingUnit: 'orange',
-      packageWeight: '18g',
-      ingredients: 'orange',
-      nutritions: {
-        calories: 62,
-        protein: 1.2,
-        carbs: 15,
-        fat: 0.2,
-        fiber: 3.1,
-      },
-    },
-    {
-      fdcID: 3,
-      description: 'Orange',
-      brandName: 'Generic',
-      servingSize: 1,
-      servingUnit: 'orange',
-      packageWeight: '18g',
-      ingredients: 'orange',
-      nutritions: {
-        calories: 62,
-        protein: 1.2,
-        carbs: 15,
-        fat: 0.2,
-        fiber: 3.1,
-      },
-    },
-    {
-      fdcID: 3,
-      description: 'Orange',
-      brandName: 'Generic',
-      servingSize: 1,
-      servingUnit: 'orange',
-      packageWeight: '18g',
-      ingredients: 'orange',
-      nutritions: {
-        calories: 62,
-        protein: 1.2,
-        carbs: 15,
-        fat: 0.2,
-        fiber: 3.1,
-      },
-    },
-    {
-      fdcID: 3,
-      description: 'Orange',
-      brandName: 'Generic',
-      servingSize: 1,
-      servingUnit: 'orange',
-      packageWeight: '18g',
-      ingredients: 'orange',
-      nutritions: {
-        calories: 62,
-        protein: 1.2,
-        carbs: 15,
-        fat: 0.2,
-        fiber: 3.1,
-      },
-    },
-    {
-      fdcID: 3,
-      description: 'Orange',
-      brandName: 'Generic',
-      servingSize: 1,
-      servingUnit: 'orange',
-      packageWeight: '18g',
-      ingredients: 'orange',
-      nutritions: {
-        calories: 62,
-        protein: 1.2,
-        carbs: 15,
-        fat: 0.2,
-        fiber: 3.1,
-      },
-    },
-    {
-      fdcID: 3,
-      description: 'Orange',
-      brandName: 'Generic',
-      servingSize: 1,
-      servingUnit: 'orange',
-      packageWeight: '18g',
-      ingredients: 'orange',
-      nutritions: {
-        calories: 62,
-        protein: 1.2,
-        carbs: 15,
-        fat: 0.2,
-        fiber: 3.1,
-      },
-    },
-  ];
+  constructor(private http: HttpClient, private snackBar: MatSnackBar) {}
 
-  constructor(private snackBar: MatSnackBar) {}
-
-  getFoods(): IFood[] {
-    return this.foods;
-  }
-
-  addFood(food: IFood): void {
-    this.foods.push(food);
-    this.foodAdded.emit();
-    this.snackBar.open(food.description + ' was added!', '', {
-      duration: 2000,
+  getFoods(): Observable<IFood[]> {
+    return this.http.get<IFood[]>(this.apiUrl + '/dailyFoods', {
+      headers: getHeaders(),
     });
   }
 
-  updateFood(food: IFood): void {
-    const index = this.foods.findIndex((w) => w.fdcID === food.fdcID);
-    this.foods[index] = food;
-    this.snackBar.open(food.description + ' was edited!', '', {
-      duration: 2000,
-    });
+  addFood(food: IFood): Observable<boolean> {
+    return this.http
+      .post<{ success: Boolean; message: string }>(
+        this.apiUrl + '/addDailyFood',
+        { food },
+        {
+          headers: getHeaders(),
+        }
+      )
+      .pipe(
+        map((response) => {
+          if (response.success) {
+            this.foodAdded.emit();
+            this.snackBar.open(food.description + ' was added!', '', {
+              duration: 2000,
+            });
+            return true;
+          } else {
+            this.snackBar.open(response.message, '', {
+              duration: 2000,
+            });
+            return false;
+          }
+        }),
+        catchError((error: Error | any) => {
+          this.snackBar.open(error.message, '', {
+            duration: 2000,
+          });
+          return of(false);
+        })
+      );
   }
 
-  deleteFood(food: IFood): void {
-    const index = this.foods.findIndex((w) => w.fdcID === food.fdcID);
-    this.foods.splice(index, 1);
-    this.snackBar.open(food.description + ' was deleted!', '', {
-      duration: 2000,
-    });
+  updateFood(food: IFood): Observable<boolean> {
+    return this.http
+      .put<{ success: Boolean; message: string }>(
+        this.apiUrl + '/updateDailyFood',
+        { fodcID: food.fdcID, food: food },
+        {
+          headers: getHeaders(),
+        }
+      )
+      .pipe(
+        map((response) => {
+          if (response.success) {
+            this.foodAdded.emit();
+            this.snackBar.open(food.description + ' was updated!', '', {
+              duration: 2000,
+            });
+            return true;
+          } else {
+            this.snackBar.open(response.message, '', {
+              duration: 2000,
+            });
+            return false;
+          }
+        }),
+        catchError((error: Error | any) => {
+          this.snackBar.open(error.message, '', {
+            duration: 2000,
+          });
+          return of(false);
+        })
+      );
   }
 
-  getNumberOfFoods(): number {
-    return this.foods.length;
+  deleteFood(food: IFood): Observable<boolean> {
+    return this.http
+      .delete<{ success: Boolean; message: string }>(
+        this.apiUrl + '/deleteDailyFood',
+        {
+          params: { fdcID: food.fdcID.toString() },
+          headers: getHeaders(),
+        }
+      )
+      .pipe(
+        map((response) => {
+          if (response.success) {
+            this.foodAdded.emit();
+            this.snackBar.open(food.description + ' was deleted!', '', {
+              duration: 2000,
+            });
+            return true;
+          } else {
+            this.snackBar.open(response.message, '', {
+              duration: 2000,
+            });
+            return false;
+          }
+        }),
+        catchError((error: Error | any) => {
+          this.snackBar.open(error.message, '', {
+            duration: 2000,
+          });
+          return of(false);
+        })
+      );
   }
 }

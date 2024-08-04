@@ -72,7 +72,7 @@ export const addExercise = async (req: AuthenticatedRequest, res: Response) => {
       const muscleGroupExercises = userExercises.items.filter(
         (exercise) => exercise.muscleGroup === muscleGroup
       );
-      if (muscleGroupExercises.length >= 5) {
+      if (muscleGroupExercises.length >= 50) {
         return res.status(400).json({
           message: 'Maxed out the amount of exercises for this muscle group!',
           success: false,

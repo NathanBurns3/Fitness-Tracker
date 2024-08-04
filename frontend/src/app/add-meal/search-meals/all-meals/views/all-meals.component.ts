@@ -28,10 +28,8 @@ export class AllMealsComponent {
       this.loading = false;
       return;
     }
-    this.mealLookupService
-      .searchMeals(meal)
-      .then((data: IFood[]) => {
-        this.meals = data;
+    this.mealLookupService.searchMeals(meal).subscribe({
+      next: (data: IFood[]) => {
         this.meals = data.map((meal: IFood) => {
           return {
             ...meal,
@@ -41,26 +39,29 @@ export class AllMealsComponent {
           };
         });
         this.loading = false;
-      })
-      .catch((error: any) => {
-        console.error('Error:', error);
+      },
+      error: () => {
         this.loading = false;
-      });
+      },
+    });
   }
 
-  async openFoodDetails(food: IFood): Promise<void> {
-    food = await this.mealLookupService.updateNutritions(food);
-    this.dialog.open(MealDetailsComponent, {
-      data: {
-        food,
-        buttons: [
-          { text: 'Add Food', action: 'addFood' },
-          { text: 'Favorite', action: 'addFavoriteFood' },
-        ],
-      },
-      width: '600px',
-      height: '600px',
-    });
+  openFoodDetails(food: IFood): void {
+    this.mealLookupService
+      .updateNutritions(food)
+      .subscribe((updatedFood: IFood) => {
+        this.dialog.open(MealDetailsComponent, {
+          data: {
+            food: updatedFood,
+            buttons: [
+              { text: 'Add Food', action: 'addFood' },
+              { text: 'Favorite', action: 'addFavoriteFood' },
+            ],
+          },
+          width: '600px',
+          height: '600px',
+        });
+      });
   }
 
   formatFoodName(name: string): string {

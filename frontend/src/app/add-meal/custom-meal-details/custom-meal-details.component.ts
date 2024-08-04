@@ -124,10 +124,8 @@ export class CustomMealDetailsComponent {
       this.noResults = false;
       return;
     }
-    this.mealLookupService
-      .searchMeals(meal)
-      .then((data: IFood[]) => {
-        this.mealOptions = data;
+    this.mealLookupService.searchMeals(meal).subscribe({
+      next: (data: IFood[]) => {
         this.mealOptions = data.map((meal: IFood) => {
           return {
             ...meal,
@@ -137,11 +135,11 @@ export class CustomMealDetailsComponent {
         });
         this.loading = false;
         this.noResults = this.mealOptions.length === 0;
-      })
-      .catch((error: any) => {
-        console.error('Error:', error);
+      },
+      error: () => {
         this.loading = false;
-      });
+      },
+    });
   }
 
   formatFoodName(name: string): string {
@@ -156,11 +154,14 @@ export class CustomMealDetailsComponent {
       .join(', ');
   }
 
-  async selectFood(food: IFood) {
-    food = await this.mealLookupService.updateNutritions(food);
-    this.foodSelected = true;
-    this.foodChosen = food;
-    this.mealSearch = food.description;
+  selectFood(food: IFood) {
+    this.mealLookupService
+      .updateNutritions(food)
+      .subscribe((updatedFood: IFood) => {
+        this.foodSelected = true;
+        this.foodChosen = updatedFood;
+        this.mealSearch = updatedFood.description;
+      });
   }
 
   addFood(amount: string) {
@@ -219,14 +220,6 @@ export class CustomMealDetailsComponent {
   }
 
   saveCustomMeal() {
-    if (this.action === 'add') {
-      if (this.customMealService.getNumberOfCustomMeals() >= 50) {
-        this.snackBar.open('Maxed out the amount of custom meals!', '', {
-          duration: 2000,
-        });
-        return;
-      }
-    }
     this.customMealService.updateCustomMeal(this.clonedMeal, this.action);
     this.dialogRef.close(this.clonedMeal);
   }

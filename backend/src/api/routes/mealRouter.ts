@@ -39,7 +39,7 @@ mealRouter.delete(
 );
 mealRouter.get('/favoriteMealsLimit', verifyToken, getFavoriteMealsLimit);
 mealRouter.get('/customMeals', verifyToken, getCustomMeals);
-mealRouter.get('/customMeal', verifyToken, getCustomMeal);
+mealRouter.get('/customMeal/:mealID', verifyToken, getCustomMeal);
 mealRouter.post('/addCustomMeal', verifyToken, addCustomMeal);
 mealRouter.put('/updateCustomMeal', verifyToken, updateCustomMeal);
 mealRouter.delete('/deleteCustomMeal/:mealID', verifyToken, deleteCustomMeal);

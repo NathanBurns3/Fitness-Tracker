@@ -31,8 +31,12 @@ export class HomeComponent implements OnInit {
   constructor(private profileInfoService: ProfileInfoService) {}
 
   ngOnInit(): void {
-    this.profileInfo = this.profileInfoService.getProfileInfo();
-    this.formattedHeight = this.formatHeight();
+    this.profileInfoService
+      .getProfileInfo()
+      .subscribe((profileInfo: IProfileInfo) => {
+        this.profileInfo = profileInfo;
+        this.formattedHeight = this.formatHeight();
+      });
   }
 
   selectSummary(summary: string) {

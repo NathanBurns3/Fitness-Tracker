@@ -4,6 +4,7 @@ import { IExerciseInfo } from '../models/exercise-info';
 import { DailyEatingInfoService } from '../services/daily-eating-info.service';
 import { DailyExerciseInfoService } from '../services/daily-exercise-info.service';
 import { Chart, ChartConfiguration } from 'chart.js';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'DailySummaryComponent',
@@ -75,13 +76,17 @@ export class DailySummaryComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.dailyEatingInfoService.getDailyEatingInfo().subscribe((data) => {
-      this.dailyEatingInfo = data;
-      this.eatingPercentage = this.getEatingPercentage();
-    });
-    this.dailyExerciseInfo =
-      this.dailyExerciseInfoService.getDailyExerciseInfo();
-    this.exercisePercentage = this.getExercisePercentage();
+    forkJoin([
+      this.dailyEatingInfoService.getDailyEatingInfo(),
+      this.dailyExerciseInfoService.getDailyExerciseInfo(),
+    ]).subscribe(
+      ([eatingInfo, exerciseInfo]: [IDailyEatingInfo, IExerciseInfo]) => {
+        this.dailyEatingInfo = eatingInfo;
+        this.dailyExerciseInfo = exerciseInfo;
+        this.eatingPercentage = this.getEatingPercentage();
+        this.exercisePercentage = this.getExercisePercentage();
+      }
+    );
   }
 
   ngAfterViewInit(): void {

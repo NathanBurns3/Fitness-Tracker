@@ -105,7 +105,6 @@ export class UserSettingsComponent implements OnInit {
   saveSettings(): void {
     this.userSettingsService.updateUserSettings(this.userSettings);
     this.userSettingsChanged = false;
-    this.dailyEatingInfoService.calculateMacros(this.userSettings);
     this.snackBar.open('Your settings was updated!', '', {
       duration: 2000,
     });

@@ -75,11 +75,13 @@ export class DailySummaryComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.dailyEatingInfo = this.dailyEatingInfoService.getDailyEatingInfo();
+    this.dailyEatingInfoService.getDailyEatingInfo().subscribe((data) => {
+      this.dailyEatingInfo = data;
+      this.eatingPercentage = this.getEatingPercentage();
+    });
     this.dailyExerciseInfo =
       this.dailyExerciseInfoService.getDailyExerciseInfo();
     this.exercisePercentage = this.getExercisePercentage();
-    this.eatingPercentage = this.getEatingPercentage();
   }
 
   ngAfterViewInit(): void {

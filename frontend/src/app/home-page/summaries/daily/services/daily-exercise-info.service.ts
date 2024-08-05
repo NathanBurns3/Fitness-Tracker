@@ -1,23 +1,20 @@
 import { Injectable } from '@angular/core';
 import { IExerciseInfo } from '../models/exercise-info';
+import { environment } from 'src/environments/environment';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { getHeaders } from 'src/utils/http-headers.util';
 
 @Injectable({
   providedIn: 'root',
 })
 export class DailyExerciseInfoService {
-  getDailyExerciseInfo(): IExerciseInfo {
-    return {
-      chestSets: 1,
-      calveSets: 2,
-      hamstringSets: 3,
-      quadSets: 4,
-      gluteSets: 2,
-      shoulderSets: 3,
-      tricepSets: 2,
-      forearmSets: 5,
-      bicepSets: 1,
-      backSets: 4,
-      abSets: 1,
-    };
+  private apiUrl = environment.apiURL + '/home';
+
+  constructor(private http: HttpClient) {}
+  getDailyExerciseInfo(): Observable<IExerciseInfo> {
+    return this.http.get<IExerciseInfo>(this.apiUrl + '/dailyExerciseInfo', {
+      headers: getHeaders(),
+    });
   }
 }

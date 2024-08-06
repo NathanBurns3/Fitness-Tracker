@@ -71,8 +71,11 @@ export class MonthlySummaryComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.monthlyBreakdownInfo =
-      this.monthlyBreakdownInfoService.getMonthlyBreakdownInfo();
+    this.monthlyBreakdownInfoService
+      .getMonthlyBreakdownInfo()
+      .subscribe((data) => {
+        this.monthlyBreakdownInfo = data;
+      });
 
     this.monthlyExerciseInfoService
       .getMonthlyExerciseInfo()
@@ -113,18 +116,26 @@ export class MonthlySummaryComponent implements OnInit, OnDestroy {
     const daysInMonth = new Date(year, month + 1, 0).getDate();
     const firstDayOfWeek = new Date(year, month, 1).getDay();
     const days: IMonthlyBreakdownInfo[] = [];
-    const goals = this.monthlyBreakdownInfoService.getMonthlyBreakdownInfo();
-    for (let i = 0; i < firstDayOfWeek; i++) {
-      days.push({ day: null, exerciseGoal: false, eatingGoal: false });
-    }
-    for (let day = 1; day <= daysInMonth; day++) {
-      const goal = goals.find((g) => g.day === day);
-      if (goal) {
-        days.push(goal);
-      } else {
-        days.push({ day, exerciseGoal: false, eatingGoal: false });
-      }
-    }
+    let goals: IMonthlyBreakdownInfo[] = [];
+
+    this.monthlyBreakdownInfoService
+      .getMonthlyBreakdownInfo()
+      .subscribe((data) => {
+        goals = data;
+
+        for (let i = 0; i < firstDayOfWeek; i++) {
+          days.push({ day: null, exerciseGoal: false, eatingGoal: false });
+        }
+        for (let day = 1; day <= daysInMonth; day++) {
+          const goal = goals.find((g) => g.day === day);
+          if (goal) {
+            days.push(goal);
+          } else {
+            days.push({ day, exerciseGoal: false, eatingGoal: false });
+          }
+        }
+      });
+
     return days;
   }
 

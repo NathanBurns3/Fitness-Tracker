@@ -73,9 +73,14 @@ export class MonthlySummaryComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.monthlyBreakdownInfo =
       this.monthlyBreakdownInfoService.getMonthlyBreakdownInfo();
-    this.monthlyExerciseInfo =
-      this.monthlyExerciseInfoService.getMonthlyExerciseInfo();
-    this.exercisePercentage = this.getExercisePercentage();
+
+    this.monthlyExerciseInfoService
+      .getMonthlyExerciseInfo()
+      .subscribe((data) => {
+        this.monthlyExerciseInfo = data;
+        this.exercisePercentage = this.getExercisePercentage();
+      });
+
     this.daysOfMonth = this.generateDaysOfMonth(
       this.date.getFullYear(),
       this.date.getMonth()

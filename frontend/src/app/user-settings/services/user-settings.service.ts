@@ -1,68 +1,54 @@
 import { Injectable } from '@angular/core';
-import { IPersonalInformation } from '../models/personal-information';
-import { IContactInformation } from '../models/contact-information';
-import { IActivityGoal } from '../models/activity-goals';
-import { ActivityLevelEnum } from '../models/activity-level-enum';
-import { WeightGoalEnum } from '../models/weight-goal-enum';
-import { IPhysicalMeasurements } from '../models/physical-measurements';
 import { IUserSettings } from '../models/user-settings';
-import { DietEnum } from '../models/diet-enum';
-import { GenderEnum } from '../models/gender-enum';
+import { environment } from 'src/environments/environment';
+import { HttpClient } from '@angular/common/http';
+import { catchError, map, Observable, of } from 'rxjs';
+import { getHeaders } from 'src/utils/http-headers.util';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserSettingsService {
-  personalInformation: IPersonalInformation = {
-    firstName: 'John',
-    lastName: 'Doe',
-    gender: GenderEnum.Male,
-    age: 21,
-    profilePicture: './assets/testProfilePicture.jpg',
-  };
+  private apiUrl = environment.apiURL + '/settings';
 
-  contactInformation: IContactInformation = {
-    email: 'testEmail@gmail.com',
-    phoneNumber: '123-456-7890',
-  };
+  constructor(private http: HttpClient, private snackBar: MatSnackBar) {}
 
-  physicalMeasurements: IPhysicalMeasurements = {
-    height: 75,
-    weight: 180,
-  };
-
-  activityGoal: IActivityGoal = {
-    Activity: ActivityLevelEnum.Sedentary,
-    WeightGoal: WeightGoalEnum.WeightLoss,
-  };
-
-  dietPlan: string = DietEnum.Balanced;
-
-  updateUserSettings(userSettings: IUserSettings): void {
-    this.personalInformation = userSettings.personalInformation;
-    this.contactInformation = userSettings.contactInformation;
-    this.physicalMeasurements = userSettings.physicalMeasurements;
-    this.activityGoal = userSettings.activityGoal;
-    this.dietPlan = userSettings.dietPlan;
+  updateUserSettings(userSettings: IUserSettings): Observable<boolean> {
+    return this.http
+      .put<{ success: boolean; message: string }>(
+        this.apiUrl + '/updateUserSettings',
+        { userSettings },
+        {
+          headers: getHeaders(),
+        }
+      )
+      .pipe(
+        map((response) => {
+          if (!response.success) {
+            this.snackBar.open('User Settings was updated!', '', {
+              duration: 2000,
+            });
+            return true;
+          } else {
+            this.snackBar.open(response.message, '', {
+              duration: 2000,
+            });
+            return false;
+          }
+        }),
+        catchError((error: Error | any) => {
+          this.snackBar.open(error.message, '', {
+            duration: 2000,
+          });
+          return of(false);
+        })
+      );
   }
 
-  getPersonalInformation(): IPersonalInformation {
-    return this.personalInformation;
-  }
-
-  getContactInformation(): IContactInformation {
-    return this.contactInformation;
-  }
-
-  getPhysicalMeasurements() {
-    return this.physicalMeasurements;
-  }
-
-  getActivityGoal() {
-    return this.activityGoal;
-  }
-
-  getDietPlan() {
-    return this.dietPlan;
+  getUserSettings(): Observable<IUserSettings> {
+    return this.http.get<IUserSettings>(this.apiUrl + '/userSettings', {
+      headers: getHeaders(),
+    });
   }
 }

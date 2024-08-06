@@ -1,29 +1,23 @@
 import { Injectable } from '@angular/core';
 import { IMonthlyBreakdownInfo } from '../models/monthly-breakdown-info';
+import { environment } from 'src/environments/environment';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { getHeaders } from 'src/utils/http-headers.util';
 @Injectable({
   providedIn: 'root',
 })
 export class MonthlyBreakdownInfoService {
-  getMonthlyBreakdownInfo(): IMonthlyBreakdownInfo[] {
-    return [
-      { day: 1, exerciseGoal: true, eatingGoal: false },
-      { day: 2, exerciseGoal: false, eatingGoal: true },
-      { day: 3, exerciseGoal: false, eatingGoal: false },
-      { day: 4, exerciseGoal: true, eatingGoal: false },
-      { day: 5, exerciseGoal: false, eatingGoal: true },
-      { day: 6, exerciseGoal: false, eatingGoal: true },
-      { day: 7, exerciseGoal: true, eatingGoal: false },
-      { day: 8, exerciseGoal: true, eatingGoal: true },
-      { day: 9, exerciseGoal: false, eatingGoal: false },
-      { day: 10, exerciseGoal: true, eatingGoal: false },
-      { day: 11, exerciseGoal: false, eatingGoal: false },
-      { day: 12, exerciseGoal: false, eatingGoal: true },
-      { day: 13, exerciseGoal: false, eatingGoal: true },
-      { day: 14, exerciseGoal: false, eatingGoal: false },
-      { day: 15, exerciseGoal: true, eatingGoal: true },
-      { day: 16, exerciseGoal: true, eatingGoal: true },
-      { day: 17, exerciseGoal: false, eatingGoal: false },
-      { day: 18, exerciseGoal: false, eatingGoal: false },
-    ];
+  private apiUrl = environment.apiURL + '/home';
+
+  constructor(private http: HttpClient) {}
+
+  getMonthlyBreakdownInfo(): Observable<IMonthlyBreakdownInfo[]> {
+    return this.http.get<IMonthlyBreakdownInfo[]>(
+      this.apiUrl + '/monthlyBreakdownInfo',
+      {
+        headers: getHeaders(),
+      }
+    );
   }
 }

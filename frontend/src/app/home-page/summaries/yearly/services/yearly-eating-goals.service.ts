@@ -1,10 +1,20 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
+import { getHeaders } from 'src/utils/http-headers.util';
 
 @Injectable({
   providedIn: 'root',
 })
 export class YearlyEatingGoalsService {
-  getYearlyEatingGoals(): number[] {
-    return [20, 25, 17, 11, 9, 5, 23, 13, 19, 15, 9, 27];
+  private apiUrl = environment.apiURL + '/home';
+
+  constructor(private http: HttpClient) {}
+
+  getYearlyEatingGoals(): Observable<number[]> {
+    return this.http.get<number[]>(this.apiUrl + '/yearlyEatingGoals', {
+      headers: getHeaders(),
+    });
   }
 }

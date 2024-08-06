@@ -28,19 +28,13 @@ export class UserSettingsComponent implements OnInit {
 
   constructor(
     private userSettingsService: UserSettingsService,
-    private dailyEatingInfoService: DailyEatingInfoService,
     private snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
-    this.userSettings = {
-      personalInformation: this.userSettingsService.getPersonalInformation(),
-      contactInformation: this.userSettingsService.getContactInformation(),
-      physicalMeasurements: this.userSettingsService.getPhysicalMeasurements(),
-      activityGoal: this.userSettingsService.getActivityGoal(),
-      dietPlan: this.userSettingsService.getDietPlan(),
-    };
-    console.log(this.userSettings.activityGoal);
+    this.userSettingsService.getUserSettings().subscribe((userSettings) => {
+      this.userSettings = userSettings;
+    });
   }
 
   updateContactInformation(
@@ -103,11 +97,13 @@ export class UserSettingsComponent implements OnInit {
   }
 
   saveSettings(): void {
-    this.userSettingsService.updateUserSettings(this.userSettings);
-    this.userSettingsChanged = false;
-    this.snackBar.open('Your settings was updated!', '', {
-      duration: 2000,
-    });
+    this.userSettingsService
+      .updateUserSettings(this.userSettings)
+      .subscribe((response) => {
+        if (response) {
+          this.userSettingsChanged = false;
+        }
+      });
   }
 
   cancelSettings(): void {

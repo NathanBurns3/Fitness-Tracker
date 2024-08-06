@@ -2,6 +2,7 @@ import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { Chart, registerables } from 'chart.js';
 import { YearlyEatingGoalsService } from '../services/yearly-eating-goals.service';
 import { YearlyExercisesService } from '../services/yearly-exercise.service';
+import { forkJoin } from 'rxjs';
 Chart.register(...registerables);
 
 @Component({
@@ -23,13 +24,14 @@ export class YearlySummaryComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.ExercisesCompleted = this.yearlyExercisesService.getYearlyExercises();
-    this.EatingGoalsCompleted =
-      this.yearlyEatingGoalsService.getYearlyEatingGoals();
-  }
-
-  ngAfterViewInit(): void {
-    this.createChart();
+    forkJoin([
+      this.yearlyExercisesService.getYearlyExercises(),
+      this.yearlyEatingGoalsService.getYearlyEatingGoals(),
+    ]).subscribe(([exercises, eatingGoals]) => {
+      this.ExercisesCompleted = exercises;
+      this.EatingGoalsCompleted = eatingGoals;
+      this.createChart();
+    });
   }
 
   ngOnDestroy(): void {

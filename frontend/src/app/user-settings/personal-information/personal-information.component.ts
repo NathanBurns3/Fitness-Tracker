@@ -26,7 +26,6 @@ export class PersonalInformationComponent implements OnInit, OnChanges {
     [GenderEnum.Female]: 'Female',
     [GenderEnum.Other]: 'Other',
   };
-  //genderOptions: string[] = ['Male', 'Female', 'Other'];
 
   ngOnInit(): void {
     this.personalInformation = { ...this.originalPersonalInformation };

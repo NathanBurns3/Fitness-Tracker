@@ -18,14 +18,14 @@ export class UserSettingsService {
     return this.http
       .put<{ success: boolean; message: string }>(
         this.apiUrl + '/updateUserSettings',
-        { userSettings },
+        { settings: userSettings },
         {
           headers: getHeaders(),
         }
       )
       .pipe(
         map((response) => {
-          if (!response.success) {
+          if (response.success) {
             this.snackBar.open('User Settings was updated!', '', {
               duration: 2000,
             });

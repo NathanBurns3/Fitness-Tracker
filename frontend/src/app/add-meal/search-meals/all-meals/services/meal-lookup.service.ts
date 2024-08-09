@@ -15,7 +15,7 @@ export class MealLookupService {
   searchMeals(meal: string): Observable<IFood[]> {
     return this.http
       .get<IFood[]>(this.apiUrl + '/searchFoods', {
-        params: { meal },
+        params: { meal: meal },
       })
       .pipe(
         map((response) => response),

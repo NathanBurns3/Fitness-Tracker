@@ -54,7 +54,7 @@ export class ExercisesService {
     return this.http
       .post<{ success: Boolean; message: string }>(
         this.apiUrl + '/addExercise',
-        { muscleGroup, exercise },
+        { muscleGroup: muscleGroup, exerciseName: exercise },
         {
           headers: getHeaders(),
         }

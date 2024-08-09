@@ -25,7 +25,7 @@ export class DailyFoodService {
     return this.http
       .post<{ success: Boolean; message: string }>(
         this.apiUrl + '/addDailyFood',
-        { food },
+        { food: food },
         {
           headers: getHeaders(),
         }
@@ -58,7 +58,7 @@ export class DailyFoodService {
     return this.http
       .put<{ success: Boolean; message: string }>(
         this.apiUrl + '/updateDailyFood',
-        { fodcID: food.fdcID, food: food },
+        { fdcID: food.fdcID, food: food },
         {
           headers: getHeaders(),
         }

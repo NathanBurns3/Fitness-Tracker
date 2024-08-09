@@ -25,7 +25,7 @@ export class DailyExercisesService {
     return this.http
       .post<{ success: Boolean; message: string }>(
         this.apiUrl + '/addDailyExercise',
-        { exercise },
+        { exercise: exercise },
         {
           headers: getHeaders(),
         }
@@ -58,7 +58,7 @@ export class DailyExercisesService {
     return this.http
       .put<{ success: Boolean; message: string }>(
         this.apiUrl + '/updateDailyExercise',
-        { exercise },
+        { exerciseID: exercise.exerciseID, exercise: exercise },
         {
           headers: getHeaders(),
         }

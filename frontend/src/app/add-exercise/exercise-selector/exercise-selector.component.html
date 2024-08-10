@@ -43,6 +43,10 @@
         type="number"
         placeholder="Number of Sets"
         aria-label="Number of Sets"
+        min="1"
+        step="1"
+        (keydown)="preventInvalidCharacters($event)"
+        (input)="checkMaxLength($event)"
       />
     </form>
     <button
@@ -51,18 +55,18 @@
       [disabled]="
         selectedMuscleGroup === 'Choose a Muscle Group' ||
         selectedExercise === 'Choose a Exercise' ||
-        sets.invalid
+        !sets.value
       "
       class="rounded-lg border p-2.5 text-sm text-white w-48 shadow-lg transition duration-500 ease-in-out transform bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-700 hover:to-blue-900 hover:-translate-y-0.5 hover:scale-105 cursor-pointer"
       [class.opacity-50]="
         selectedMuscleGroup === 'Choose a Muscle Group' ||
         selectedExercise === 'Choose a Exercise' ||
-        sets.invalid
+        !sets.value
       "
       [class.pointer-events-none]="
         selectedMuscleGroup === 'Choose a Muscle Group' ||
         selectedExercise === 'Choose a Exercise' ||
-        sets.invalid
+        !sets.value
       "
     >
       Add Exercise

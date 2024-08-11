@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { ExercisesService } from '../services/exercises.service';
 import { muscleGroupsEnum } from '../models/muscle-groups-enum';
@@ -9,6 +9,8 @@ import { muscleGroupsEnum } from '../models/muscle-groups-enum';
   styleUrls: ['./add-new-exercise.component.css'],
 })
 export class AddNewExerciseComponent {
+  @Output() exerciseAdded = new EventEmitter<void>();
+
   muscleGroup!: muscleGroupsEnum;
   muscleGroups: muscleGroupsEnum[] = Object.values(muscleGroupsEnum);
   exercise: string = '';
@@ -27,6 +29,7 @@ export class AddNewExerciseComponent {
       .addExercise(this.muscleGroup, this.exercise)
       .subscribe((success: boolean) => {
         if (success) {
+          this.exerciseAdded.emit();
           this.dialogRef.close();
         }
       });

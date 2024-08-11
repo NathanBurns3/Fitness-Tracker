@@ -81,16 +81,24 @@ export class ExerciseSelectorComponent {
   }
 
   openAddNewExerciseDialog() {
-    this.dialog.open(AddNewExerciseComponent, {
+    const dialogRef = this.dialog.open(AddNewExerciseComponent, {
       width: '500px',
       height: '500px',
+    });
+
+    dialogRef.componentInstance.exerciseAdded.subscribe(() => {
+      this.onMuscleGroupChange();
     });
   }
 
   openDeleteExerciseDialog() {
-    this.dialog.open(DeleteExerciseComponent, {
+    const dialogRef = this.dialog.open(DeleteExerciseComponent, {
       width: '500px',
       height: '500px',
+    });
+
+    dialogRef.componentInstance.exerciseDeleted.subscribe(() => {
+      this.onMuscleGroupChange();
     });
   }
 }

@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { IExercise } from '../models/exercise';
 import { muscleGroupsEnum } from '../models/muscle-groups-enum';
@@ -12,6 +12,8 @@ import { map } from 'rxjs';
   templateUrl: './exercise-details.component.html',
 })
 export class ExerciseDetailsComponent implements OnInit {
+  @Output() exerciseDeleted = new EventEmitter<void>();
+
   muscleGroup!: muscleGroupsEnum | string;
   exercise: string;
   sets: FormControl = new FormControl('');
@@ -26,6 +28,7 @@ export class ExerciseDetailsComponent implements OnInit {
   ) {
     this.muscleGroup = this.data.exercise.muscleGroup as muscleGroupsEnum;
     this.exercise = this.data.exercise.exerciseName;
+    this.sets.setValue(this.data.exercise.sets);
   }
 
   ngOnInit(): void {
@@ -94,6 +97,7 @@ export class ExerciseDetailsComponent implements OnInit {
       .deleteExercise(this.data.exercise)
       .subscribe((success: boolean) => {
         if (success) {
+          this.exerciseDeleted.emit();
           this.dialogRef.close();
         }
       });

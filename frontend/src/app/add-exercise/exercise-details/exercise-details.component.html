@@ -51,6 +51,10 @@
         type="number"
         placeholder="Number of Sets"
         aria-label="Number of Sets"
+        min="1"
+        step="1"
+        (keydown)="preventInvalidCharacters($event)"
+        (input)="checkMaxLength($event)"
       />
     </form>
   </div>
@@ -60,9 +64,11 @@
   <button
     class="rounded-lg border p-2.5 w-16 mr-2 text-sm bg-gradient-to-r from-blue-500 to-blue-700 text-white hover:from-blue-700 hover:to-blue-900 shadow-lg transition duration-500 ease-in-out transform hover:-translate-y-0.5 hover:scale-105"
     (click)="saveExercise()"
-    [class.opacity-50]="sets.invalid"
-    [class.pointer-events-none]="sets.invalid"
-    [disabled]="sets.invalid"
+    [class.opacity-50]="!sets.value || exercise === 'Choose a Exercise'"
+    [class.pointer-events-none]="
+      !sets.value || exercise === 'Choose a Exercise'
+    "
+    [disabled]="!sets.value || exercise === 'Choose a Exercise'"
   >
     Save
   </button>

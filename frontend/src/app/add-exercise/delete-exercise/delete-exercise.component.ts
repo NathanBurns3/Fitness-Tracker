@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { ExercisesService } from '../services/exercises.service';
 import { muscleGroupsEnum } from '../models/muscle-groups-enum';
@@ -11,6 +11,8 @@ import { IExercise } from '../models/exercise';
   styleUrls: ['./delete-exercise.component.css'],
 })
 export class DeleteExerciseComponent {
+  @Output() exerciseDeleted = new EventEmitter<void>();
+
   muscleGroup!: muscleGroupsEnum | string;
   exercise!: IExercise;
   exercises: IExercise[] = [];
@@ -50,6 +52,7 @@ export class DeleteExerciseComponent {
         )
         .subscribe((success: boolean) => {
           if (success) {
+            this.exerciseDeleted.emit();
             this.dialogRef.close();
           }
         });

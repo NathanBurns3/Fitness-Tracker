@@ -6,7 +6,7 @@ interface ICustomMealsDB extends Document {
     mealID: mongoose.Types.ObjectId;
     mealName: string;
     servingUnit: string;
-    foods: Array<{
+    food: Array<{
       fdcID: number;
       description: string;
       brandName: string;
@@ -34,7 +34,7 @@ const CustomMealsSchema: Schema = new Schema(
         mealID: { type: Schema.Types.ObjectId, required: true },
         mealName: { type: String, required: true },
         servingUnit: { type: String, required: true },
-        foods: {
+        food: {
           type: [
             {
               _id: false,

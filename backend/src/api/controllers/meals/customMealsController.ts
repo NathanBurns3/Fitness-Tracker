@@ -22,7 +22,7 @@ export const getCustomMeals = async (
     }
 
     const meals: ICustomMeal[] = customMeals.meals.map((meal) => {
-      const totalServingSize = meal.foods.reduce(
+      const totalServingSize = meal.food.reduce(
         (sum, food) => sum + food.servingSize,
         0
       );
@@ -31,7 +31,7 @@ export const getCustomMeals = async (
         name: meal.mealName,
         servingUnit: meal.servingUnit,
         servingSize: totalServingSize,
-        food: meal.foods.map((food) => ({
+        food: meal.food.map((food) => ({
           fdcID: food.fdcID,
           description: food.description,
           brandName: food.brandName,

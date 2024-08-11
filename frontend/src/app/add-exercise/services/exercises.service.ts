@@ -85,11 +85,12 @@ export class ExercisesService {
 
   deleteExercise(
     muscleGroup: muscleGroupsEnum,
-    exercise: string
+    exerciseID: string,
+    exerciseName: string
   ): Observable<boolean> {
     return this.http
       .delete<{ success: Boolean; message: string }>(
-        this.apiUrl + '/deleteExercise/' + muscleGroup + '/' + exercise,
+        this.apiUrl + '/deleteExercise/' + muscleGroup + '/' + exerciseID,
         {
           headers: getHeaders(),
         }
@@ -97,7 +98,7 @@ export class ExercisesService {
       .pipe(
         map((response) => {
           if (response.success) {
-            this.snackBar.open(exercise + ' was deleted!', '', {
+            this.snackBar.open(exerciseName + ' was deleted!', '', {
               duration: 2000,
             });
             return true;

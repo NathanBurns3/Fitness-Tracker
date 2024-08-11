@@ -12,8 +12,8 @@ import { IExercise } from '../models/exercise';
 })
 export class DeleteExerciseComponent {
   muscleGroup!: muscleGroupsEnum | string;
-  exercise: string = '';
-  exercises: string[] = [];
+  exercise!: IExercise;
+  exercises: IExercise[] = [];
   muscleGroups: muscleGroupsEnum[] = Object.values(muscleGroupsEnum);
 
   constructor(
@@ -32,25 +32,27 @@ export class DeleteExerciseComponent {
         .getExercisesById(
           muscleGroupsEnum[this.muscleGroup as muscleGroupsEnum]
         )
-        .pipe(
-          map((exercises: IExercise[]) =>
-            exercises.map((exercise) => exercise.exerciseName)
-          )
-        )
-        .subscribe((exerciseNames: string[]) => {
-          this.exercises = exerciseNames;
+        .pipe(map((exercises: IExercise[]) => exercises))
+        .subscribe((exercises: IExercise[]) => {
+          this.exercises = exercises;
         });
     }
-    this.exercise = 'Choose a Exercise';
+    this.exercise = {} as IExercise;
   }
 
   deleteExercise() {
-    this.exercisesService
-      .deleteExercise(this.muscleGroup as muscleGroupsEnum, this.exercise)
-      .subscribe((success: boolean) => {
-        if (success) {
-          this.dialogRef.close();
-        }
-      });
+    if (this.exercise) {
+      this.exercisesService
+        .deleteExercise(
+          this.muscleGroup as muscleGroupsEnum,
+          this.exercise.exerciseID,
+          this.exercise.exerciseName
+        )
+        .subscribe((success: boolean) => {
+          if (success) {
+            this.dialogRef.close();
+          }
+        });
+    }
   }
 }

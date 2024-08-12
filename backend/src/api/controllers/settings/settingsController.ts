@@ -79,6 +79,18 @@ export const updateUserSettings = async (
         .json({ message: 'Invalid user ID.', success: false });
     }
 
+    if (
+      !settings ||
+      !settings.personalInformation ||
+      !settings.contactInformation ||
+      !settings.physicalMeasurements ||
+      !settings.activityGoal
+    ) {
+      return res
+        .status(400)
+        .json({ message: 'Invalid settings object.', success: false });
+    }
+
     const updatedSettings = await User.findOneAndUpdate(
       { _id: userID },
       {

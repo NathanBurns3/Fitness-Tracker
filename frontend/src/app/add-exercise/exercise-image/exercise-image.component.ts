@@ -1,8 +1,3 @@
-/*
-TODO:
-make all images the same size
-*/
-
 import { Component, Input } from '@angular/core';
 
 @Component({

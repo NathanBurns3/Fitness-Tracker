@@ -28,7 +28,7 @@ export const getCustomMeals = async (
       );
       return {
         id: meal.mealID,
-        name: meal.mealName,
+        name: meal.name,
         servingUnit: meal.servingUnit,
         servingSize: totalServingSize,
         food: meal.food.map((food) => ({
@@ -136,7 +136,7 @@ export const addCustomMeal = async (
         $push: {
           meals: {
             mealID: newCustomMeal.id,
-            mealName: newCustomMeal.name,
+            name: newCustomMeal.name,
             servingUnit: newCustomMeal.servingUnit,
             foods: newCustomMeal.food,
           },
@@ -171,7 +171,7 @@ export const updateCustomMeal = async (
       { userID, 'meals.mealID': mealID },
       {
         $set: {
-          'meals.$.mealName': customMeal.name,
+          'meals.$.name': customMeal.name,
           'meals.$.servingUnit': customMeal.servingUnit,
           'meals.$.foods': customMeal.food.map((food) => ({
             fdcID: food.fdcID,

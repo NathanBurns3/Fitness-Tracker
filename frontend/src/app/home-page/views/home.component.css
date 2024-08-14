@@ -6,7 +6,7 @@
 
 .ProfileSection {
   width: 23%;
-  transition: width 0.35s ease-in-out;
+  transition: transform 0.7s ease-in-out; /* Adjusted transition duration */
 }
 
 .ProfileSection.open {
@@ -16,6 +16,11 @@
   top: 0;
   height: 100%;
   z-index: 50;
+  transform: translateX(0);
+}
+
+.ProfileSection:not(.open) {
+  transform: translateX(-100%);
 }
 
 .HomeSection {
@@ -27,6 +32,10 @@
   position: absolute;
   top: 0;
   z-index: 100;
+}
+
+.ProfileSection.open ~ .toggle-button {
+  display: none;
 }
 
 #SignOutButton {

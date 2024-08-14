@@ -17,7 +17,7 @@ export class HomeComponent implements OnInit {
   })} ${this.today.getDate()}, ${this.today.getFullYear()}`;
   selectedSummary: string = 'Daily';
   formattedHeight!: string;
-  hideHome = false;
+  isSidebarOpen = false;
   weightGoalLabels = {
     [WeightGoalEnum.Maintain]: 'Maintain',
     [WeightGoalEnum.MildWeightLoss]: 'Mild Lose',
@@ -29,12 +29,6 @@ export class HomeComponent implements OnInit {
   };
 
   constructor(private profileInfoService: ProfileInfoService) {}
-
-  isSidebarOpen = false;
-
-  toggleSidebar() {
-    this.isSidebarOpen = !this.isSidebarOpen;
-  }
 
   ngOnInit(): void {
     this.profileInfoService
@@ -56,7 +50,7 @@ export class HomeComponent implements OnInit {
     return `${feet}' ${inches}"`;
   }
 
-  toggleHome() {
-    this.hideHome = !this.hideHome;
+  toggleSidebar() {
+    this.isSidebarOpen = !this.isSidebarOpen;
   }
 }

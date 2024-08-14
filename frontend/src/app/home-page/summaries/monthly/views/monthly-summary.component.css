@@ -10,6 +10,12 @@
   }
 }
 
+@media screen and (max-width: 1200px) {
+  .exercise {
+    margin-top: -0.5em;
+  }
+}
+
 @media (max-width: 370px) {
   .myChart {
     max-width: 200px;

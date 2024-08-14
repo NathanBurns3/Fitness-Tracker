@@ -30,6 +30,12 @@ export class HomeComponent implements OnInit {
 
   constructor(private profileInfoService: ProfileInfoService) {}
 
+  isSidebarOpen = false;
+
+  toggleSidebar() {
+    this.isSidebarOpen = !this.isSidebarOpen;
+  }
+
   ngOnInit(): void {
     this.profileInfoService
       .getProfileInfo()

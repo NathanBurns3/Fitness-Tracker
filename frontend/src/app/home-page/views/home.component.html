@@ -1,18 +1,18 @@
 <body class="h-screen bg-zinc-300 text-center">
-  <div class="flex justify-center">
+  <div class="main-container flex justify-center">
     <!--PROFILE SECTION-->
     <div
       id="ProfileSection"
       class="ProfileSection relative box-border m-2 bg-neutral-50 h-[calc(100vh-16px)] rounded-lg shadow-2xl overflow-auto lg:block transform transition-transform duration-200 lg:translate-x-0 z-40"
-      [ngClass]="{ hide: hideHome }"
+      [ngClass]="{ open: isSidebarOpen }"
       *ngIf="profileInfo"
     >
       <div #ProfileHeader>
         <button
-          (click)="toggleHome()"
+          (click)="toggleSidebar()"
           class="toggle-button lg:hidden absolute top-0 left-5 m-3 px-1 bg-blue-700 text-white rounded z-50 hover:bg-blue-700 hover:cursor-pointer transition-colors duration-200 ease-in-out"
         >
-          |||
+          ☰
         </button>
         <a>
           <h3
@@ -83,14 +83,14 @@
     <div
       class="HomeSection relative box-border m-2 bg-neutral-50 h-[calc(100vh-16px)] rounded shadow-lg overflow-auto"
       id="HomeSection"
-      [ngClass]="{ hide: hideHome }"
+      [ngClass]="{ shrink: isSidebarOpen }"
     >
       <div #Title class="pt-5">
         <button
-          (click)="toggleHome()"
+          (click)="toggleSidebar()"
           class="toggle-button lg:hidden absolute top-0 left-5 mt-3 px-1 bg-blue-700 text-white rounded z-50 hover:bg-blue-700 hover:cursor-pointer transition-colors duration-200 ease-in-out"
         >
-          |||
+          ☰
         </button>
         <a id="SignOutButton" [ngClass]="{ hide: hideHome }">
           <h3

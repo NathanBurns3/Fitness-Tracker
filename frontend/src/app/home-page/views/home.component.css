@@ -6,10 +6,21 @@
 
 .ProfileSection {
   width: 23%;
+  transition: width 0.35s ease-in-out;
+}
+
+.ProfileSection.open {
+  width: 70%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  z-index: 50;
 }
 
 .HomeSection {
   width: 73%;
+  transition: none; /* Remove width transition */
 }
 
 .toggle-button {
@@ -50,29 +61,14 @@
   .ProfileSection {
     width: 0;
     overflow: hidden;
-    transition: width 0.35s ease-in-out;
+  }
+
+  .ProfileSection.open {
+    width: 70%;
   }
 
   .HomeSection {
     width: 100%;
-    transition: width 0.35s ease-in-out;
-    transition-delay: 0.15s;
-    margin: 0 auto;
-  }
-
-  .ProfileSection.hide {
-    width: 100%;
-    overflow: show;
-    transition: width 0.35s ease-in-out;
-    transition-delay: 0.15s;
-    margin: 0 auto;
-  }
-
-  .HomeSection.hide {
-    width: 0;
-    overflow: hidden;
-    transition: width 0.35s ease-in-out;
-    margin: 0 auto;
   }
 
   .Profile-Picture {

@@ -2,114 +2,116 @@
   <div
     class="content bg-neutral-50 rounded-lg shadow-2xl h-[calc(100vh-40px)] m-5 p-5"
   >
-    <div #Title>
-      <div class="min-h-[50px] relative mt-5 -mb-4">
-        <div class="flex justify-between items-center">
-          <button
-            routerLink="/"
-            class="back button absolute left-6 bg-zinc-300 hover:bg-zinc-400 text-white font-bold py-2 px-4 rounded bg-gradient-to-r from-orange-500 to-orange-700"
-          >
-            <span>Back</span>
-          </button>
-          <h1
-            class="title text-6xl font-bold text-blue-800 absolute left-1/2 transform -translate-x-1/2"
-          >
-            Settings
-          </h1>
-          <div *ngIf="!mobile" class="absolute right-5">
+    <div *ngIf="userSettings">
+      <div #Title>
+        <div class="min-h-[50px] relative mt-5 -mb-4">
+          <div class="flex justify-between items-center">
             <button
-              class="button rounded-lg border text-center p-2 w-20 mr-2 font-bold bg-gradient-to-r from-blue-500 to-blue-700 text-white hover:from-blue-700 hover:to-blue-900 shadow-lg transition duration-500 ease-in-out transform hover:-translate-y-0.5 hover:scale-105"
-              (click)="saveSettings()"
-              [class.opacity-50]="!userSettingsChanged || !pageValid"
-              [class.pointer-events-none]="!userSettingsChanged || !pageValid"
-              [disabled]="!userSettingsChanged || !pageValid"
+              routerLink="/"
+              class="back button absolute left-6 bg-zinc-300 hover:bg-zinc-400 text-white font-bold py-2 px-4 rounded bg-gradient-to-r from-orange-500 to-orange-700"
             >
-              Save
+              <span>Back</span>
             </button>
-            <button
-              class="button rounded-lg border text-center p-2 w-20 mr-2 font-bold bg-gradient-to-r from-orange-500 to-orange-700 text-white hover:from-orange-700 hover:to-orange-900 shadow-lg transition duration-500 ease-in-out transform hover:-translate-y-0.5 hover:scale-105"
-              (click)="cancelSettings()"
-              [class.opacity-50]="!userSettingsChanged"
-              [class.pointer-events-none]="!userSettingsChanged"
-              [disabled]="!userSettingsChanged"
+            <h1
+              class="title text-6xl font-bold text-blue-800 absolute left-1/2 transform -translate-x-1/2"
             >
-              Cancel
-            </button>
+              Settings
+            </h1>
+            <div *ngIf="!mobile" class="absolute right-5">
+              <button
+                class="button rounded-lg border text-center p-2 w-20 mr-2 font-bold bg-gradient-to-r from-blue-500 to-blue-700 text-white hover:from-blue-700 hover:to-blue-900 shadow-lg transition duration-500 ease-in-out transform hover:-translate-y-0.5 hover:scale-105"
+                (click)="saveSettings()"
+                [class.opacity-50]="!userSettingsChanged || !pageValid"
+                [class.pointer-events-none]="!userSettingsChanged || !pageValid"
+                [disabled]="!userSettingsChanged || !pageValid"
+              >
+                Save
+              </button>
+              <button
+                class="button rounded-lg border text-center p-2 w-20 mr-2 font-bold bg-gradient-to-r from-orange-500 to-orange-700 text-white hover:from-orange-700 hover:to-orange-900 shadow-lg transition duration-500 ease-in-out transform hover:-translate-y-0.5 hover:scale-105"
+                (click)="cancelSettings()"
+                [class.opacity-50]="!userSettingsChanged"
+                [class.pointer-events-none]="!userSettingsChanged"
+                [disabled]="!userSettingsChanged"
+              >
+                Cancel
+              </button>
+            </div>
           </div>
         </div>
       </div>
-    </div>
 
-    <div class="sections m-4 grid grid-cols-8 h-[calc(100vh-10rem)]">
-      <div class="section-1 col-span-5 mx-3">
-        <div
-          class="personal-information border border-zinc-300 rounded-lg shadow-lg col-span-5 p-4 h-[45%] mb-4"
-        >
-          <personal-information
-            [originalPersonalInformation]="userSettings.personalInformation"
-            (personalInformationChange)="updatePersonalInformation($event)"
-          ></personal-information>
+      <div class="sections m-4 grid grid-cols-8 h-[calc(100vh-10rem)]">
+        <div class="section-1 col-span-5 mx-3">
+          <div
+            class="personal-information border border-zinc-300 rounded-lg shadow-lg col-span-5 p-4 h-[45%] mb-4"
+          >
+            <personal-information
+              [originalPersonalInformation]="userSettings.personalInformation"
+              (personalInformationChange)="updatePersonalInformation($event)"
+            ></personal-information>
+          </div>
+          <div
+            class="contact-information border border-zinc-300 rounded-lg shadow-lg col-span-5 p-4 h-[25%] mb-4"
+          >
+            <contact-information
+              [originalContactInformation]="userSettings.contactInformation"
+              (contactInformationChange)="updateContactInformation($event)"
+            ></contact-information>
+          </div>
+          <div
+            class="physical-measurements border border-zinc-300 rounded-lg shadow-lg col-span-8 p-4 h-[25%]"
+          >
+            <physical-measurements
+              [originalPhysicalMeasurements]="userSettings.physicalMeasurements"
+              (physicalMeasurementsChange)="updatePhysicalMeasurements($event)"
+            ></physical-measurements>
+          </div>
         </div>
-        <div
-          class="contact-information border border-zinc-300 rounded-lg shadow-lg col-span-5 p-4 h-[25%] mb-4"
-        >
-          <contact-information
-            [originalContactInformation]="userSettings.contactInformation"
-            (contactInformationChange)="updateContactInformation($event)"
-          ></contact-information>
-        </div>
-        <div
-          class="physical-measurements border border-zinc-300 rounded-lg shadow-lg col-span-8 p-4 h-[25%]"
-        >
-          <physical-measurements
-            [originalPhysicalMeasurements]="userSettings.physicalMeasurements"
-            (physicalMeasurementsChange)="updatePhysicalMeasurements($event)"
-          ></physical-measurements>
+        <div class="section-2 col-span-3 mx-3">
+          <div
+            class="activity-goal border border-zinc-300 rounded-lg shadow-lg col-span-3 p-4 h-[45%] mb-4"
+          >
+            <activity-goal
+              [originalActivityGoal]="userSettings.activityGoal"
+              (activityGoalChange)="updateActivityGoal($event)"
+            ></activity-goal>
+          </div>
+          <div
+            class="diet-selection border border-zinc-300 rounded-lg shadow-lg col-span-3 p-4 h-[20%] mb-4"
+          >
+            <diet-selection
+              [originalDietSelection]="userSettings.dietPlan"
+              (dietSelectionChange)="updateDietSelection($event)"
+            ></diet-selection>
+          </div>
+          <div
+            class="account-management border border-zinc-300 rounded-lg shadow-lg col-span-3 p-4 h-[30%]"
+          >
+            <account-management></account-management>
+          </div>
         </div>
       </div>
-      <div class="section-2 col-span-3 mx-3">
-        <div
-          class="activity-goal border border-zinc-300 rounded-lg shadow-lg col-span-3 p-4 h-[45%] mb-4"
+      <div *ngIf="mobile" class="space-x-5">
+        <button
+          class="rounded-lg border text-center p-2 w-20 mr-2 font-bold bg-gradient-to-r from-blue-500 to-blue-700 text-white hover:from-blue-700 hover:to-blue-900 shadow-lg transition duration-500 ease-in-out transform hover:-translate-y-0.5 hover:scale-105"
+          (click)="saveSettings()"
+          [class.opacity-50]="!userSettingsChanged || !pageValid"
+          [class.pointer-events-none]="!userSettingsChanged || !pageValid"
+          [disabled]="!userSettingsChanged || !pageValid"
         >
-          <activity-goal
-            [originalActivityGoal]="userSettings.activityGoal"
-            (activityGoalChange)="updateActivityGoal($event)"
-          ></activity-goal>
-        </div>
-        <div
-          class="diet-selection border border-zinc-300 rounded-lg shadow-lg col-span-3 p-4 h-[20%] mb-4"
+          Save
+        </button>
+        <button
+          class="rounded-lg border text-center p-2 w-20 mr-2 font-bold bg-gradient-to-r from-orange-500 to-orange-700 text-white hover:from-orange-700 hover:to-orange-900 shadow-lg transition duration-500 ease-in-out transform hover:-translate-y-0.5 hover:scale-105"
+          (click)="cancelSettings()"
+          [class.opacity-50]="!userSettingsChanged"
+          [class.pointer-events-none]="!userSettingsChanged"
+          [disabled]="!userSettingsChanged"
         >
-          <diet-selection
-            [originalDietSelection]="userSettings.dietPlan"
-            (dietSelectionChange)="updateDietSelection($event)"
-          ></diet-selection>
-        </div>
-        <div
-          class="account-management border border-zinc-300 rounded-lg shadow-lg col-span-3 p-4 h-[30%]"
-        >
-          <account-management></account-management>
-        </div>
+          Cancel
+        </button>
       </div>
-    </div>
-    <div *ngIf="mobile" class="space-x-5">
-      <button
-        class="rounded-lg border text-center p-2 w-20 mr-2 font-bold bg-gradient-to-r from-blue-500 to-blue-700 text-white hover:from-blue-700 hover:to-blue-900 shadow-lg transition duration-500 ease-in-out transform hover:-translate-y-0.5 hover:scale-105"
-        (click)="saveSettings()"
-        [class.opacity-50]="!userSettingsChanged || !pageValid"
-        [class.pointer-events-none]="!userSettingsChanged || !pageValid"
-        [disabled]="!userSettingsChanged || !pageValid"
-      >
-        Save
-      </button>
-      <button
-        class="rounded-lg border text-center p-2 w-20 mr-2 font-bold bg-gradient-to-r from-orange-500 to-orange-700 text-white hover:from-orange-700 hover:to-orange-900 shadow-lg transition duration-500 ease-in-out transform hover:-translate-y-0.5 hover:scale-105"
-        (click)="cancelSettings()"
-        [class.opacity-50]="!userSettingsChanged"
-        [class.pointer-events-none]="!userSettingsChanged"
-        [disabled]="!userSettingsChanged"
-      >
-        Cancel
-      </button>
     </div>
   </div>
 </body>

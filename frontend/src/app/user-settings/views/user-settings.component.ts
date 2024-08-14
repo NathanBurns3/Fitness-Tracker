@@ -6,7 +6,6 @@ import { IPersonalInformation } from '../models/personal-information';
 import { IPhysicalMeasurements } from '../models/physical-measurements';
 import { IActivityGoal } from '../models/activity-goals';
 import validator from 'validator';
-import { DailyEatingInfoService } from 'src/app/home-page/summaries/daily/services/daily-eating-info.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
@@ -33,6 +32,7 @@ export class UserSettingsComponent implements OnInit {
 
   ngOnInit(): void {
     this.userSettingsService.getUserSettings().subscribe((userSettings) => {
+      console.log('settings', userSettings);
       this.userSettings = userSettings;
     });
   }

@@ -5,6 +5,7 @@
       id="ProfileSection"
       class="ProfileSection relative box-border m-2 bg-neutral-50 h-[calc(100vh-16px)] rounded-lg shadow-2xl overflow-auto lg:block transform transition-transform duration-200 lg:translate-x-0 z-40"
       [ngClass]="{ hide: hideHome }"
+      *ngIf="profileInfo"
     >
       <div #ProfileHeader>
         <button
@@ -102,40 +103,41 @@
           </h3>
         </a>
         <h1 id="Title" class="justify-center text-6xl font-bold text-blue-800">
-          Fitness Tracker
+          ActiveLife Tracker
         </h1>
         <h1
           id="WelcomeMessage"
-          class="justify-center text-2xl text-orange-700 font-bold pt-4"
+          class="justify-center text-2xl text-orange-700 font-bold pt-3"
+          *ngIf="profileInfo"
         >
           Welcome {{ profileInfo.firstName }}!
         </h1>
       </div>
-      <div #Date class="pt-2">
+      <div #Date class="pt-1">
         <h1 class="justify-center text-base text-blue-950 font-bold">
           {{ formattedDate }}
         </h1>
       </div>
-      <div #AddItems class="pt-6">
+      <div #AddItems class="pt-5">
         <button
           routerLink="/add-exercise"
           #AddExerciseButton
-          class="add-buttons w-48 text-center rounded-3xl border font-bold p-2.5 text-white shadow-lg transition duration-500 ease-in-out transform bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-700 hover:to-blue-900 hover:-translate-y-0.5 hover:scale-105 cursor-pointer mr-16"
+          class="add-buttons w-48 text-center rounded-3xl border font-bold p-2 text-white shadow-lg transition duration-500 ease-in-out transform bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-700 hover:to-blue-900 hover:-translate-y-0.5 hover:scale-105 cursor-pointer mr-16"
         >
           Add Exercise
         </button>
         <button
           routerLink="/add-meal"
           #AddMealButton
-          class="add-buttons w-48 text-center rounded-3xl border font-bold p-2.5 text-white shadow-lg transition duration-500 ease-in-out transform bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-700 hover:to-blue-900 hover:-translate-y-0.5 hover:scale-105 cursor-pointer"
+          class="add-buttons w-48 text-center rounded-3xl border font-bold p-2 text-white shadow-lg transition duration-500 ease-in-out transform bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-700 hover:to-blue-900 hover:-translate-y-0.5 hover:scale-105 cursor-pointer"
         >
           Add Meal
         </button>
       </div>
-      <div #SummaryNav class="pt-6">
+      <div #SummaryNav class="pt-5">
         <h1 class="text-lg text-blue-950 font-bold">Summary</h1>
         <div
-          class="summary-bubble w-1/2 mx-auto rounded-full border border-zinc-300 p-2 shadow-sm"
+          class="summary-bubble w-1/2 mx-auto rounded-full border border-zinc-300 p-1 shadow-sm"
         >
           <ul class="flex">
             <li class="flex-1 mr-2">
@@ -179,7 +181,7 @@
       </div>
       <div #SummaryDisplay class="pt-3">
         <div
-          class="w-5/6 min-h-[53vh] mx-auto p-2 border border-zinc-300 rounded-lg shadow-lg"
+          class="summaries w-5/6 h-[26.5em] mx-auto p-2 border border-zinc-300 rounded-lg shadow-lg"
         >
           <DailySummaryComponent
             *ngIf="selectedSummary === 'Daily'"

@@ -28,6 +28,12 @@
   pointer-events: none;
 }
 
+@media screen and (max-width: 1200px) {
+  .summaries {
+    height: 24.3em;
+  }
+}
+
 @media (max-width: 1023px) {
   .ProfileSection,
   .HomeSection {

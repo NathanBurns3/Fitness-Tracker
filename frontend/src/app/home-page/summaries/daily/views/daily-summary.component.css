@@ -10,6 +10,12 @@
   }
 }
 
+@media screen and (max-width: 1200px) {
+  .eating {
+    margin-top: 1em;
+  }
+}
+
 @media (max-width: 370px) {
   .myChart {
     max-width: 200px;

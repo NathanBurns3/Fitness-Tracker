@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { getHeaders } from 'src/utils/http-headers.util';
 
@@ -13,8 +13,13 @@ export class YearlyExercisesService {
   constructor(private http: HttpClient) {}
 
   getYearlyExercises(): Observable<number[]> {
-    return this.http.get<number[]>(this.apiUrl + '/yearlyExerciseGoals', {
-      headers: getHeaders(),
-    });
+    return this.http
+      .get<{ yearlyExerciseGoals: number[] }>(
+        this.apiUrl + '/yearlyExerciseGoals',
+        {
+          headers: getHeaders(),
+        }
+      )
+      .pipe(map((response) => response.yearlyExerciseGoals));
   }
 }

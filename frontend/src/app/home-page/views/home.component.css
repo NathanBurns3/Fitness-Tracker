@@ -101,7 +101,7 @@
   }
 }
 
-@media (max-width: 675px) {
+@media (max-width: 699px) {
   .hide-on-small {
     display: none;
   }
@@ -110,7 +110,7 @@
   }
 }
 
-@media (min-width: 676px) {
+@media (min-width: 700px) {
   .hide-on-small {
     display: inline;
   }
@@ -119,7 +119,7 @@
   }
 }
 
-@media (max-width: 550px) {
+@media (max-width: 600px) {
   #Title {
     font-size: 2.5rem;
   }

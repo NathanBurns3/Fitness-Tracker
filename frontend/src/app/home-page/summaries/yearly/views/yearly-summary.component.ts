@@ -66,7 +66,7 @@ export class YearlySummaryComponent implements OnInit, OnDestroy {
     gradient2?.addColorStop(0, 'rgba(245, 124, 0, 0.5)');
     gradient2?.addColorStop(1, 'rgba(245, 124, 0, 1)');
 
-    var myChart = new Chart(ctx, {
+    this.myChart = new Chart(ctx, {
       type: 'bar',
       data: {
         labels: [

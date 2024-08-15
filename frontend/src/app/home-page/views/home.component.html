@@ -183,7 +183,10 @@
       </div>
       <div #SummaryDisplay class="pt-3">
         <div
-          class="summaries w-5/6 h-[26.5em] mx-auto p-2 border border-zinc-300 rounded-lg shadow-lg"
+          class="summaries w-5/6 h-[24.25em] mx-auto p-2 border border-zinc-300 rounded-lg shadow-lg"
+          [ngClass]="{
+            'yearly-summary-height': selectedSummary === 'Yearly',
+          }"
         >
           <DailySummaryComponent
             *ngIf="selectedSummary === 'Daily'"

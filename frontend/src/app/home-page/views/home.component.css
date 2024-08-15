@@ -6,26 +6,22 @@
 
 .ProfileSection {
   width: 23%;
-  transition: transform 0.7s ease-in-out; /* Adjusted transition duration */
+  transition: transform 0.7s ease-in-out;
 }
 
 .ProfileSection.open {
-  width: 70%;
-  position: absolute;
-  left: 0;
-  top: 0;
-  height: 100%;
-  z-index: 50;
+  width: 23%;
+  position: relative;
   transform: translateX(0);
 }
 
 .ProfileSection:not(.open) {
-  transform: translateX(-100%);
+  transform: translateX(0);
 }
 
 .HomeSection {
   width: 73%;
-  transition: none; /* Remove width transition */
+  transition: none;
 }
 
 .toggle-button {
@@ -48,12 +44,6 @@
   pointer-events: none;
 }
 
-@media screen and (max-width: 1200px) {
-  .summaries {
-    height: 24.3em;
-  }
-}
-
 @media (max-width: 1023px) {
   .ProfileSection,
   .HomeSection {
@@ -74,6 +64,16 @@
 
   .ProfileSection.open {
     width: 70%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    z-index: 50;
+    transform: translateX(0);
+  }
+
+  .ProfileSection:not(.open) {
+    transform: translateX(-100%);
   }
 
   .HomeSection {
@@ -83,6 +83,14 @@
   .Profile-Picture {
     width: 22%;
     height: auto;
+  }
+
+  .summaries {
+    height: 25em;
+  }
+
+  .yearly-summary-height {
+    height: 25em;
   }
 }
 
@@ -146,6 +154,14 @@
   .summary-bubble {
     padding: 0.5rem;
     width: 65%;
+  }
+
+  .summaries {
+    height: 39em;
+  }
+
+  .yearly-summary-height {
+    height: 21em;
   }
 }
 

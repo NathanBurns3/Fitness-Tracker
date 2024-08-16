@@ -7,6 +7,9 @@ import { DailyEatingInfoService } from '../summaries/daily/services/daily-eating
 import { DailyExerciseInfoService } from '../summaries/daily/services/daily-exercise-info.service';
 import { IDailyEatingInfo } from '../summaries/daily/models/daily-eating-info';
 import { IExerciseInfo } from '../summaries/daily/models/exercise-info';
+import { MonthlyBreakdownInfoService } from '../summaries/monthly/services/monthly-breakdown-info.service';
+import { MonthlyExerciseInfoService } from '../summaries/monthly/services/monthly-exercise-info.service';
+import { IMonthlyBreakdownInfo } from '../summaries/monthly/models/monthly-breakdown-info';
 
 @Component({
   selector: 'home',
@@ -34,12 +37,16 @@ export class HomeComponent implements OnInit {
   };
   dailyEatingInfo!: IDailyEatingInfo;
   dailyExerciseInfo!: IExerciseInfo;
+  monthlyBreakdownInfo!: IMonthlyBreakdownInfo[];
+  monthlyExerciseInfo!: IExerciseInfo;
   isLoading: boolean = false;
 
   constructor(
     private profileInfoService: ProfileInfoService,
     private dailyEatingInfoService: DailyEatingInfoService,
-    private dailyExerciseInfoService: DailyExerciseInfoService
+    private dailyExerciseInfoService: DailyExerciseInfoService,
+    private monthlyBreakdownInfoService: MonthlyBreakdownInfoService,
+    private monthlyExerciseInfoService: MonthlyExerciseInfoService
   ) {}
 
   ngOnInit(): void {
@@ -50,6 +57,7 @@ export class HomeComponent implements OnInit {
         this.formattedHeight = this.formatHeight();
       });
     this.getDailyInfo();
+    this.getMonthlyInfo();
   }
 
   selectSummary(summary: string) {
@@ -77,9 +85,38 @@ export class HomeComponent implements OnInit {
         this.dailyEatingInfo = eatingInfo;
         this.dailyExerciseInfo = exerciseInfo;
         this.isLoading = false;
-        console.log('eating', this.dailyEatingInfo);
-        console.log('exercise', this.dailyExerciseInfo);
       }
     );
+  }
+
+  getMonthlyInfo(): void {
+    this.isLoading = true;
+    forkJoin([
+      this.monthlyExerciseInfoService.getMonthlyExerciseInfo(),
+      this.monthlyBreakdownInfoService.getMonthlyBreakdownInfo(),
+    ]).subscribe(([exerciseInfo, goals]) => {
+      this.monthlyExerciseInfo = exerciseInfo;
+
+      const date = new Date();
+      const year = date.getFullYear();
+      const month = date.getMonth();
+      const daysInMonth = new Date(year, month + 1, 0).getDate();
+      const firstDayOfWeek = new Date(year, month, 1).getDay();
+      const days: IMonthlyBreakdownInfo[] = [];
+
+      for (let i = 0; i < firstDayOfWeek; i++) {
+        days.push({ day: null, exerciseGoal: false, eatingGoal: false });
+      }
+      for (let day = 1; day <= daysInMonth; day++) {
+        const goal = goals.find((g) => g.day === day);
+        if (goal) {
+          days.push(goal);
+        } else {
+          days.push({ day, exerciseGoal: false, eatingGoal: false });
+        }
+      }
+      this.monthlyBreakdownInfo = days;
+      this.isLoading = false;
+    });
   }
 }

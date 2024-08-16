@@ -196,6 +196,9 @@
           ></DailySummaryComponent>
           <MonthlySummaryComponent
             *ngIf="selectedSummary === 'Monthly'"
+            [monthlyExerciseInfo]="monthlyExerciseInfo"
+            [daysOfMonth]="monthlyBreakdownInfo"
+            [isLoading]="isLoading"
           ></MonthlySummaryComponent>
           <YearlySummaryComponent
             *ngIf="selectedSummary === 'Yearly'"

@@ -1,4 +1,12 @@
-import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component,
+  HostListener,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  SimpleChanges,
+} from '@angular/core';
 import { IMonthlyBreakdownInfo } from '../models/monthly-breakdown-info';
 import { MonthlyBreakdownInfoService } from '../services/monthly-breakdown-info.service';
 import { IExerciseInfo } from '../../daily/models/exercise-info';
@@ -10,9 +18,11 @@ import { Chart, ChartConfiguration } from 'chart.js';
   templateUrl: './monthly-summary.component.html',
   styleUrls: ['./monthly-summary.component.css'],
 })
-export class MonthlySummaryComponent implements OnInit, OnDestroy {
-  monthlyBreakdownInfo!: IMonthlyBreakdownInfo[];
-  monthlyExerciseInfo!: IExerciseInfo;
+export class MonthlySummaryComponent implements OnInit, OnDestroy, OnChanges {
+  @Input() daysOfMonth!: IMonthlyBreakdownInfo[];
+  @Input() monthlyExerciseInfo!: IExerciseInfo;
+  @Input() isLoading: boolean = false;
+
   exercisePercentage!: number[];
   colors: string[] = [
     'bg-red-400',
@@ -59,39 +69,29 @@ export class MonthlySummaryComponent implements OnInit, OnDestroy {
     year: 'numeric',
   });
   hoverIndex: number = -1;
-  daysOfMonth: IMonthlyBreakdownInfo[] = [];
+  //daysOfMonth: IMonthlyBreakdownInfo[] = [];
   screenWidth!: number;
   chart!: Chart;
 
-  constructor(
-    private monthlyBreakdownInfoService: MonthlyBreakdownInfoService,
-    private monthlyExerciseInfoService: MonthlyExerciseInfoService
-  ) {
-    this.onResize();
-  }
-
   ngOnInit(): void {
-    this.monthlyBreakdownInfoService
-      .getMonthlyBreakdownInfo()
-      .subscribe((data) => {
-        this.monthlyBreakdownInfo = data;
-      });
-
-    this.monthlyExerciseInfoService
-      .getMonthlyExerciseInfo()
-      .subscribe((data) => {
-        this.monthlyExerciseInfo = data;
-        this.exercisePercentage = this.getExercisePercentage();
-      });
-
-    this.daysOfMonth = this.generateDaysOfMonth(
+    this.onResize();
+    /* this.daysOfMonth = this.generateDaysOfMonth(
       this.date.getFullYear(),
       this.date.getMonth()
-    );
+    ); */
   }
 
-  ngAfterViewInit(): void {
-    this.createChart();
+  ngOnChanges(changes: SimpleChanges): void {
+    if (
+      changes['monthlyExerciseInfo'] &&
+      changes['monthlyExerciseInfo'].currentValue
+    ) {
+      this.exercisePercentage = this.getExercisePercentage();
+    }
+
+    if (changes['daysOfMonth'] && changes['daysOfMonth'].currentValue) {
+      this.createChart();
+    }
   }
 
   ngOnDestroy(): void {
@@ -112,7 +112,7 @@ export class MonthlySummaryComponent implements OnInit, OnDestroy {
 
   debouncedCreateChart = this.debounce(() => this.createChart(), 200);
 
-  generateDaysOfMonth(year: number, month: number): IMonthlyBreakdownInfo[] {
+  /* generateDaysOfMonth(year: number, month: number): IMonthlyBreakdownInfo[] {
     const daysInMonth = new Date(year, month + 1, 0).getDate();
     const firstDayOfWeek = new Date(year, month, 1).getDay();
     const days: IMonthlyBreakdownInfo[] = [];
@@ -137,7 +137,7 @@ export class MonthlySummaryComponent implements OnInit, OnDestroy {
       });
 
     return days;
-  }
+  } */
 
   getExercisePercentage(): number[] {
     const percentages: number[] = [];

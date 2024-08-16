@@ -1,8 +1,7 @@
-import { Request, Response } from 'express';
+import { Response } from 'express';
 import { IProfileInfo } from '../../models/api/home/profile-info';
 import User from '../../models/db/user';
-import Goals from '../../models/db/goals';
-import mongoose, { Types } from 'mongoose';
+import mongoose from 'mongoose';
 import { AuthenticatedRequest } from '../../helpers/authMiddleware';
 
 export const getProfileInfo = async (
@@ -49,7 +48,19 @@ export const getProfileInfo = async (
       return res.status(404).json({ message: 'User or Goals not found' });
     }
 
-    const profileInfo: IProfileInfo = result[0];
+    const profileInfo: IProfileInfo = {
+      firstName: result[0].firstName,
+      lastName: result[0].lastName,
+      profileImage: result[0].profileImage,
+      gender: result[0].gender,
+      age: result[0].age,
+      height: result[0].height,
+      weight: result[0].weight,
+      goal: result[0].weightGoal,
+      exerciseStreak: result[0].exerciseStreak,
+      eatingGoalStreak: result[0].eatingGoalStreak,
+    };
+
     res.status(200).json(profileInfo);
   } catch (error: Error | any) {
     res.status(500).json({ message: error.message });

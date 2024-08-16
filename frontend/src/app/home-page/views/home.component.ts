@@ -2,6 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { IProfileInfo } from '../models/profile-info';
 import { ProfileInfoService } from '../services/profile-info.service';
 import { WeightGoalEnum } from 'src/app/user-settings/models/weight-goal-enum';
+import { forkJoin } from 'rxjs';
+import { DailyEatingInfoService } from '../summaries/daily/services/daily-eating-info.service';
+import { DailyExerciseInfoService } from '../summaries/daily/services/daily-exercise-info.service';
+import { IDailyEatingInfo } from '../summaries/daily/models/daily-eating-info';
+import { IExerciseInfo } from '../summaries/daily/models/exercise-info';
 
 @Component({
   selector: 'home',
@@ -27,8 +32,15 @@ export class HomeComponent implements OnInit {
     [WeightGoalEnum.WeightGain]: 'Weight Gain',
     [WeightGoalEnum.ExtremeWeightGain]: 'Extreme Gain',
   };
+  dailyEatingInfo!: IDailyEatingInfo;
+  dailyExerciseInfo!: IExerciseInfo;
+  isLoading: boolean = false;
 
-  constructor(private profileInfoService: ProfileInfoService) {}
+  constructor(
+    private profileInfoService: ProfileInfoService,
+    private dailyEatingInfoService: DailyEatingInfoService,
+    private dailyExerciseInfoService: DailyExerciseInfoService
+  ) {}
 
   ngOnInit(): void {
     this.profileInfoService
@@ -37,6 +49,7 @@ export class HomeComponent implements OnInit {
         this.profileInfo = profileInfo;
         this.formattedHeight = this.formatHeight();
       });
+    this.getDailyInfo();
   }
 
   selectSummary(summary: string) {
@@ -52,5 +65,21 @@ export class HomeComponent implements OnInit {
 
   toggleSidebar() {
     this.isSidebarOpen = !this.isSidebarOpen;
+  }
+
+  getDailyInfo(): void {
+    this.isLoading = true;
+    forkJoin([
+      this.dailyEatingInfoService.getDailyEatingInfo(),
+      this.dailyExerciseInfoService.getDailyExerciseInfo(),
+    ]).subscribe(
+      ([eatingInfo, exerciseInfo]: [IDailyEatingInfo, IExerciseInfo]) => {
+        this.dailyEatingInfo = eatingInfo;
+        this.dailyExerciseInfo = exerciseInfo;
+        this.isLoading = false;
+        console.log('eating', this.dailyEatingInfo);
+        console.log('exercise', this.dailyExerciseInfo);
+      }
+    );
   }
 }

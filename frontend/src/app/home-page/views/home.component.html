@@ -190,6 +190,9 @@
         >
           <DailySummaryComponent
             *ngIf="selectedSummary === 'Daily'"
+            [dailyEatingInfo]="dailyEatingInfo"
+            [dailyExerciseInfo]="dailyExerciseInfo"
+            [isLoading]="isLoading"
           ></DailySummaryComponent>
           <MonthlySummaryComponent
             *ngIf="selectedSummary === 'Monthly'"

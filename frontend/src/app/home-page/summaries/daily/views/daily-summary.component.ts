@@ -1,4 +1,12 @@
-import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component,
+  HostListener,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  SimpleChanges,
+} from '@angular/core';
 import { IDailyEatingInfo } from '../models/daily-eating-info';
 import { IExerciseInfo } from '../models/exercise-info';
 import { DailyEatingInfoService } from '../services/daily-eating-info.service';
@@ -11,9 +19,11 @@ import { forkJoin } from 'rxjs';
   templateUrl: './daily-summary.component.html',
   styleUrls: ['./daily-summary.component.css'],
 })
-export class DailySummaryComponent implements OnInit, OnDestroy {
-  dailyEatingInfo!: IDailyEatingInfo;
-  dailyExerciseInfo!: IExerciseInfo;
+export class DailySummaryComponent implements OnInit, OnDestroy, OnChanges {
+  @Input() dailyEatingInfo!: IDailyEatingInfo;
+  @Input() dailyExerciseInfo!: IExerciseInfo;
+  @Input() isLoading: boolean = false;
+
   exercisePercentage!: number[];
   eatingPercentage!: number[];
   eatingTotalsAndGoals!: { total: number; goal: number }[];
@@ -68,25 +78,20 @@ export class DailySummaryComponent implements OnInit, OnDestroy {
   screenWidth!: number;
   chart!: Chart;
 
-  constructor(
-    private dailyEatingInfoService: DailyEatingInfoService,
-    private dailyExerciseInfoService: DailyExerciseInfoService
-  ) {
+  ngOnInit(): void {
     this.onResize();
   }
 
-  ngOnInit(): void {
-    forkJoin([
-      this.dailyEatingInfoService.getDailyEatingInfo(),
-      this.dailyExerciseInfoService.getDailyExerciseInfo(),
-    ]).subscribe(
-      ([eatingInfo, exerciseInfo]: [IDailyEatingInfo, IExerciseInfo]) => {
-        this.dailyEatingInfo = eatingInfo;
-        this.dailyExerciseInfo = exerciseInfo;
-        this.eatingPercentage = this.getEatingPercentage();
-        this.exercisePercentage = this.getExercisePercentage();
-      }
-    );
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['dailyEatingInfo'] && changes['dailyEatingInfo'].currentValue) {
+      this.eatingPercentage = this.getEatingPercentage();
+    }
+    if (
+      changes['dailyExerciseInfo'] &&
+      changes['dailyExerciseInfo'].currentValue
+    ) {
+      this.exercisePercentage = this.getExercisePercentage();
+    }
   }
 
   ngAfterViewInit(): void {

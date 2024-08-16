@@ -1,3 +1,6 @@
+<div *ngIf="isLoading" class="loading-overlay">
+  <div class="spinner"></div>
+</div>
 <div *ngIf="dailyEatingInfo && dailyExerciseInfo">
   <div #Exercise>
     <h1 class="font-bold text-2xl text-blue-950">Exercise</h1>

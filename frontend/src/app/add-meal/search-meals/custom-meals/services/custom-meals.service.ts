@@ -93,7 +93,7 @@ export class CustomMealService {
       return this.http
         .put<{ success: boolean; message: string }>(
           this.apiUrl + '/updateCustomMeal',
-          { mealID: meal.id, customMeal: meal },
+          { mealID: meal.mealID, customMeal: meal },
           {
             headers: getHeaders(),
           }

@@ -7,7 +7,7 @@ interface ICustomMealsDB extends Document {
     name: string;
     servingUnit: string;
     food: Array<{
-      fdcID: number;
+      fdcID: string;
       description: string;
       brandName: string;
       servingSize: number;
@@ -38,7 +38,7 @@ const CustomMealsSchema: Schema = new Schema(
           type: [
             {
               _id: false,
-              fdcID: { type: Number, required: true },
+              fdcID: { type: String, required: true },
               description: { type: String, required: true },
               brandName: { type: String, required: true },
               servingSize: { type: Number, required: true },

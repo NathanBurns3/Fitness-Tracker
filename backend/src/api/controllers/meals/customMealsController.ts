@@ -27,7 +27,7 @@ export const getCustomMeals = async (
         0
       );
       return {
-        id: meal.mealID,
+        mealID: meal.mealID,
         name: meal.name,
         servingUnit: meal.servingUnit,
         servingSize: totalServingSize,
@@ -108,7 +108,7 @@ export const addCustomMeal = async (
     }
 
     const newCustomMeal: ICustomMeal = {
-      id: new mongoose.Types.ObjectId(),
+      mealID: new mongoose.Types.ObjectId(),
       name: customMeal.name,
       servingUnit: customMeal.servingUnit,
       servingSize: customMeal.servingSize,
@@ -135,10 +135,10 @@ export const addCustomMeal = async (
       {
         $push: {
           meals: {
-            mealID: newCustomMeal.id,
+            mealID: newCustomMeal.mealID,
             name: newCustomMeal.name,
             servingUnit: newCustomMeal.servingUnit,
-            foods: newCustomMeal.food,
+            food: newCustomMeal.food,
           },
         },
       },
@@ -159,12 +159,23 @@ export const updateCustomMeal = async (
     const userID = req.user?.id;
     const { mealID, customMeal }: { mealID: string; customMeal: ICustomMeal } =
       req.body;
-    if (
-      !userID ||
-      !mongoose.Types.ObjectId.isValid(userID) ||
-      !mongoose.Types.ObjectId.isValid(mealID)
-    ) {
-      return res.status(400).json({ message: 'Invalid ID.', success: false });
+
+    if (!userID) {
+      return res
+        .status(400)
+        .json({ message: 'User ID is required.', success: false });
+    }
+
+    if (!mongoose.Types.ObjectId.isValid(userID)) {
+      return res
+        .status(400)
+        .json({ message: 'Invalid User ID.', success: false });
+    }
+
+    if (!mongoose.Types.ObjectId.isValid(mealID)) {
+      return res
+        .status(400)
+        .json({ message: 'Invalid Meal ID.', success: false });
     }
 
     const updatedCustomMeals = await CustomMeals.findOneAndUpdate(
@@ -173,7 +184,7 @@ export const updateCustomMeal = async (
         $set: {
           'meals.$.name': customMeal.name,
           'meals.$.servingUnit': customMeal.servingUnit,
-          'meals.$.foods': customMeal.food.map((food) => ({
+          'meals.$.food': customMeal.food.map((food) => ({
             fdcID: food.fdcID,
             description: food.description,
             brandName: food.brandName,

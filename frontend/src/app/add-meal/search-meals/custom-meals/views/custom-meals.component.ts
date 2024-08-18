@@ -20,6 +20,10 @@ export class CustomMealsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.loadCustomMeals();
+  }
+
+  loadCustomMeals(): void {
     this.customMealService.getCustomMeals().subscribe((meals) => {
       this.customMeals = meals;
     });
@@ -28,22 +32,26 @@ export class CustomMealsComponent implements OnInit {
   addCustomMeal(): void {
     //will need to give it an id
     const customMeal: ICustomMeal = {
-      id: '100',
+      mealID: '100',
       name: '',
       servingSize: 1,
       servingUnit: '',
       food: [],
     };
-    this.dialog.open(CustomMealDetailsComponent, {
+    const dialogRef = this.dialog.open(CustomMealDetailsComponent, {
       data: { meal: customMeal, title: 'Add Custom Meal', action: 'add' },
       width: '950px',
       height: '750px',
+    });
+
+    dialogRef.componentInstance.foodUpdate.subscribe(() => {
+      this.loadCustomMeals();
     });
   }
 
   openFoodDetails(meal: ICustomMeal): void {
     const food: IFood = this.convertToIFood(meal);
-    this.dialog.open(MealDetailsComponent, {
+    const dialogRef = this.dialog.open(MealDetailsComponent, {
       data: {
         food,
         buttons: [
@@ -51,16 +59,20 @@ export class CustomMealsComponent implements OnInit {
           { text: 'Edit Meal', action: 'editCustomFood' },
           { text: 'Remove Meal', action: 'removeCustomFood' },
         ],
-        customFoodID: meal.id,
+        customFoodID: meal.mealID,
       },
       width: '600px',
       height: '600px',
+    });
+
+    dialogRef.componentInstance.foodUpdate.subscribe(() => {
+      this.loadCustomMeals();
     });
   }
 
   convertToIFood(meal: ICustomMeal): IFood {
     return {
-      fdcID: +meal.id,
+      fdcID: meal.mealID,
       description: meal.name,
       brandName: 'Custom',
       servingSize: meal.servingSize,

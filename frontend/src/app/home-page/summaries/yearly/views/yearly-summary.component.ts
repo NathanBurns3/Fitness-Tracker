@@ -1,8 +1,12 @@
-import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component,
+  HostListener,
+  Input,
+  OnDestroy,
+  OnInit,
+  SimpleChanges,
+} from '@angular/core';
 import { Chart, registerables } from 'chart.js';
-import { YearlyEatingGoalsService } from '../services/yearly-eating-goals.service';
-import { YearlyExercisesService } from '../services/yearly-exercise.service';
-import { forkJoin } from 'rxjs';
 Chart.register(...registerables);
 
 @Component({
@@ -11,32 +15,35 @@ Chart.register(...registerables);
   styleUrls: ['./yearly-summary.component.css'],
 })
 export class YearlySummaryComponent implements OnInit, OnDestroy {
-  ExercisesCompleted!: number[];
-  EatingGoalsCompleted!: number[];
+  @Input() exercisesCompleted!: number[];
+  @Input() eatingGoalsCompleted!: number[];
+  @Input() isLoading: boolean = false;
+
   myChart!: Chart;
   screenWidth!: number;
 
-  constructor(
-    private yearlyExercisesService: YearlyExercisesService,
-    private yearlyEatingGoalsService: YearlyEatingGoalsService
-  ) {
-    this.onResize();
-  }
-
   ngOnInit(): void {
-    forkJoin([
-      this.yearlyExercisesService.getYearlyExercises(),
-      this.yearlyEatingGoalsService.getYearlyEatingGoals(),
-    ]).subscribe(([exercises, eatingGoals]) => {
-      this.ExercisesCompleted = exercises;
-      this.EatingGoalsCompleted = eatingGoals;
-      this.createChart();
-    });
+    this.onResize();
   }
 
   ngOnDestroy(): void {
     if (this.myChart) {
       this.myChart.destroy();
+    }
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (
+      changes['exercisesCompleted'] &&
+      changes['exercisesCompleted'].currentValue &&
+      changes['eatingGoalsCompleted'] &&
+      changes['eatingGoalsCompleted'].currentValue
+    ) {
+      this.createChart();
+    }
+
+    if (changes['daysOfMonth'] && changes['daysOfMonth'].currentValue) {
+      this.createChart();
     }
   }
 
@@ -86,7 +93,7 @@ export class YearlySummaryComponent implements OnInit, OnDestroy {
         datasets: [
           {
             label: 'Exercises Completed',
-            data: this.ExercisesCompleted,
+            data: this.exercisesCompleted,
             backgroundColor: gradient1,
             borderColor: 'rgba(21, 101, 192, 1)',
             borderWidth: 1,
@@ -95,7 +102,7 @@ export class YearlySummaryComponent implements OnInit, OnDestroy {
           },
           {
             label: 'Eating Goals Completed',
-            data: this.EatingGoalsCompleted,
+            data: this.eatingGoalsCompleted,
             backgroundColor: gradient2,
             borderColor: 'rgba(245, 124, 0, 1)',
             borderWidth: 1,

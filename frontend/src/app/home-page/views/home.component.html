@@ -202,6 +202,9 @@
           ></MonthlySummaryComponent>
           <YearlySummaryComponent
             *ngIf="selectedSummary === 'Yearly'"
+            [exercisesCompleted]="yearlyExercisesCompleted"
+            [eatingGoalsCompleted]="yearlyEatingGoalsCompleted"
+            [isLoading]="isLoading"
           ></YearlySummaryComponent>
         </div>
       </div>

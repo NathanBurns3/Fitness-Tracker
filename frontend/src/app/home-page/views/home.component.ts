@@ -10,6 +10,8 @@ import { IExerciseInfo } from '../summaries/daily/models/exercise-info';
 import { MonthlyBreakdownInfoService } from '../summaries/monthly/services/monthly-breakdown-info.service';
 import { MonthlyExerciseInfoService } from '../summaries/monthly/services/monthly-exercise-info.service';
 import { IMonthlyBreakdownInfo } from '../summaries/monthly/models/monthly-breakdown-info';
+import { YearlyExercisesService } from '../summaries/yearly/services/yearly-exercise.service';
+import { YearlyEatingGoalsService } from '../summaries/yearly/services/yearly-eating-goals.service';
 
 @Component({
   selector: 'home',
@@ -39,6 +41,8 @@ export class HomeComponent implements OnInit {
   dailyExerciseInfo!: IExerciseInfo;
   monthlyBreakdownInfo!: IMonthlyBreakdownInfo[];
   monthlyExerciseInfo!: IExerciseInfo;
+  yearlyExercisesCompleted!: number[];
+  yearlyEatingGoalsCompleted!: number[];
   isLoading: boolean = false;
 
   constructor(
@@ -46,7 +50,9 @@ export class HomeComponent implements OnInit {
     private dailyEatingInfoService: DailyEatingInfoService,
     private dailyExerciseInfoService: DailyExerciseInfoService,
     private monthlyBreakdownInfoService: MonthlyBreakdownInfoService,
-    private monthlyExerciseInfoService: MonthlyExerciseInfoService
+    private monthlyExerciseInfoService: MonthlyExerciseInfoService,
+    private yearlyExercisesService: YearlyExercisesService,
+    private yearlyEatingGoalsService: YearlyEatingGoalsService
   ) {}
 
   ngOnInit(): void {
@@ -58,6 +64,7 @@ export class HomeComponent implements OnInit {
       });
     this.getDailyInfo();
     this.getMonthlyInfo();
+    this.getYearlyInfo();
   }
 
   selectSummary(summary: string) {
@@ -116,6 +123,18 @@ export class HomeComponent implements OnInit {
         }
       }
       this.monthlyBreakdownInfo = days;
+      this.isLoading = false;
+    });
+  }
+
+  getYearlyInfo(): void {
+    this.isLoading = true;
+    forkJoin([
+      this.yearlyExercisesService.getYearlyExercises(),
+      this.yearlyEatingGoalsService.getYearlyEatingGoals(),
+    ]).subscribe(([exercises, eatingGoals]) => {
+      this.yearlyExercisesCompleted = exercises;
+      this.yearlyEatingGoalsCompleted = eatingGoals;
       this.isLoading = false;
     });
   }

@@ -69,16 +69,11 @@ export class MonthlySummaryComponent implements OnInit, OnDestroy, OnChanges {
     year: 'numeric',
   });
   hoverIndex: number = -1;
-  //daysOfMonth: IMonthlyBreakdownInfo[] = [];
   screenWidth!: number;
   chart!: Chart;
 
   ngOnInit(): void {
     this.onResize();
-    /* this.daysOfMonth = this.generateDaysOfMonth(
-      this.date.getFullYear(),
-      this.date.getMonth()
-    ); */
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -111,33 +106,6 @@ export class MonthlySummaryComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   debouncedCreateChart = this.debounce(() => this.createChart(), 200);
-
-  /* generateDaysOfMonth(year: number, month: number): IMonthlyBreakdownInfo[] {
-    const daysInMonth = new Date(year, month + 1, 0).getDate();
-    const firstDayOfWeek = new Date(year, month, 1).getDay();
-    const days: IMonthlyBreakdownInfo[] = [];
-    let goals: IMonthlyBreakdownInfo[] = [];
-
-    this.monthlyBreakdownInfoService
-      .getMonthlyBreakdownInfo()
-      .subscribe((data) => {
-        goals = data;
-
-        for (let i = 0; i < firstDayOfWeek; i++) {
-          days.push({ day: null, exerciseGoal: false, eatingGoal: false });
-        }
-        for (let day = 1; day <= daysInMonth; day++) {
-          const goal = goals.find((g) => g.day === day);
-          if (goal) {
-            days.push(goal);
-          } else {
-            days.push({ day, exerciseGoal: false, eatingGoal: false });
-          }
-        }
-      });
-
-    return days;
-  } */
 
   getExercisePercentage(): number[] {
     const percentages: number[] = [];

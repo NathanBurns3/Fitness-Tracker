@@ -19,13 +19,17 @@ export class FavoriteMealsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.loadFavoriteMeals();
+  }
+
+  loadFavoriteMeals(): void {
     this.favoriteMealsService.getFavoriteMeals().subscribe((meals) => {
       this.favoriteMeals = meals;
     });
   }
 
   openFoodDetails(food: IFood): void {
-    this.dialog.open(MealDetailsComponent, {
+    const dialogRef = this.dialog.open(MealDetailsComponent, {
       data: {
         food,
         buttons: [
@@ -35,6 +39,10 @@ export class FavoriteMealsComponent implements OnInit {
       },
       width: '600px',
       height: '600px',
+    });
+
+    dialogRef.componentInstance.foodUpdate.subscribe(() => {
+      this.loadFavoriteMeals();
     });
   }
 }

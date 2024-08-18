@@ -46,4 +46,8 @@
   [favoriteMeals]="favoriteMeals"
   [isLoading]="isLoading"
 ></favorite-meals>
-<custom-meals *ngIf="selectedSearch === 'Custom'"></custom-meals>
+<custom-meals
+  *ngIf="selectedSearch === 'Custom'"
+  [customMeals]="customMeals"
+  [isLoading]="isLoading"
+></custom-meals>

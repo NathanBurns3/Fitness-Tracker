@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { IFood } from 'src/app/add-meal/models/food';
 import { CustomMealService } from '../services/custom-meals.service';
 import { MatDialog } from '@angular/material/dialog';
@@ -11,17 +11,14 @@ import { ICustomMeal } from 'src/app/add-meal/models/custom-meal';
   templateUrl: './custom-meals.component.html',
   styleUrls: ['./custom-meals.component.css'],
 })
-export class CustomMealsComponent implements OnInit {
-  customMeals: ICustomMeal[] = [];
+export class CustomMealsComponent {
+  @Input() customMeals: ICustomMeal[] = [];
+  @Input() isLoading: boolean = false;
 
   constructor(
     private customMealService: CustomMealService,
     private dialog: MatDialog
   ) {}
-
-  ngOnInit(): void {
-    this.loadCustomMeals();
-  }
 
   loadCustomMeals(): void {
     this.customMealService.getCustomMeals().subscribe((meals) => {

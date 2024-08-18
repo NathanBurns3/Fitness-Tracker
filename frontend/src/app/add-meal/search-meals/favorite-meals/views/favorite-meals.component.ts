@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
 import { IFood } from 'src/app/add-meal/models/food';
 import { FavoriteMealsService } from '../services/favorite-meals.service';
 import { MatDialog } from '@angular/material/dialog';
@@ -9,18 +9,16 @@ import { MealDetailsComponent } from 'src/app/add-meal/meal-details/meal-details
   templateUrl: './favorite-meals.component.html',
   styleUrls: ['./favorite-meals.component.css'],
 })
-export class FavoriteMealsComponent implements OnInit {
-  favoriteMeals: IFood[] = [];
+export class FavoriteMealsComponent {
+  @Input() favoriteMeals: IFood[] = [];
+  @Input() isLoading: boolean = false;
+
   starImage = 'assets/star-yellow.png';
 
   constructor(
     private favoriteMealsService: FavoriteMealsService,
     private dialog: MatDialog
   ) {}
-
-  ngOnInit(): void {
-    this.loadFavoriteMeals();
-  }
 
   loadFavoriteMeals(): void {
     this.favoriteMealsService.getFavoriteMeals().subscribe((meals) => {

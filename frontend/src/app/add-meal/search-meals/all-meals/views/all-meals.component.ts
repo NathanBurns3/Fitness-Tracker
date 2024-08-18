@@ -1,8 +1,17 @@
-import { Component } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  AfterViewInit,
+  Output,
+  EventEmitter,
+} from '@angular/core';
 import { MealLookupService } from '../services/meal-lookup.service';
 import { IFood } from 'src/app/add-meal/models/food';
 import { MealDetailsComponent } from 'src/app/add-meal/meal-details/meal-details.component';
 import { MatDialog } from '@angular/material/dialog';
+import { SearchMealsComponent } from '../../views/search-meals.component';
+import { FavoriteMealsService } from '../../favorite-meals/services/favorite-meals.service';
 
 @Component({
   selector: 'all-meals',
@@ -10,6 +19,8 @@ import { MatDialog } from '@angular/material/dialog';
   styleUrls: ['./all-meals.component.css'],
 })
 export class AllMealsComponent {
+  @Output() favoriteMealsChange = new EventEmitter<IFood[]>();
+
   mealSearch: string = '';
   meals: IFood[] = [];
   loading: boolean = false;
@@ -17,6 +28,7 @@ export class AllMealsComponent {
 
   constructor(
     private mealLookupService: MealLookupService,
+    private favoriteMealsService: FavoriteMealsService,
     private dialog: MatDialog
   ) {}
 
@@ -50,7 +62,7 @@ export class AllMealsComponent {
     this.mealLookupService
       .updateNutritions(food)
       .subscribe((updatedFood: IFood) => {
-        this.dialog.open(MealDetailsComponent, {
+        const dialogRef = this.dialog.open(MealDetailsComponent, {
           data: {
             food: updatedFood,
             buttons: [
@@ -60,6 +72,12 @@ export class AllMealsComponent {
           },
           width: '600px',
           height: '600px',
+        });
+
+        dialogRef.componentInstance.favoriteAdded.subscribe(() => {
+          this.favoriteMealsService.getFavoriteMeals().subscribe((meals) => {
+            this.favoriteMealsChange.emit(meals);
+          });
         });
       });
   }

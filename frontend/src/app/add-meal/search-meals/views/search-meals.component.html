@@ -37,6 +37,13 @@
     </li>
   </ul>
 </div>
-<all-meals *ngIf="selectedSearch === 'All'"></all-meals>
-<favorite-meals *ngIf="selectedSearch === 'Favorites'"></favorite-meals>
+<all-meals
+  *ngIf="selectedSearch === 'All'"
+  (favoriteMealsChange)="getNewFavoriteMeals($event)"
+></all-meals>
+<favorite-meals
+  *ngIf="selectedSearch === 'Favorites'"
+  [favoriteMeals]="favoriteMeals"
+  [isLoading]="isLoading"
+></favorite-meals>
 <custom-meals *ngIf="selectedSearch === 'Custom'"></custom-meals>

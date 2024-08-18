@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, EventEmitter, Inject, Output } from '@angular/core';
 import { IFood } from '../models/food';
 import {
   MAT_DIALOG_DATA,
@@ -19,6 +19,9 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrls: ['./meal-details.component.css'],
 })
 export class MealDetailsComponent {
+  @Output() foodUpdate = new EventEmitter<void>();
+  @Output() favoriteAdded = new EventEmitter<void>();
+
   food: IFood;
   clonedFood: IFood;
   buttons: Ibutton[] = [];
@@ -46,8 +49,7 @@ export class MealDetailsComponent {
     private favoriteMealsService: FavoriteMealsService,
     private customMealService: CustomMealService,
     private dailyFoodService: DailyFoodService,
-    private dialog: MatDialog,
-    private snackBar: MatSnackBar
+    private dialog: MatDialog
   ) {
     this.food = this.setValues(this.data.food);
     this.clonedFood = JSON.parse(JSON.stringify(this.food));
@@ -103,7 +105,7 @@ export class MealDetailsComponent {
 
   convertCustomFoodToFood(meal: ICustomMeal): IFood {
     return {
-      fdcID: +meal.id,
+      fdcID: meal.mealID,
       description: meal.name,
       brandName: 'Custom',
       servingSize: meal.servingSize,
@@ -145,6 +147,7 @@ export class MealDetailsComponent {
       .addFavoriteMeal(this.food)
       .subscribe((success) => {
         if (success) {
+          this.favoriteAdded.emit();
           this.closeMealDetails();
         }
       });
@@ -155,6 +158,7 @@ export class MealDetailsComponent {
       .deleteFavoriteMeal(this.food)
       .subscribe((success) => {
         if (success) {
+          this.foodUpdate.emit();
           this.closeMealDetails();
         }
       });
@@ -165,10 +169,17 @@ export class MealDetailsComponent {
       .getCustomMeal(this.data.customFoodID)
       .subscribe((customMeal) => {
         if (customMeal) {
+          customMeal.servingSize = this.calculateTotalNutritions(
+            customMeal.food
+          );
           const dialogRef = this.dialog.open(CustomMealDetailsComponent, {
             data: { meal: customMeal, title: 'Edit Custom Meal' },
             width: '900px',
             height: '750px',
+          });
+
+          dialogRef.componentInstance.foodUpdate.subscribe(() => {
+            this.foodUpdate.emit();
           });
 
           dialogRef.afterClosed().subscribe((result) => {
@@ -187,6 +198,7 @@ export class MealDetailsComponent {
       .deleteCustomMeal(this.data.customFoodID)
       .subscribe((success) => {
         if (success) {
+          this.foodUpdate.emit();
           this.closeMealDetails();
         }
       });
@@ -223,5 +235,9 @@ export class MealDetailsComponent {
       this.clonedFood.servingSize = Math.trunc(truncatedValue);
     }
     this.updateNutritions(this.clonedFood.servingSize);
+  }
+
+  calculateTotalNutritions(foods: IFood[]): number {
+    return foods.reduce((sum, food) => (sum += food.servingSize), 0);
   }
 }

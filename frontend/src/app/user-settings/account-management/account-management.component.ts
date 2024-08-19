@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { UpdatePasswordComponent } from '../update-password/update-password.component';
+import { DeleteAccountComponent } from '../delete-account/delete-account.component';
 
 @Component({
   selector: 'account-management',
@@ -17,7 +18,10 @@ export class AccountManagementComponent {
     });
   }
 
-  deleteAccount(): void {
-    // Delete account logic
+  openDeleteAccount(): void {
+    this.dialog.open(DeleteAccountComponent, {
+      width: '500px',
+      height: '250px',
+    });
   }
 }

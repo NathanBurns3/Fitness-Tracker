@@ -159,6 +159,33 @@ export const updatePassword = async (
   }
 };
 
+export const deleteAccount = async (
+  req: AuthenticatedRequest,
+  res: Response
+) => {
+  try {
+    const userID = req.user?.id;
+    if (!userID || !mongoose.Types.ObjectId.isValid(userID)) {
+      return res
+        .status(400)
+        .json({ message: 'Invalid user ID.', success: false });
+    }
+
+    const deletedUser = await User.findOneAndDelete({ _id: userID });
+    if (!deletedUser) {
+      return res
+        .status(404)
+        .json({ message: 'User not found.', success: false });
+    }
+
+    return res
+      .status(200)
+      .json({ message: 'Account deleted successfully.', success: true });
+  } catch (error: Error | any) {
+    res.status(500).json({ message: error.message, success: false });
+  }
+};
+
 export const calculateUserMacros = async (
   userID: string,
   updatedSettings: any

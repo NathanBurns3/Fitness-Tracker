@@ -83,4 +83,35 @@ export class UserSettingsService {
         })
       );
   }
+
+  deleteAccount(): Observable<boolean> {
+    return this.http
+      .delete<{ success: boolean; message: string }>(
+        this.apiUrl + '/deleteAccount',
+        {
+          headers: getHeaders(),
+        }
+      )
+      .pipe(
+        map((response) => {
+          if (response.success) {
+            this.snackBar.open('Account was deleted!', '', {
+              duration: 2000,
+            });
+            return true;
+          } else {
+            this.snackBar.open(response.message, '', {
+              duration: 2000,
+            });
+            return false;
+          }
+        }),
+        catchError((error: Error | any) => {
+          this.snackBar.open(error.message, '', {
+            duration: 2000,
+          });
+          return of(false);
+        })
+      );
+  }
 }

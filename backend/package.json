@@ -25,6 +25,7 @@
   },
   "devDependencies": {
     "@types/cors": "^2.8.17",
-    "@types/jsonwebtoken": "^9.0.6"
+    "@types/jsonwebtoken": "^9.0.6",
+    "@types/node-cron": "^3.0.11"
   }
 }

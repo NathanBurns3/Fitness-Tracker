@@ -132,8 +132,6 @@ export const updatePassword = async (
   try {
     const userID = req.user?.id;
     const { newPassword } = req.body;
-    console.log('userID:', userID); // Add this line
-    console.log('newPassword:', newPassword); // Add this line
     if (!userID || !mongoose.Types.ObjectId.isValid(userID)) {
       return res
         .status(400)

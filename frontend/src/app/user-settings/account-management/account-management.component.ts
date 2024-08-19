@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { UpdatePasswordComponent } from '../update-password/update-password.component';
 
 @Component({
   selector: 'account-management',
@@ -6,8 +8,13 @@ import { Component } from '@angular/core';
   styleUrls: ['./account-management.component.css'],
 })
 export class AccountManagementComponent {
-  changePassword(): void {
-    // Change password logic
+  constructor(private dialog: MatDialog) {}
+
+  openUpdatePassword(): void {
+    this.dialog.open(UpdatePasswordComponent, {
+      width: '500px',
+      height: '500px',
+    });
   }
 
   deleteAccount(): void {

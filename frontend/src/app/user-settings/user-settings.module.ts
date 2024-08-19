@@ -9,6 +9,7 @@ import { AccountManagementComponent } from './account-management/account-managem
 import { PhysicalMeasurementsComponent } from './physical-measurements/physical-measurements.component';
 import { ActivityGoalComponent } from './activity-goal/activity-goal.component';
 import { DietSelectionComponent } from './diet-selection/diet-selection.component';
+import { UpdatePasswordComponent } from './update-password/update-password.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { DietSelectionComponent } from './diet-selection/diet-selection.componen
     PhysicalMeasurementsComponent,
     ActivityGoalComponent,
     DietSelectionComponent,
+    UpdatePasswordComponent,
   ],
   imports: [CommonModule, RouterModule, FormsModule],
   exports: [UserSettingsComponent],

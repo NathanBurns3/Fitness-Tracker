@@ -51,4 +51,36 @@ export class UserSettingsService {
       headers: getHeaders(),
     });
   }
+
+  updatePassword(newPassword: string): Observable<boolean> {
+    return this.http
+      .put<{ success: boolean; message: string }>(
+        this.apiUrl + '/updatePassword',
+        { newPassword },
+        {
+          headers: getHeaders(),
+        }
+      )
+      .pipe(
+        map((response) => {
+          if (response.success) {
+            this.snackBar.open('Password was updated!', '', {
+              duration: 2000,
+            });
+            return true;
+          } else {
+            this.snackBar.open(response.message, '', {
+              duration: 2000,
+            });
+            return false;
+          }
+        }),
+        catchError((error: Error | any) => {
+          this.snackBar.open(error.message, '', {
+            duration: 2000,
+          });
+          return of(false);
+        })
+      );
+  }
 }

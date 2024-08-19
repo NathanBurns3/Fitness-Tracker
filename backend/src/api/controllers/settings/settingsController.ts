@@ -125,6 +125,40 @@ export const updateUserSettings = async (
   }
 };
 
+export const updatePassword = async (
+  req: AuthenticatedRequest,
+  res: Response
+) => {
+  try {
+    const userID = req.user?.id;
+    const { newPassword } = req.body;
+    console.log('userID:', userID); // Add this line
+    console.log('newPassword:', newPassword); // Add this line
+    if (!userID || !mongoose.Types.ObjectId.isValid(userID)) {
+      return res
+        .status(400)
+        .json({ message: 'Invalid user ID.', success: false });
+    }
+
+    const updatedSettings = await User.findOneAndUpdate(
+      { _id: userID },
+      {
+        password: newPassword,
+      },
+      { new: true }
+    );
+    if (!updatedSettings) {
+      return res
+        .status(404)
+        .json({ message: 'User settings not found.', success: false });
+    }
+
+    return res.status(200).json({ updatedSettings, success: true });
+  } catch (error: Error | any) {
+    res.status(500).json({ message: error.message, success: false });
+  }
+};
+
 export const calculateUserMacros = async (
   userID: string,
   updatedSettings: any

@@ -12,6 +12,7 @@ import { switchMap } from 'rxjs';
 })
 export class MealListComponent {
   foods: IFood[] = [];
+  isLoading = false;
 
   constructor(
     private dailyFoodService: DailyFoodService,
@@ -19,12 +20,15 @@ export class MealListComponent {
   ) {}
 
   ngOnInit(): void {
+    this.isLoading = true;
     this.dailyFoodService.getFoods().subscribe((foods) => {
+      this.isLoading = false;
       this.foods = foods;
     });
     this.dailyFoodService.foodAdded
       .pipe(switchMap(() => this.dailyFoodService.getFoods()))
       .subscribe((foods: IFood[]) => {
+        this.isLoading = false;
         this.foods = foods;
       });
   }

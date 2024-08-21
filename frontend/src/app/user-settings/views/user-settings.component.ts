@@ -19,6 +19,7 @@ export class UserSettingsComponent implements OnInit {
   pageValid: boolean = true;
   validEmail: boolean = true;
   mobile: boolean = window.innerWidth < 700;
+  isLoading: boolean = false;
 
   @HostListener('window:resize', ['$event'])
   onResize() {
@@ -31,9 +32,10 @@ export class UserSettingsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.isLoading = true;
     this.userSettingsService.getUserSettings().subscribe((userSettings) => {
-      console.log('settings', userSettings);
       this.userSettings = userSettings;
+      this.isLoading = false;
     });
   }
 

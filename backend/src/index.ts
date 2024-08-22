@@ -9,6 +9,7 @@ import exerciseRouter from './api/routes/exerciseRoutes';
 import mealRouter from './api/routes/mealRouter';
 import settingsRouter from './api/routes/settingsRoutes';
 import cors from 'cors';
+import './api/helpers/scheduler';
 
 const app = express();
 

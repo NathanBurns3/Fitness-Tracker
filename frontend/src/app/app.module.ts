@@ -9,6 +9,7 @@ import { RouterModule } from '@angular/router';
 import { AddMealModule } from './add-meal/add-meal.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { UserSettingsModule } from './user-settings/user-settings.module';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [AppComponent],
@@ -21,6 +22,7 @@ import { UserSettingsModule } from './user-settings/user-settings.module';
     AppRoutingModule,
     RouterModule,
     BrowserAnimationsModule,
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

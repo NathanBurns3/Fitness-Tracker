@@ -1,3 +1,6 @@
+<div *ngIf="isLoading" class="loading-overlay">
+  <div class="spinner"></div>
+</div>
 <body class="h-screen bg-zinc-300 text-center">
   <div class="main-container flex justify-center">
     <!--PROFILE SECTION-->
@@ -5,7 +8,7 @@
       id="ProfileSection"
       class="ProfileSection relative box-border m-2 bg-neutral-50 h-[calc(100vh-16px)] rounded-lg shadow-2xl overflow-auto lg:block transform transition-transform duration-200 lg:translate-x-0 z-40"
       [ngClass]="{ open: isSidebarOpen }"
-      *ngIf="profileInfo"
+      *ngIf="!isLoading"
     >
       <div #ProfileHeader>
         <button
@@ -85,6 +88,7 @@
       class="HomeSection relative box-border m-2 bg-neutral-50 h-[calc(100vh-16px)] rounded shadow-lg overflow-auto"
       id="HomeSection"
       [ngClass]="{ shrink: isSidebarOpen }"
+      *ngIf="!isLoading"
     >
       <div #Title class="pt-5">
         <button

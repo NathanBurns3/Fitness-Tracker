@@ -44,6 +44,8 @@ export class HomeComponent implements OnInit {
   yearlyExercisesCompleted!: number[];
   yearlyEatingGoalsCompleted!: number[];
   isLoading: boolean = false;
+  private apiCallsCompleted: number = 0;
+  private totalApiCalls: number = 4;
 
   constructor(
     private profileInfoService: ProfileInfoService,
@@ -56,11 +58,13 @@ export class HomeComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.isLoading = true;
     this.profileInfoService
       .getProfileInfo()
       .subscribe((profileInfo: IProfileInfo) => {
         this.profileInfo = profileInfo;
         this.formattedHeight = this.formatHeight();
+        this.checkAllApiCallsCompleted();
       });
     this.getDailyInfo();
     this.getMonthlyInfo();
@@ -83,7 +87,6 @@ export class HomeComponent implements OnInit {
   }
 
   getDailyInfo(): void {
-    this.isLoading = true;
     forkJoin([
       this.dailyEatingInfoService.getDailyEatingInfo(),
       this.dailyExerciseInfoService.getDailyExerciseInfo(),
@@ -91,13 +94,12 @@ export class HomeComponent implements OnInit {
       ([eatingInfo, exerciseInfo]: [IDailyEatingInfo, IExerciseInfo]) => {
         this.dailyEatingInfo = eatingInfo;
         this.dailyExerciseInfo = exerciseInfo;
-        this.isLoading = false;
+        this.checkAllApiCallsCompleted();
       }
     );
   }
 
   getMonthlyInfo(): void {
-    this.isLoading = true;
     forkJoin([
       this.monthlyExerciseInfoService.getMonthlyExerciseInfo(),
       this.monthlyBreakdownInfoService.getMonthlyBreakdownInfo(),
@@ -123,19 +125,25 @@ export class HomeComponent implements OnInit {
         }
       }
       this.monthlyBreakdownInfo = days;
-      this.isLoading = false;
+      this.checkAllApiCallsCompleted();
     });
   }
 
   getYearlyInfo(): void {
-    this.isLoading = true;
     forkJoin([
       this.yearlyExercisesService.getYearlyExercises(),
       this.yearlyEatingGoalsService.getYearlyEatingGoals(),
     ]).subscribe(([exercises, eatingGoals]) => {
       this.yearlyExercisesCompleted = exercises;
       this.yearlyEatingGoalsCompleted = eatingGoals;
-      this.isLoading = false;
+      this.checkAllApiCallsCompleted();
     });
+  }
+
+  private checkAllApiCallsCompleted(): void {
+    this.apiCallsCompleted++;
+    if (this.apiCallsCompleted === this.totalApiCalls) {
+      this.isLoading = false;
+    }
   }
 }

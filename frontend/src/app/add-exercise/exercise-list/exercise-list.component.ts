@@ -12,6 +12,7 @@ import { switchMap } from 'rxjs';
 })
 export class ExerciseListComponent implements OnInit {
   exercises: IExercise[] = [];
+  isLoading = false;
 
   constructor(
     private dailyExerciseService: DailyExercisesService,
@@ -19,23 +20,34 @@ export class ExerciseListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.loadList();
+  }
+
+  loadList(): void {
+    this.isLoading = true;
     this.dailyExerciseService
       .getExercises()
       .subscribe((exercises: IExercise[]) => {
         this.exercises = exercises;
+        this.isLoading = false;
       });
     this.dailyExerciseService.exerciseAdded
       .pipe(switchMap(() => this.dailyExerciseService.getExercises()))
       .subscribe((exercises: IExercise[]) => {
         this.exercises = exercises;
+        this.isLoading = false;
       });
   }
 
   openExerciseDetails(exercise: IExercise): void {
-    this.dialog.open(ExerciseDetailsComponent, {
+    const dialogRef = this.dialog.open(ExerciseDetailsComponent, {
       data: { exercise },
       width: '500px',
       height: '500px',
+    });
+
+    dialogRef.componentInstance.exerciseDeleted.subscribe(() => {
+      this.loadList();
     });
   }
 }

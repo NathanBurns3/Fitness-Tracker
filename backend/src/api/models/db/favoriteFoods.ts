@@ -3,7 +3,7 @@ import mongoose, { Schema, Document } from 'mongoose';
 interface IFavoriteFoodsDB extends Document {
   userID: mongoose.Types.ObjectId;
   foods: Array<{
-    fdcID: number;
+    fdcID: string;
     description: string;
     brandName: string;
     servingSize: number;
@@ -27,7 +27,7 @@ const FavoriteFoodsSchema: Schema = new Schema(
       type: [
         {
           _id: false,
-          fdcID: { type: Number, required: true },
+          fdcID: { type: String, required: true },
           description: { type: String, required: true },
           brandName: { type: String, required: true },
           servingSize: { type: Number, required: true },

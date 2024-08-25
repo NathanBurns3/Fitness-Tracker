@@ -7,7 +7,7 @@ export const Nutrient_Ids = {
 };
 
 export interface IFood {
-  fdcID: number;
+  fdcID: string;
   description: string;
   brandName: string;
   servingSize: number;

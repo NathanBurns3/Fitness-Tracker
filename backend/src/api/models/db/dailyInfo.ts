@@ -20,7 +20,7 @@ interface IDailyInfoDB extends Document {
     sets: number;
   }>;
   foods: Array<{
-    fdcID: number;
+    fdcID: string;
     description: string;
     brandName: string;
     servingSize: number;
@@ -72,7 +72,7 @@ const DailyInfoSchema: Schema = new Schema(
       type: [
         {
           _id: false,
-          fdcID: { type: Number, required: true },
+          fdcID: { type: String, required: true },
           description: { type: String, required: true },
           brandName: { type: String, required: true },
           servingSize: { type: Number, required: true },

@@ -101,7 +101,7 @@ export const updateDailyFood = async (
 ) => {
   try {
     const userID = req.user?.id;
-    const { fdcID, food }: { fdcID: number; food: IFood } = req.body;
+    const { fdcID, food }: { fdcID: string; food: IFood } = req.body;
     if (!userID || !mongoose.Types.ObjectId.isValid(userID)) {
       return res
         .status(400)

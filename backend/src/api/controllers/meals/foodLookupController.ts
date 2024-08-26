@@ -33,7 +33,9 @@ export const updateNutritions = async (req: Request, res: Response) => {
         'x-api-key': clientID,
       },
     });
-    formatFoodNutritions(response.data, meal);
+    if (response.data[0] && response.data[0].labelNutrients) {
+      formatFoodNutritions(response.data, meal);
+    }
     res.json(meal);
   } catch (error: Error | any) {
     res.status(500).send(error.message);

@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, EventEmitter, Inject, Output } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ICustomMeal } from '../models/custom-meal';
 import { IFood } from '../models/food';
@@ -13,6 +13,8 @@ import { convertUnit } from 'src/app/helpers/unit-converter';
   styleUrls: ['./custom-meal-details.component.css'],
 })
 export class CustomMealDetailsComponent {
+  @Output() foodUpdate = new EventEmitter<void>();
+
   title: string;
   customFood: ICustomMeal;
   action: string = '';
@@ -35,7 +37,7 @@ export class CustomMealDetailsComponent {
   previousServingUnit: string = '';
   maxedFood: boolean = false;
   foodChosen: IFood = {
-    fdcID: 0,
+    fdcID: '0',
     description: '',
     brandName: '',
     servingSize: 0,
@@ -224,6 +226,7 @@ export class CustomMealDetailsComponent {
       .updateCustomMeal(this.clonedMeal, this.action)
       .subscribe((success) => {
         if (success) {
+          this.foodUpdate.emit();
           this.dialogRef.close(this.clonedMeal);
         }
       });

@@ -5,6 +5,7 @@ import { environment } from 'src/environments/environment';
 import { catchError, map, Observable, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { getHeaders } from 'src/utils/http-headers.util';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -13,11 +14,15 @@ export class DailyExercisesService {
   private apiUrl = environment.apiURL + '/exercise';
   exerciseAdded = new EventEmitter<void>();
 
-  constructor(private http: HttpClient, private snackBar: MatSnackBar) {}
+  constructor(
+    private http: HttpClient,
+    private snackBar: MatSnackBar,
+    private router: Router
+  ) {}
 
   getExercises(): Observable<IExercise[]> {
     return this.http.get<IExercise[]>(this.apiUrl + '/dailyExercises', {
-      headers: getHeaders(),
+      headers: getHeaders(this.router),
     });
   }
 
@@ -27,7 +32,7 @@ export class DailyExercisesService {
         this.apiUrl + '/addDailyExercise',
         { exercise: exercise },
         {
-          headers: getHeaders(),
+          headers: getHeaders(this.router),
         }
       )
       .pipe(
@@ -60,7 +65,7 @@ export class DailyExercisesService {
         this.apiUrl + '/updateDailyExercise',
         { exerciseID: exercise.exerciseID, exercise: exercise },
         {
-          headers: getHeaders(),
+          headers: getHeaders(this.router),
         }
       )
       .pipe(
@@ -91,7 +96,7 @@ export class DailyExercisesService {
       .delete<{ success: Boolean; message: string }>(
         this.apiUrl + '/deleteDailyExercise/' + exercise.exerciseID,
         {
-          headers: getHeaders(),
+          headers: getHeaders(this.router),
         }
       )
       .pipe(

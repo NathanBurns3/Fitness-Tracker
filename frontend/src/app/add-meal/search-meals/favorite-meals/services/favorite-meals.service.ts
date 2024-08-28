@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 import { catchError, map, Observable, of } from 'rxjs';
 import { IFood } from 'src/app/add-meal/models/food';
 import { environment } from 'src/environments/environment';
@@ -12,11 +13,15 @@ import { getHeaders } from 'src/utils/http-headers.util';
 export class FavoriteMealsService {
   private apiUrl = environment.apiURL + '/meal';
 
-  constructor(private http: HttpClient, private snackBar: MatSnackBar) {}
+  constructor(
+    private http: HttpClient,
+    private snackBar: MatSnackBar,
+    private router: Router
+  ) {}
 
   getFavoriteMeals(): Observable<IFood[]> {
     return this.http.get<IFood[]>(this.apiUrl + '/favoriteMeals', {
-      headers: getHeaders(),
+      headers: getHeaders(this.router),
     });
   }
 
@@ -25,7 +30,7 @@ export class FavoriteMealsService {
       .delete<{ success: boolean; message: string }>(
         this.apiUrl + '/deleteFavoriteMeal/' + meal.fdcID,
         {
-          headers: getHeaders(),
+          headers: getHeaders(this.router),
         }
       )
       .pipe(
@@ -61,7 +66,7 @@ export class FavoriteMealsService {
         this.apiUrl + '/addFavoriteMeal',
         { food: meal },
         {
-          headers: getHeaders(),
+          headers: getHeaders(this.router),
         }
       )
       .pipe(

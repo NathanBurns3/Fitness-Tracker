@@ -6,6 +6,7 @@ import { HttpClient } from '@angular/common/http';
 import { IExercise } from '../models/exercise';
 import { catchError, map, Observable, of } from 'rxjs';
 import { getHeaders } from 'src/utils/http-headers.util';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -14,14 +15,18 @@ export class ExercisesService {
   private apiUrl = environment.apiURL + '/exercise';
   exerciseAdded = new EventEmitter<void>();
 
-  constructor(private http: HttpClient, private snackBar: MatSnackBar) {}
+  constructor(
+    private http: HttpClient,
+    private snackBar: MatSnackBar,
+    private router: Router
+  ) {}
 
   getExercisesById(
     selectedMuscleGroup: muscleGroupsEnum
   ): Observable<IExercise[]> {
     return this.http
       .get<IExercise[]>(this.apiUrl + '/exercises/' + selectedMuscleGroup, {
-        headers: getHeaders(),
+        headers: getHeaders(this.router),
       })
       .pipe(
         map((response) => {
@@ -56,7 +61,7 @@ export class ExercisesService {
         this.apiUrl + '/addExercise',
         { muscleGroup: muscleGroup, exerciseName: exercise },
         {
-          headers: getHeaders(),
+          headers: getHeaders(this.router),
         }
       )
       .pipe(
@@ -92,7 +97,7 @@ export class ExercisesService {
       .delete<{ success: Boolean; message: string }>(
         this.apiUrl + '/deleteExercise/' + muscleGroup + '/' + exerciseID,
         {
-          headers: getHeaders(),
+          headers: getHeaders(this.router),
         }
       )
       .pipe(

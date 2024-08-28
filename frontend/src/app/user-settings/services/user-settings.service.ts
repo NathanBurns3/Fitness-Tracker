@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { catchError, map, Observable, of } from 'rxjs';
 import { getHeaders } from 'src/utils/http-headers.util';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -12,7 +13,11 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class UserSettingsService {
   private apiUrl = environment.apiURL + '/settings';
 
-  constructor(private http: HttpClient, private snackBar: MatSnackBar) {}
+  constructor(
+    private http: HttpClient,
+    private snackBar: MatSnackBar,
+    private router: Router
+  ) {}
 
   updateUserSettings(userSettings: IUserSettings): Observable<boolean> {
     return this.http
@@ -20,7 +25,7 @@ export class UserSettingsService {
         this.apiUrl + '/updateUserSettings',
         { settings: userSettings },
         {
-          headers: getHeaders(),
+          headers: getHeaders(this.router),
         }
       )
       .pipe(
@@ -48,7 +53,7 @@ export class UserSettingsService {
 
   getUserSettings(): Observable<IUserSettings> {
     return this.http.get<IUserSettings>(this.apiUrl + '/userSettings', {
-      headers: getHeaders(),
+      headers: getHeaders(this.router),
     });
   }
 
@@ -58,7 +63,7 @@ export class UserSettingsService {
         this.apiUrl + '/updatePassword',
         { newPassword },
         {
-          headers: getHeaders(),
+          headers: getHeaders(this.router),
         }
       )
       .pipe(
@@ -89,7 +94,7 @@ export class UserSettingsService {
       .delete<{ success: boolean; message: string }>(
         this.apiUrl + '/deleteAccount',
         {
-          headers: getHeaders(),
+          headers: getHeaders(this.router),
         }
       )
       .pipe(

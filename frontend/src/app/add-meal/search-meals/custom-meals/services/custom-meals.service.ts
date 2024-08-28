@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 import { catchError, map, Observable, of } from 'rxjs';
 import { ICustomMeal } from 'src/app/add-meal/models/custom-meal';
 import { IFood } from 'src/app/add-meal/models/food';
@@ -13,17 +14,21 @@ import { getHeaders } from 'src/utils/http-headers.util';
 export class CustomMealService {
   private apiUrl = environment.apiURL + '/meal';
 
-  constructor(private http: HttpClient, private snackBar: MatSnackBar) {}
+  constructor(
+    private http: HttpClient,
+    private snackBar: MatSnackBar,
+    private router: Router
+  ) {}
 
   getCustomMeals(): Observable<ICustomMeal[]> {
     return this.http.get<ICustomMeal[]>(this.apiUrl + '/customMeals', {
-      headers: getHeaders(),
+      headers: getHeaders(this.router),
     });
   }
 
   getCustomMeal(id: string): Observable<ICustomMeal> {
     return this.http.get<ICustomMeal>(this.apiUrl + '/customMeal/' + id, {
-      headers: getHeaders(),
+      headers: getHeaders(this.router),
     });
   }
 
@@ -32,7 +37,7 @@ export class CustomMealService {
       .delete<{ success: boolean; message: string }>(
         this.apiUrl + '/deleteCustomMeal/' + id,
         {
-          headers: getHeaders(),
+          headers: getHeaders(this.router),
         }
       )
       .pipe(
@@ -65,7 +70,7 @@ export class CustomMealService {
           this.apiUrl + '/addCustomMeal',
           { customMeal: meal },
           {
-            headers: getHeaders(),
+            headers: getHeaders(this.router),
           }
         )
         .pipe(
@@ -95,7 +100,7 @@ export class CustomMealService {
           this.apiUrl + '/updateCustomMeal',
           { mealID: meal.mealID, customMeal: meal },
           {
-            headers: getHeaders(),
+            headers: getHeaders(this.router),
           }
         )
         .pipe(

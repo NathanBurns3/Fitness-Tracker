@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { catchError, map, Observable, of } from 'rxjs';
 import { getHeaders } from 'src/utils/http-headers.util';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -13,11 +14,15 @@ export class DailyFoodService {
   private apiUrl = environment.apiURL + '/meal';
   foodAdded = new EventEmitter<void>();
 
-  constructor(private http: HttpClient, private snackBar: MatSnackBar) {}
+  constructor(
+    private http: HttpClient,
+    private snackBar: MatSnackBar,
+    private router: Router
+  ) {}
 
   getFoods(): Observable<IFood[]> {
     return this.http.get<IFood[]>(this.apiUrl + '/dailyFoods', {
-      headers: getHeaders(),
+      headers: getHeaders(this.router),
     });
   }
 
@@ -27,7 +32,7 @@ export class DailyFoodService {
         this.apiUrl + '/addDailyFood',
         { food: food },
         {
-          headers: getHeaders(),
+          headers: getHeaders(this.router),
         }
       )
       .pipe(
@@ -60,7 +65,7 @@ export class DailyFoodService {
         this.apiUrl + '/updateDailyFood',
         { fdcID: food.fdcID, food: food },
         {
-          headers: getHeaders(),
+          headers: getHeaders(this.router),
         }
       )
       .pipe(
@@ -92,7 +97,7 @@ export class DailyFoodService {
       .delete<{ success: Boolean; message: string }>(
         this.apiUrl + '/deleteDailyFood/' + food.fdcID,
         {
-          headers: getHeaders(),
+          headers: getHeaders(this.router),
         }
       )
       .pipe(

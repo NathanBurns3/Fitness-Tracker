@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import Exercises from '../../models/db/exercises';
 import { muscleGroupsEnum } from '../../models/api/exercise/muscle-groups-enum';
-import mongoose, { set } from 'mongoose';
+import mongoose from 'mongoose';
 import { IExercise } from '../../models/api/exercise/exercise';
 import { AuthenticatedRequest } from '../../helpers/authMiddleware';
 

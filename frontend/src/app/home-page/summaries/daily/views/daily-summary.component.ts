@@ -162,9 +162,7 @@ export class DailySummaryComponent implements OnInit, OnDestroy, OnChanges {
     const eatingInfoLength = eatingTotals.length;
     for (let i = 0; i < eatingInfoLength; i++) {
       const percentage = Math.round((eatingTotals[i] / eatingGoals[i]) * 100);
-      if (percentage !== 0) {
-        percentages.push(percentage);
-      }
+      percentages.push(percentage);
       this.eatingTotalsAndGoals.push({
         total: parseFloat(eatingTotals[i].toFixed(2)),
         goal: parseFloat(eatingGoals[i].toFixed(2)),

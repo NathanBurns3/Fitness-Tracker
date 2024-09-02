@@ -19,7 +19,7 @@ export const getDailyEatingInfo = async (
     const [userDailyInfo, userGoals] = await Promise.all([
       DailyInfo.aggregate([
         { $match: { userID: new Types.ObjectId(userID) } },
-        { $unwind: '$foods' },
+        { $unwind: { path: '$foods', preserveNullAndEmptyArrays: true } },
         {
           $group: {
             _id: null,
@@ -44,12 +44,6 @@ export const getDailyEatingInfo = async (
       Goals.findOne({ userID: userID }).lean(),
     ]);
 
-    if (!userDailyInfo.length) {
-      return res
-        .status(404)
-        .json({ message: 'Daily Info not found for this user' });
-    }
-
     if (!userGoals) {
       return res.status(404).json({ message: 'Goals not found for this user' });
     }
@@ -62,7 +56,13 @@ export const getDailyEatingInfo = async (
         fatGoal: userGoals.foodGoals.fat,
         fiberGoal: userGoals.foodGoals.fiber,
       },
-      totals: userDailyInfo[0],
+      totals: userDailyInfo[0] || {
+        calories: 0,
+        protein: 0,
+        carbs: 0,
+        fat: 0,
+        fiber: 0,
+      },
     };
 
     res.status(200).json(dailyEatingInfo);
@@ -83,7 +83,12 @@ export const getDailyExerciseInfo = async (
 
     const aggregationResult = await DailyInfo.aggregate([
       { $match: { userID: new Types.ObjectId(userID) } },
-      { $unwind: '$exercisesCompleted' },
+      {
+        $unwind: {
+          path: '$exercisesCompleted',
+          preserveNullAndEmptyArrays: true,
+        },
+      },
       {
         $group: {
           _id: null,
@@ -206,13 +211,19 @@ export const getDailyExerciseInfo = async (
       },
     ]);
 
-    if (aggregationResult.length === 0) {
-      return res
-        .status(404)
-        .json({ message: 'Daily Info not found for this user' });
-    }
-
-    const exerciseInfo: IExerciseInfo = aggregationResult[0];
+    const exerciseInfo: IExerciseInfo = aggregationResult[0] || {
+      chestSets: 0,
+      calveSets: 0,
+      hamstringSets: 0,
+      quadSets: 0,
+      gluteSets: 0,
+      shoulderSets: 0,
+      tricepSets: 0,
+      forearmSets: 0,
+      bicepSets: 0,
+      backSets: 0,
+      abSets: 0,
+    };
 
     res.status(200).json(exerciseInfo);
   } catch (error: Error | any) {

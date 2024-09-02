@@ -17,7 +17,7 @@ export const getMonthlyExerciseInfo = async (
 
     const aggregationPipeline = [
       { $match: { userID: new Types.ObjectId(userID) } },
-      { $unwind: '$sets' },
+      { $unwind: { path: '$sets', preserveNullAndEmptyArrays: true } },
       {
         $group: {
           _id: null,
@@ -115,13 +115,19 @@ export const getMonthlyExerciseInfo = async (
 
     const result = await MonthlyInfo.aggregate(aggregationPipeline);
 
-    if (result.length === 0) {
-      return res
-        .status(404)
-        .json({ message: 'Monthly Info not found for this user' });
-    }
-
-    const monthlyExerciseInfo: IExerciseInfo = result[0];
+    const monthlyExerciseInfo: IExerciseInfo = result[0] || {
+      chestSets: 0,
+      calveSets: 0,
+      hamstringSets: 0,
+      quadSets: 0,
+      gluteSets: 0,
+      shoulderSets: 0,
+      tricepSets: 0,
+      forearmSets: 0,
+      bicepSets: 0,
+      backSets: 0,
+      abSets: 0,
+    };
 
     res.status(200).json(monthlyExerciseInfo);
   } catch (error: Error | any) {
@@ -141,7 +147,12 @@ export const getMonthlyBreakdownInfo = async (
     const userMonthlyInfo: IMonthlyBreakdownInfo[] =
       await MonthlyInfo.aggregate([
         { $match: { userID: new Types.ObjectId(userID) } },
-        { $unwind: '$goalsCompleted' },
+        {
+          $unwind: {
+            path: '$goalsCompleted',
+            preserveNullAndEmptyArrays: true,
+          },
+        },
         {
           $project: {
             _id: 0,

@@ -51,7 +51,7 @@ export class DailyFoodService {
           }
         }),
         catchError((error: Error | any) => {
-          this.snackBar.open(error.message, '', {
+          this.snackBar.open(error.error.message, '', {
             duration: 2000,
           });
           return of(false);
@@ -84,7 +84,7 @@ export class DailyFoodService {
           }
         }),
         catchError((error: Error | any) => {
-          this.snackBar.open(error.message, '', {
+          this.snackBar.open(error.error.message, '', {
             duration: 2000,
           });
           return of(false);
@@ -116,7 +116,7 @@ export class DailyFoodService {
           }
         }),
         catchError((error: Error | any) => {
-          this.snackBar.open(error.message, '', {
+          this.snackBar.open(error.error.message, '', {
             duration: 2000,
           });
           return of(false);

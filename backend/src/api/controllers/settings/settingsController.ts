@@ -2,6 +2,12 @@ import { Request, Response } from 'express';
 import mongoose from 'mongoose';
 import User from '../../models/db/user';
 import Goals from '../../models/db/goals';
+import CustomMeals from '../../models/db/customMeals';
+import DailyInfo from '../../models/db/dailyInfo';
+import Exercises from '../../models/db/exercises';
+import FavoriteFoods from '../../models/db/favoriteFoods';
+import MonthlyInfo from '../../models/db/monthlyInfo';
+import YearlyInfo from '../../models/db/yearlyInfo';
 import { IUserSettings } from '../../models/api/settings/user-settings';
 import { GenderEnum } from '../../models/api/settings/gender-enum';
 import { ActivityLevelEnum } from '../../models/api/settings/activity-level-enum';
@@ -175,6 +181,16 @@ export const deleteAccount = async (
         .status(404)
         .json({ message: 'User not found.', success: false });
     }
+
+    await Promise.all([
+      CustomMeals.deleteMany({ userID }),
+      DailyInfo.deleteMany({ userID }),
+      Exercises.deleteMany({ userID }),
+      FavoriteFoods.deleteMany({ userID }),
+      Goals.deleteMany({ userID }),
+      MonthlyInfo.deleteMany({ userID }),
+      YearlyInfo.deleteMany({ userID }),
+    ]);
 
     return res
       .status(200)

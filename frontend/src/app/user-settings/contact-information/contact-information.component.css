@@ -24,6 +24,16 @@
   }
 }
 
+@media screen and (max-width: 800px) {
+  .email {
+    width: 12em;
+  }
+
+  .phone {
+    width: 12em;
+  }
+}
+
 @media screen and (max-width: 475px) {
   .contact {
     display: grid;

@@ -1,3 +1,9 @@
+@media screen and (max-width: 1200px) {
+  .activity-section {
+    margin-bottom: 1rem;
+  }
+}
+
 @media screen and (max-width: 900px) {
   .title {
     font-size: 1.25em;
@@ -18,41 +24,41 @@
     display: ruby;
   }
 
-  .activity {
+  .activity-section {
     margin-right: 2.5em;
   }
 
-  .goal {
+  .goal-section {
     margin-left: 2.5em;
   }
 }
 
 @media screen and (max-width: 540px) {
-  .activity {
+  .activity-section {
     margin-right: 1.5em;
   }
 
-  .goal {
+  .goal-section {
     margin-left: 1.5em;
   }
 }
 
-@media screen and (max-width: 480px) {
-  .activity {
+@media screen and (max-width: 481px) {
+  .activity-section {
     margin-right: 1em;
   }
 
-  .goal {
+  .goal-section {
     margin-left: 1em;
   }
 }
 
 @media screen and (max-width: 475px) {
-  .activity {
+  .activity-section {
     margin-right: 0em;
   }
 
-  .goal {
+  .goal-section {
     margin-left: 0em;
   }
 

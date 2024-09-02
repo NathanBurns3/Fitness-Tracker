@@ -30,20 +30,22 @@ export class ExerciseSelectorComponent {
   ) {}
 
   onMuscleGroupChange() {
-    this.exercisesService
-      .getExercisesById(
-        muscleGroupsEnum[this.selectedMuscleGroup as muscleGroupsEnum]
-      )
-      .pipe(
-        map((exercises: IExercise[]) =>
-          exercises.map((exercise) => exercise.exerciseName)
+    if (this.selectedMuscleGroup !== 'Choose a Muscle Group') {
+      this.exercisesService
+        .getExercisesById(
+          muscleGroupsEnum[this.selectedMuscleGroup as muscleGroupsEnum]
         )
-      )
-      .subscribe((exerciseNames: string[]) => {
-        this.exercises = exerciseNames;
-      });
-    this.selectedExercise = 'Choose a Exercise';
-    this.muscleGroupChange.emit(this.selectedMuscleGroup);
+        .pipe(
+          map((exercises: IExercise[]) =>
+            exercises.map((exercise) => exercise.exerciseName)
+          )
+        )
+        .subscribe((exerciseNames: string[]) => {
+          this.exercises = exerciseNames;
+        });
+      this.selectedExercise = 'Choose a Exercise';
+      this.muscleGroupChange.emit(this.selectedMuscleGroup);
+    }
   }
 
   onAddExercise(exerciseName: string): void {

@@ -27,7 +27,6 @@ export class CustomMealsComponent {
   }
 
   addCustomMeal(): void {
-    //will need to give it an id
     const customMeal: ICustomMeal = {
       mealID: '100',
       name: '',

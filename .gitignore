@@ -44,3 +44,5 @@ Thumbs.db
 /frontend/.angular/cache/
 /backend/node_modules/
 .env
+/frontend/src/environments/environment.ts
+/frontend/src/environments/environment.prod.ts

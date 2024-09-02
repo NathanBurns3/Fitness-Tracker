@@ -7,6 +7,7 @@ import { IPhysicalMeasurements } from '../models/physical-measurements';
 import { IActivityGoal } from '../models/activity-goals';
 import validator from 'validator';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { DietEnum } from '../models/diet-enum';
 
 @Component({
   selector: 'user-settings',
@@ -85,7 +86,7 @@ export class UserSettingsComponent implements OnInit {
   }
 
   updateDietSelection(dietSelection: string): void {
-    this.userSettings.dietPlan = dietSelection;
+    this.userSettings.dietPlan = dietSelection as DietEnum;
     this.userSettingsChanged = true;
   }
 

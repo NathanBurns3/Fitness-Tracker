@@ -98,19 +98,20 @@
         >
           |||
         </button>
-        <a id="SignOutButton">
+        <a id="SignOutButton" (click)="logout()">
           <h3
-            routerLink="/user-settings"
             class="absolute top-0 right-5 mt-3 text-orange-700 cursor-default px-1 border border-orange-700 rounded transform hover:bg-orange-700 hover:text-white transition-colors duration-200"
-            id="SignOutButtonRoute"
           >
             <span class="show-on-small">X</span>
             <span class="hide-on-small">Sign Out</span>
           </h3>
         </a>
-        <h1 id="Title" class="justify-center text-6xl font-bold text-blue-800">
-          ActiveLife Tracker
-        </h1>
+        <img
+          id="TitleImage"
+          src="assets/title.png"
+          alt="ActiveLife Tracker"
+          class="mx-auto w-7/12 h-7/12"
+        />
         <h1
           id="WelcomeMessage"
           class="justify-center text-2xl text-orange-700 font-bold pt-3"

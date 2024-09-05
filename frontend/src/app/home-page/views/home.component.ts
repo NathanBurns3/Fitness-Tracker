@@ -12,6 +12,8 @@ import { MonthlyExerciseInfoService } from '../summaries/monthly/services/monthl
 import { IMonthlyBreakdownInfo } from '../summaries/monthly/models/monthly-breakdown-info';
 import { YearlyExercisesService } from '../summaries/yearly/services/yearly-exercise.service';
 import { YearlyEatingGoalsService } from '../summaries/yearly/services/yearly-eating-goals.service';
+import { AuthService } from 'src/app/auth/services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'home',
@@ -54,7 +56,9 @@ export class HomeComponent implements OnInit {
     private monthlyBreakdownInfoService: MonthlyBreakdownInfoService,
     private monthlyExerciseInfoService: MonthlyExerciseInfoService,
     private yearlyExercisesService: YearlyExercisesService,
-    private yearlyEatingGoalsService: YearlyEatingGoalsService
+    private yearlyEatingGoalsService: YearlyEatingGoalsService,
+    private authService: AuthService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -145,5 +149,17 @@ export class HomeComponent implements OnInit {
     if (this.apiCallsCompleted === this.totalApiCalls) {
       this.isLoading = false;
     }
+  }
+
+  logout() {
+    this.authService.logout().subscribe(
+      () => {
+        localStorage.removeItem('token');
+        this.router.navigate(['/login']);
+      },
+      (error) => {
+        console.error('Logout error', error);
+      }
+    );
   }
 }

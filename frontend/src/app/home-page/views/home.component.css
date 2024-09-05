@@ -132,6 +132,11 @@
     font-size: 1rem;
   }
 
+  #TitleImage {
+    width: 65%;
+    height: 65%;
+  }
+
   .add-buttons {
     font-size: 0.75rem;
     width: 7rem;
@@ -147,6 +152,12 @@
   #Title {
     font-size: 2.2rem;
   }
+
+  #TitleImage {
+    width: 70%;
+    height: 70%;
+  }
+
   .summary-button {
     font-size: 0.75rem;
   }

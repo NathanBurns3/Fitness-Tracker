@@ -10,6 +10,7 @@ import { PhysicalMeasurementsComponent } from './physical-measurements/physical-
 import { ActivityGoalComponent } from './activity-goal/activity-goal.component';
 import { DietSelectionComponent } from './diet-selection/diet-selection.component';
 import { UpdatePasswordComponent } from './update-password/update-password.component';
+import { DeleteAccountComponent } from './delete-account/delete-account.component';
 
 @NgModule({
   declarations: [
@@ -21,8 +22,16 @@ import { UpdatePasswordComponent } from './update-password/update-password.compo
     ActivityGoalComponent,
     DietSelectionComponent,
     UpdatePasswordComponent,
+    DeleteAccountComponent,
   ],
   imports: [CommonModule, RouterModule, FormsModule],
-  exports: [UserSettingsComponent],
+  exports: [
+    UserSettingsComponent,
+    ContactInformationComponent,
+    PersonalInformationComponent,
+    PhysicalMeasurementsComponent,
+    ActivityGoalComponent,
+    DietSelectionComponent,
+  ],
 })
 export class UserSettingsModule {}

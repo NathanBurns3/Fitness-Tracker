@@ -30,7 +30,7 @@ app.use(express.urlencoded({ limit: '50mb', extended: true }));
 
 app.use(
   cors({
-    origin: process.env['PROD_URL'], // Nathan: Replace with frontend URL
+    origin: process.env['PROD_URL'],
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true,
   })

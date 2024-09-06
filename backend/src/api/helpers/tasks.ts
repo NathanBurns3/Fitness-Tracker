@@ -28,7 +28,6 @@ async function updateMonthlyInfo(userID: mongoose.Types.ObjectId) {
     monthlyInfo.goalsCompleted = [];
   }
 
-  // Add up the total exercises for the day by muscle group
   dailyInfo.exercisesCompleted.forEach((exercise) => {
     const muscleGroup = exercise.muscleGroup;
     const sets = exercise.sets;
@@ -42,7 +41,6 @@ async function updateMonthlyInfo(userID: mongoose.Types.ObjectId) {
     }
   });
 
-  // Add up the nutrition for every food eaten and check if within the eating goal
   const goals = await Goals.findOne({ userID }).lean();
   if (!goals) return;
 

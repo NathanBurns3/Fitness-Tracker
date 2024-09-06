@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { UserSettingsService } from '../services/user-settings.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'delete-account',
@@ -9,7 +10,8 @@ import { UserSettingsService } from '../services/user-settings.service';
 export class DeleteAccountComponent {
   constructor(
     public dialogRef: MatDialogRef<DeleteAccountComponent>,
-    private userSettingsService: UserSettingsService
+    private userSettingsService: UserSettingsService,
+    private router: Router
   ) {}
 
   closeDeleteAccount(): void {
@@ -20,7 +22,7 @@ export class DeleteAccountComponent {
     this.userSettingsService.deleteAccount().subscribe((success: boolean) => {
       if (success) {
         this.dialogRef.close();
-        // Nathan: add log out functionality
+        this.router.navigate(['/login']);
       }
     });
   }

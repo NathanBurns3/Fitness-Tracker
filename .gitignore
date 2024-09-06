@@ -59,8 +59,6 @@ yarn-error.log*
 # Angular
 /frontend/dist/
 /frontend/tmp/
-/frontend/src/environments/environment.ts
-/frontend/src/environments/environment.prod.ts
 
 # Node.js
 /backend/dist/

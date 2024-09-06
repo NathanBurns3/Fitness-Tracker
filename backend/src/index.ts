@@ -1,5 +1,7 @@
 import dotenv from 'dotenv';
-dotenv.config();
+import path from 'path';
+
+dotenv.config({ path: path.resolve(__dirname, '../../.env') });
 
 import express from 'express';
 import connectDB from './config/db';
@@ -10,16 +12,25 @@ import mealRouter from './api/routes/mealRouter';
 import settingsRouter from './api/routes/settingsRoutes';
 import cors from 'cors';
 import './api/helpers/scheduler';
+import authRouter from './api/routes/authRoutes';
+import rateLimit from 'express-rate-limit';
 
 const app = express();
 
-// Nathan: Adjust
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 100,
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+app.use(limiter);
+
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ limit: '50mb', extended: true }));
 
 app.use(
   cors({
-    origin: 'http://localhost:4200', // Replace with your frontend URL
+    origin: process.env['PROD_URL'], // Nathan: Replace with frontend URL
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true,
   })
@@ -31,6 +42,7 @@ app.use('/home', homeRouter);
 app.use('/exercise', exerciseRouter);
 app.use('/meal', mealRouter);
 app.use('/settings', settingsRouter);
+app.use('/auth', authRouter);
 
 app.get('/', (req, res) => {
   console.log('Root endpoint hit');

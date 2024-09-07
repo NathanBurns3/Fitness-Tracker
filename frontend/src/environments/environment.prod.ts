@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiURL: process.env['PROD_URL'],
+  apiURL: 'https://active-life-tracker.vercel.app/',
 };

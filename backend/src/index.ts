@@ -30,10 +30,7 @@ app.use(express.urlencoded({ limit: '50mb', extended: true }));
 
 app.use(
   cors({
-    origin: [
-      'https://active-life-tracker.vercel.app',
-      'https://active-life-tracker-msgh83z1g-nathan-burns-projects-5a4deb87.vercel.app',
-    ],
+    origin: 'https://active-life-tracker.vercel.app',
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true,
   })

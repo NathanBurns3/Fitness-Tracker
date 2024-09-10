@@ -100,12 +100,14 @@ export class UserSettingsComponent implements OnInit {
   }
 
   saveSettings(): void {
+    this.isLoading = true;
     this.userSettingsService
       .updateUserSettings(this.userSettings)
       .subscribe((response) => {
         if (response) {
           this.userSettingsChanged = false;
         }
+        this.isLoading = false;
       });
   }
 

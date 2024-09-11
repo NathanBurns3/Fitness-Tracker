@@ -28,9 +28,20 @@ app.use(limiter);
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ limit: '50mb', extended: true }));
 
+const allowedOrigins = [
+  'https://active-life-tracker.vercel.app',
+  'http://localhost:4200',
+];
+
 app.use(
   cors({
-    origin: 'https://active-life-tracker.vercel.app',
+    origin: (origin, callback) => {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS'));
+      }
+    },
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true,
   })

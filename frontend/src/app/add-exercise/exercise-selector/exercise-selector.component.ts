@@ -10,9 +10,10 @@ import { FormControl, Validators } from '@angular/forms';
 import { map } from 'rxjs';
 
 @Component({
-  selector: 'exercise-selector',
-  templateUrl: './exercise-selector.component.html',
-  styleUrls: ['./exercise-selector.component.css'],
+    selector: 'exercise-selector',
+    templateUrl: './exercise-selector.component.html',
+    styleUrls: ['./exercise-selector.component.css'],
+    standalone: false
 })
 export class ExerciseSelectorComponent {
   @Output() muscleGroupChange = new EventEmitter<string>();

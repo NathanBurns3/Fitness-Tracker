@@ -4,8 +4,9 @@ import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
+    selector: 'app-login',
+    templateUrl: './login.component.html',
+    standalone: false
 })
 export class LoginComponent {
   email = '';

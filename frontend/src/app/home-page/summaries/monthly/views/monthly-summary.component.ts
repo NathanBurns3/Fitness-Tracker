@@ -14,9 +14,10 @@ import { MonthlyExerciseInfoService } from '../services/monthly-exercise-info.se
 import { Chart, ChartConfiguration } from 'chart.js';
 
 @Component({
-  selector: 'MonthlySummaryComponent',
-  templateUrl: './monthly-summary.component.html',
-  styleUrls: ['./monthly-summary.component.css'],
+    selector: 'MonthlySummaryComponent',
+    templateUrl: './monthly-summary.component.html',
+    styleUrls: ['./monthly-summary.component.css'],
+    standalone: false
 })
 export class MonthlySummaryComponent implements OnInit, OnDestroy, OnChanges {
   @Input() daysOfMonth!: IMonthlyBreakdownInfo[];

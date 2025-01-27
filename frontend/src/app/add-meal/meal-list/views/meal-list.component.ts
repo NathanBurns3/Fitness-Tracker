@@ -6,9 +6,10 @@ import { MealDetailsComponent } from '../../meal-details/meal-details.component'
 import { switchMap } from 'rxjs';
 
 @Component({
-  selector: 'meal-list',
-  templateUrl: './meal-list.component.html',
-  styleUrls: ['./meal-list.component.css'],
+    selector: 'meal-list',
+    templateUrl: './meal-list.component.html',
+    styleUrls: ['./meal-list.component.css'],
+    standalone: false
 })
 export class MealListComponent {
   foods: IFood[] = [];

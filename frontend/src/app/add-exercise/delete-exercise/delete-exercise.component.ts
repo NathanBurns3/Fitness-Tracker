@@ -6,9 +6,10 @@ import { map } from 'rxjs';
 import { IExercise } from '../models/exercise';
 
 @Component({
-  selector: 'delete-exercise',
-  templateUrl: './delete-exercise.component.html',
-  styleUrls: ['./delete-exercise.component.css'],
+    selector: 'delete-exercise',
+    templateUrl: './delete-exercise.component.html',
+    styleUrls: ['./delete-exercise.component.css'],
+    standalone: false
 })
 export class DeleteExerciseComponent {
   @Output() exerciseDeleted = new EventEmitter<void>();

@@ -8,8 +8,9 @@ import { FormControl, Validators } from '@angular/forms';
 import { map } from 'rxjs';
 
 @Component({
-  selector: 'exercise-details',
-  templateUrl: './exercise-details.component.html',
+    selector: 'exercise-details',
+    templateUrl: './exercise-details.component.html',
+    standalone: false
 })
 export class ExerciseDetailsComponent implements OnInit {
   @Output() exerciseDeleted = new EventEmitter<void>();

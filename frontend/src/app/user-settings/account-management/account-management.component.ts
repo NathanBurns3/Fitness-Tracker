@@ -4,9 +4,10 @@ import { UpdatePasswordComponent } from '../update-password/update-password.comp
 import { DeleteAccountComponent } from '../delete-account/delete-account.component';
 
 @Component({
-  selector: 'account-management',
-  templateUrl: './account-management.component.html',
-  styleUrls: ['./account-management.component.css'],
+    selector: 'account-management',
+    templateUrl: './account-management.component.html',
+    styleUrls: ['./account-management.component.css'],
+    standalone: false
 })
 export class AccountManagementComponent {
   constructor(private dialog: MatDialog) {}

@@ -7,9 +7,10 @@ import { CustomMealDetailsComponent } from 'src/app/add-meal/custom-meal-details
 import { ICustomMeal } from 'src/app/add-meal/models/custom-meal';
 
 @Component({
-  selector: 'custom-meals',
-  templateUrl: './custom-meals.component.html',
-  styleUrls: ['./custom-meals.component.css'],
+    selector: 'custom-meals',
+    templateUrl: './custom-meals.component.html',
+    styleUrls: ['./custom-meals.component.css'],
+    standalone: false
 })
 export class CustomMealsComponent {
   @Input() customMeals: ICustomMeal[] = [];

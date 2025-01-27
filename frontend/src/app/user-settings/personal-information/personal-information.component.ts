@@ -10,9 +10,10 @@ import { IPersonalInformation } from '../models/personal-information';
 import { GenderEnum } from '../models/gender-enum';
 
 @Component({
-  selector: 'personal-information',
-  templateUrl: './personal-information.component.html',
-  styleUrls: ['./personal-information.component.css'],
+    selector: 'personal-information',
+    templateUrl: './personal-information.component.html',
+    styleUrls: ['./personal-information.component.css'],
+    standalone: false
 })
 export class PersonalInformationComponent implements OnInit, OnChanges {
   @Input() originalPersonalInformation!: IPersonalInformation;

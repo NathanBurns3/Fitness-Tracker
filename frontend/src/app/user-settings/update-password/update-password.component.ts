@@ -3,8 +3,9 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { UserSettingsService } from '../services/user-settings.service';
 
 @Component({
-  selector: 'update-password',
-  templateUrl: './update-password.component.html',
+    selector: 'update-password',
+    templateUrl: './update-password.component.html',
+    standalone: false
 })
 export class UpdatePasswordComponent {
   constructor(

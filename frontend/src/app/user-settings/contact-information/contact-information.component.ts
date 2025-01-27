@@ -9,9 +9,10 @@ import {
 import { IContactInformation } from '../models/contact-information';
 
 @Component({
-  selector: 'contact-information',
-  templateUrl: './contact-information.component.html',
-  styleUrls: ['./contact-information.component.css'],
+    selector: 'contact-information',
+    templateUrl: './contact-information.component.html',
+    styleUrls: ['./contact-information.component.css'],
+    standalone: false
 })
 export class ContactInformationComponent implements OnInit, OnChanges {
   @Input() originalContactInformation!: IContactInformation;

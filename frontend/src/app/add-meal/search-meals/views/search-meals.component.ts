@@ -6,9 +6,10 @@ import { CustomMealService } from '../custom-meals/services/custom-meals.service
 import { ICustomMeal } from '../../models/custom-meal';
 
 @Component({
-  selector: 'search-meals',
-  templateUrl: './search-meals.component.html',
-  styleUrls: ['./search-meals.component.css'],
+    selector: 'search-meals',
+    templateUrl: './search-meals.component.html',
+    styleUrls: ['./search-meals.component.css'],
+    standalone: false
 })
 export class SearchMealsComponent implements OnInit {
   selectedSearch: string = 'All';

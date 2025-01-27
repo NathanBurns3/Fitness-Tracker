@@ -4,8 +4,9 @@ import { UserSettingsService } from '../services/user-settings.service';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'delete-account',
-  templateUrl: './delete-account.component.html',
+    selector: 'delete-account',
+    templateUrl: './delete-account.component.html',
+    standalone: false
 })
 export class DeleteAccountComponent {
   constructor(

@@ -10,9 +10,10 @@ import { Chart, registerables } from 'chart.js';
 Chart.register(...registerables);
 
 @Component({
-  selector: 'YearlySummaryComponent',
-  templateUrl: './yearly-summary.component.html',
-  styleUrls: ['./yearly-summary.component.css'],
+    selector: 'YearlySummaryComponent',
+    templateUrl: './yearly-summary.component.html',
+    styleUrls: ['./yearly-summary.component.css'],
+    standalone: false
 })
 export class YearlySummaryComponent implements OnInit, OnDestroy {
   @Input() exercisesCompleted!: number[];

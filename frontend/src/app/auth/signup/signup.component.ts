@@ -20,9 +20,10 @@ import { IActivityGoal } from 'src/app/user-settings/models/activity-goals';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
-  selector: 'app-signup',
-  templateUrl: './signup.component.html',
-  styleUrls: ['./signup.component.css'],
+    selector: 'app-signup',
+    templateUrl: './signup.component.html',
+    styleUrls: ['./signup.component.css'],
+    standalone: false
 })
 export class SignupComponent {
   userSettings: IUserSettings;

@@ -14,9 +14,10 @@ import { SearchMealsComponent } from '../../views/search-meals.component';
 import { FavoriteMealsService } from '../../favorite-meals/services/favorite-meals.service';
 
 @Component({
-  selector: 'all-meals',
-  templateUrl: './all-meals.component.html',
-  styleUrls: ['./all-meals.component.css'],
+    selector: 'all-meals',
+    templateUrl: './all-meals.component.html',
+    styleUrls: ['./all-meals.component.css'],
+    standalone: false
 })
 export class AllMealsComponent {
   @Output() favoriteMealsChange = new EventEmitter<IFood[]>();

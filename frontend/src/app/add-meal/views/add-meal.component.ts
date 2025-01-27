@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'add-meal',
-  templateUrl: './add-meal.component.html',
-  styleUrls: ['./add-meal.component.css'],
+    selector: 'add-meal',
+    templateUrl: './add-meal.component.html',
+    styleUrls: ['./add-meal.component.css'],
+    standalone: false
 })
 export class AddMealComponent {}

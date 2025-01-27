@@ -14,9 +14,10 @@ import { ICustomMeal } from '../models/custom-meal';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
-  selector: 'meal-details',
-  templateUrl: './meal-details.component.html',
-  styleUrls: ['./meal-details.component.css'],
+    selector: 'meal-details',
+    templateUrl: './meal-details.component.html',
+    styleUrls: ['./meal-details.component.css'],
+    standalone: false
 })
 export class MealDetailsComponent {
   @Output() foodUpdate = new EventEmitter<void>();

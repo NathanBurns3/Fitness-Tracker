@@ -1,9 +1,10 @@
 import { Component, Input } from '@angular/core';
 
 @Component({
-  selector: 'exercise-image',
-  templateUrl: './exercise-image.component.html',
-  styleUrls: ['./exercise-image.component.css'],
+    selector: 'exercise-image',
+    templateUrl: './exercise-image.component.html',
+    styleUrls: ['./exercise-image.component.css'],
+    standalone: false
 })
 export class ExerciseImageComponent {
   @Input() selectedMuscleGroup: string = '';

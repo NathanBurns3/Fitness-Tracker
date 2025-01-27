@@ -10,9 +10,10 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { DietEnum } from '../models/diet-enum';
 
 @Component({
-  selector: 'user-settings',
-  templateUrl: './user-settings.component.html',
-  styleUrls: ['./user-settings.component.css'],
+    selector: 'user-settings',
+    templateUrl: './user-settings.component.html',
+    styleUrls: ['./user-settings.component.css'],
+    standalone: false
 })
 export class UserSettingsComponent implements OnInit {
   userSettings!: IUserSettings;

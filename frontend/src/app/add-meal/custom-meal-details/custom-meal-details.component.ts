@@ -8,9 +8,10 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { convertUnit } from 'src/app/helpers/unit-converter';
 
 @Component({
-  selector: 'custom-meal-details',
-  templateUrl: './custom-meal-details.component.html',
-  styleUrls: ['./custom-meal-details.component.css'],
+    selector: 'custom-meal-details',
+    templateUrl: './custom-meal-details.component.html',
+    styleUrls: ['./custom-meal-details.component.css'],
+    standalone: false
 })
 export class CustomMealDetailsComponent {
   @Output() foodUpdate = new EventEmitter<void>();

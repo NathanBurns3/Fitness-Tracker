@@ -1,10 +1,11 @@
-const Dotenv = require("dotenv-webpack");
-const path = require("path");
+const webpack = require("webpack");
 
 module.exports = {
   plugins: [
-    new Dotenv({
-      path: path.resolve(__dirname, "../.env"),
+    new webpack.DefinePlugin({
+      "process.env": {
+        NG_APP_API_URL: JSON.stringify(process.env.NG_APP_API_URL),
+      },
     }),
   ],
 };

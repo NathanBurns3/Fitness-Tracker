@@ -31,6 +31,8 @@ app.use(express.urlencoded({ limit: '50mb', extended: true }));
 const allowedOrigins = [
   'https://active-life-tracker.vercel.app',
   'http://localhost:4200',
+  'https://www.activelifetracker.com',
+  'https://activelifetracker.com',
 ];
 
 app.use(

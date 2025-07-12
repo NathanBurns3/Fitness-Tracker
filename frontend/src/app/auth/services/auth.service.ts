@@ -11,9 +11,7 @@ import { getHeaders } from 'src/utils/http-headers.util';
 export class AuthService {
   private apiUrl = environment.apiURL + '/auth';
 
-  constructor(private http: HttpClient, private router: Router) {
-    console.log('api url', this.apiUrl);
-  }
+  constructor(private http: HttpClient, private router: Router) {}
 
   signup(userSettings: IUserSettings, password: string, captchaToken: string) {
     return this.http.post(

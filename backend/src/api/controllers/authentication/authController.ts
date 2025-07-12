@@ -26,6 +26,28 @@ export const signup = async (req: Request, res: Response) => {
       return res.status(400).json({ message: 'Invalid input' });
     }
 
+    if (
+      !validator.isEmail(userSettings.contactInformation.email) ||
+      !validator.isMobilePhone(userSettings.contactInformation.phoneNumber)
+    ) {
+      return res.status(400).json({ message: 'Invalid email or phone number' });
+    }
+
+    const decodedPassword = Buffer.from(password, 'base64').toString('utf-8');
+    const passwordSafe =
+      decodedPassword.length >= 8 &&
+      /[A-Z]/.test(decodedPassword) &&
+      /[a-z]/.test(decodedPassword) &&
+      /\d/.test(decodedPassword) &&
+      /[!@#$%^&*(),.?":{}|<>]/.test(decodedPassword);
+
+    if (!passwordSafe) {
+      return res.status(400).json({
+        message:
+          'Password must be at least 8 characters and include uppercase, lowercase, number, and special character.',
+      });
+    }
+
     const secretKey = process.env.RECAPTCHA_SECRET_KEY;
     const verifyUrl = `https://www.google.com/recaptcha/api/siteverify?secret=${secretKey}&response=${captchaToken}`;
     const response = await axios.post(verifyUrl);
@@ -108,6 +130,9 @@ export const login = async (req: Request, res: Response) => {
     }
 
     const decodedEmail = Buffer.from(email, 'base64').toString('utf-8');
+    if (!validator.isEmail(decodedEmail)) {
+      return res.status(400).json({ message: 'Invalid email format' });
+    }
     const decodedPassword = Buffer.from(password, 'base64').toString('utf-8');
 
     const user = await User.findOne({ email: decodedEmail });

@@ -19,6 +19,7 @@ import { IPhysicalMeasurements } from '../../models/api/settings/physical-measur
 import { IActivityGoal } from '../../models/api/settings/activity-goals';
 import { calculateMacros } from '../../helpers/macroCalculation';
 import { AuthenticatedRequest } from '../../helpers/authMiddleware';
+import validator from 'validator';
 
 export const getUserSettings = async (
   req: AuthenticatedRequest,
@@ -97,6 +98,13 @@ export const updateUserSettings = async (
         .json({ message: 'Invalid settings object.', success: false });
     }
 
+    if (
+      !validator.isEmail(settings.contactInformation.email) ||
+      !validator.isMobilePhone(settings.contactInformation.phoneNumber)
+    ) {
+      return res.status(400).json({ message: 'Invalid email or phone number' });
+    }
+
     const updatedSettings = await User.findOneAndUpdate(
       { _id: userID },
       {
@@ -142,6 +150,23 @@ export const updatePassword = async (
       return res
         .status(400)
         .json({ message: 'Invalid user ID.', success: false });
+    }
+
+    const decodedPassword = Buffer.from(newPassword, 'base64').toString(
+      'utf-8'
+    );
+    const passwordSafe =
+      decodedPassword.length >= 8 &&
+      /[A-Z]/.test(decodedPassword) &&
+      /[a-z]/.test(decodedPassword) &&
+      /\d/.test(decodedPassword) &&
+      /[!@#$%^&*(),.?":{}|<>]/.test(decodedPassword);
+
+    if (!passwordSafe) {
+      return res.status(400).json({
+        message:
+          'Password must be at least 8 characters and include uppercase, lowercase, number, and special character.',
+      });
     }
 
     const updatedSettings = await User.findOneAndUpdate(

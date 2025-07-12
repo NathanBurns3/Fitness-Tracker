@@ -27,6 +27,8 @@ export const signup = async (req: Request, res: Response) => {
     }
 
     const secretKey = process.env.RECAPTCHA_SECRET_KEY;
+    console.log('secretKey', secretKey);
+    console.log('captchaToken', captchaToken);
     const verifyUrl = `https://www.google.com/recaptcha/api/siteverify?secret=${secretKey}&response=${captchaToken}`;
     const response = await axios.post(verifyUrl);
     console.log('response', response.data);

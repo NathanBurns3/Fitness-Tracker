@@ -118,6 +118,7 @@ export const login = async (req: Request, res: Response) => {
       return res.status(401).send('Invalid credentials');
     }
 
+    console.log('jwt secret', process.env.JWT_SECRET);
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET as string, {
       expiresIn: '1h',
     });

@@ -21,6 +21,10 @@ interface IUserDB extends Document {
     | 'weightgain'
     | 'extremegain';
   dietPlan: 'balanced' | 'lowfat' | 'lowcarbs' | 'highprotein';
+  failedLoginAttempts?: {
+    count: number;
+    lastAttempt: Date | null;
+  };
 }
 
 const UserSchema: Schema = new Schema(
@@ -53,6 +57,10 @@ const UserSchema: Schema = new Schema(
       type: String,
       required: true,
       enum: ['balanced', 'lowfat', 'lowcarbs', 'highprotein'],
+    },
+    failedLoginAttempts: {
+      count: { type: Number, default: 0 },
+      lastAttempt: { type: Date, default: null },
     },
   },
   {

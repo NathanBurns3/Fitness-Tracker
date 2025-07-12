@@ -13,6 +13,7 @@ import MonthlyInfo from '../../models/db/monthlyInfo';
 import YearlyInfo from '../../models/db/yearlyInfo';
 import { calculateMacros } from '../../helpers/macroCalculation';
 import axios from 'axios';
+import validator from 'validator';
 
 export const signup = async (req: Request, res: Response) => {
   try {
@@ -122,9 +123,12 @@ export const signup = async (req: Request, res: Response) => {
   }
 };
 
+const MAX_FAILED_ATTEMPTS = 3;
+const WINDOW_MS = 15 * 60 * 1000;
+
 export const login = async (req: Request, res: Response) => {
   try {
-    const { email, password } = req.body;
+    const { email, password, captchaToken } = req.body;
     if (!email || !password) {
       return res.status(400).json({ message: 'Invalid input' });
     }
@@ -136,9 +140,55 @@ export const login = async (req: Request, res: Response) => {
     const decodedPassword = Buffer.from(password, 'base64').toString('utf-8');
 
     const user = await User.findOne({ email: decodedEmail });
-    if (!user || !(await bcrypt.compare(decodedPassword, user.password))) {
+    if (!user) {
       return res.status(401).send('Invalid credentials');
     }
+
+    const now = new Date();
+    const attempts = user.failedLoginAttempts || {
+      count: 0,
+      lastAttempt: null,
+    };
+    if (
+      attempts.count >= MAX_FAILED_ATTEMPTS &&
+      attempts.lastAttempt &&
+      now.getTime() - new Date(attempts.lastAttempt).getTime() < WINDOW_MS
+    ) {
+      if (!captchaToken) {
+        return res.status(429).json({ message: 'CAPTCHA required' });
+      }
+      const secretKey = process.env.RECAPTCHA_SECRET_KEY;
+      const verifyUrl = `https://www.google.com/recaptcha/api/siteverify?secret=${secretKey}&response=${captchaToken}`;
+      const captchaRes = await axios.post(verifyUrl);
+      if (!captchaRes.data.success) {
+        return res.status(400).json({ message: 'CAPTCHA verification failed' });
+      }
+    }
+
+    if (!(await bcrypt.compare(decodedPassword, user.password))) {
+      await User.updateOne(
+        { _id: user._id },
+        {
+          $inc: { 'failedLoginAttempts.count': 1 },
+          $set: { 'failedLoginAttempts.lastAttempt': now },
+        }
+      );
+
+      if (attempts.count + 1 >= MAX_FAILED_ATTEMPTS) {
+        return res.status(429).json({ message: 'CAPTCHA required' });
+      }
+      return res.status(401).send('Invalid credentials');
+    }
+
+    await User.updateOne(
+      { _id: user._id },
+      {
+        $set: {
+          'failedLoginAttempts.count': 0,
+          'failedLoginAttempts.lastAttempt': null,
+        },
+      }
+    );
 
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET as string, {
       expiresIn: '1h',

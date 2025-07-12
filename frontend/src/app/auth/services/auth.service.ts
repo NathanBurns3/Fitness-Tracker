@@ -21,10 +21,10 @@ export class AuthService {
     );
   }
 
-  login(email: string, password: string) {
+  login(email: string, password: string, captchaToken?: string) {
     return this.http.post(
       this.apiUrl + '/login',
-      { email, password },
+      { email, password, captchaToken },
       { headers: getHeaders(this.router) }
     );
   }

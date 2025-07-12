@@ -90,8 +90,16 @@ export class SignupComponent {
                   { duration: 3000 }
                 );
                 this.router.navigate(['/login']);
+              } else if (error.error && error.error.message) {
+                this.snackBar.open(error.error.message, 'Close', {
+                  duration: 3000,
+                });
               } else {
-                console.error('Signup error', error);
+                this.snackBar.open(
+                  'Signup failed. Please try again.',
+                  'Close',
+                  { duration: 3000 }
+                );
               }
             }
           );

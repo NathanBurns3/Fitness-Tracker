@@ -27,6 +27,7 @@ export const signup = async (req: Request, res: Response) => {
     }
 
     const secretKey = process.env.RECAPTCHA_SECRET_KEY;
+    console.log('jwt secret', process.env.JWT_SECRET);
     console.log('secretKey', secretKey);
     console.log('captchaToken', captchaToken);
     const verifyUrl = `https://www.google.com/recaptcha/api/siteverify?secret=${secretKey}&response=${captchaToken}`;
@@ -118,7 +119,6 @@ export const login = async (req: Request, res: Response) => {
       return res.status(401).send('Invalid credentials');
     }
 
-    console.log('jwt secret', process.env.JWT_SECRET);
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET as string, {
       expiresIn: '1h',
     });

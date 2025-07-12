@@ -12,15 +12,25 @@ import Goals from '../../models/db/goals';
 import MonthlyInfo from '../../models/db/monthlyInfo';
 import YearlyInfo from '../../models/db/yearlyInfo';
 import { calculateMacros } from '../../helpers/macroCalculation';
+import axios from 'axios';
 
 export const signup = async (req: Request, res: Response) => {
   try {
     const {
       userSettings,
       password,
-    }: { userSettings: IUserSettings; password: string } = req.body;
-    if (!userSettings || !password) {
+      captchaToken,
+    }: { userSettings: IUserSettings; password: string; captchaToken: string } =
+      req.body;
+    if (!userSettings || !password || !captchaToken) {
       return res.status(400).json({ message: 'Invalid input' });
+    }
+
+    const secretKey = process.env.RECAPTCHA_SECRET_KEY;
+    const verifyUrl = `https://www.google.com/recaptcha/api/siteverify?secret=${secretKey}&response=${captchaToken}`;
+    const response = await axios.post(verifyUrl);
+    if (!response.data.success || response.data.score < 0.5) {
+      return res.status(400).json({ message: 'CAPTCHA verification failed' });
     }
 
     const existingUser = await User.findOne({

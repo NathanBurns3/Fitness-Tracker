@@ -18,12 +18,14 @@ import { IContactInformation } from 'src/app/user-settings/models/contact-inform
 import { IPhysicalMeasurements } from 'src/app/user-settings/models/physical-measurements';
 import { IActivityGoal } from 'src/app/user-settings/models/activity-goals';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ReCaptchaV3Service } from 'ng-recaptcha';
+import { environment } from 'src/environments/environment';
 
 @Component({
-    selector: 'app-signup',
-    templateUrl: './signup.component.html',
-    styleUrls: ['./signup.component.css'],
-    standalone: false
+  selector: 'app-signup',
+  templateUrl: './signup.component.html',
+  styleUrls: ['./signup.component.css'],
+  standalone: false,
 })
 export class SignupComponent {
   userSettings: IUserSettings;
@@ -33,11 +35,13 @@ export class SignupComponent {
   pageValid: boolean = true;
   userSettingsChanged: boolean = false;
   passwordSet: boolean = false;
+  captchaToken: string = '';
 
   constructor(
     private authService: AuthService,
     private router: Router,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private recaptchaV3Service: ReCaptchaV3Service
   ) {
     this.userSettings = {
       personalInformation: {
@@ -69,25 +73,35 @@ export class SignupComponent {
   }
 
   signup() {
-    this.authService.signup(this.userSettings, this.password).subscribe(
-      () => {
-        this.router.navigate(['/login']);
-      },
-      (error) => {
-        if (error.status === 409) {
-          this.snackBar.open(
-            'An account with that email already exists',
-            'Close',
-            {
-              duration: 3000,
+    this.recaptchaV3Service.execute('signup').subscribe({
+      next: (token: string) => {
+        this.captchaToken = token;
+        this.authService
+          .signup(this.userSettings, this.password, this.captchaToken)
+          .subscribe(
+            () => {
+              this.router.navigate(['/login']);
+            },
+            (error) => {
+              if (error.status === 409) {
+                this.snackBar.open(
+                  'An account with that email already exists',
+                  'Close',
+                  { duration: 3000 }
+                );
+                this.router.navigate(['/login']);
+              } else {
+                console.error('Signup error', error);
+              }
             }
           );
-          this.router.navigate(['/login']);
-        } else {
-          console.error('Signup error', error);
-        }
-      }
-    );
+      },
+      error: () => {
+        this.snackBar.open('CAPTCHA failed. Please try again.', 'Close', {
+          duration: 3000,
+        });
+      },
+    });
   }
 
   updatePassword(): void {
@@ -196,5 +210,9 @@ export class SignupComponent {
 
   redirectToLogin() {
     this.router.navigate(['/login']);
+  }
+
+  onCaptchaResolved(token: string | null) {
+    this.captchaToken = token ?? '';
   }
 }

@@ -15,10 +15,10 @@ export class AuthService {
     console.log('api url', this.apiUrl);
   }
 
-  signup(userSettings: IUserSettings, password: string) {
+  signup(userSettings: IUserSettings, password: string, captchaToken: string) {
     return this.http.post(
       this.apiUrl + '/signup',
-      { userSettings, password },
+      { userSettings, password, captchaToken },
       { headers: getHeaders(this.router) }
     );
   }

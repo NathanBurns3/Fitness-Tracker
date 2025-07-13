@@ -152,9 +152,12 @@ export const updatePassword = async (
         .json({ message: 'Invalid user ID.', success: false });
     }
 
+    console.log('newPassword', newPassword);
+
     const decodedPassword = Buffer.from(newPassword, 'base64').toString(
       'utf-8'
     );
+    console.log('decodedPassword', decodedPassword);
     const passwordSafe =
       decodedPassword.length >= 8 &&
       /[A-Z]/.test(decodedPassword) &&
@@ -168,6 +171,8 @@ export const updatePassword = async (
           'Password must be at least 8 characters and include uppercase, lowercase, number, and special character.',
       });
     }
+
+    console.log("password we're saving", newPassword);
 
     const updatedSettings = await User.findOneAndUpdate(
       { _id: userID },

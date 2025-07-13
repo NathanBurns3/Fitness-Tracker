@@ -26,6 +26,18 @@ const limiter = rateLimit({
 });
 app.use(limiter);
 
+const authLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 10,
+  message: { message: 'Too many requests, please try again later.' },
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+app.use('/auth/signup', authLimiter);
+app.use('/auth/login', authLimiter);
+app.use('/auth/logout', authLimiter);
+app.use('/auth/user', authLimiter);
+
 app.use(helmet());
 
 app.use(express.json({ limit: '10mb' }));

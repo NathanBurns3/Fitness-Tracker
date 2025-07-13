@@ -5,6 +5,16 @@ export interface AuthenticatedRequest extends Request {
   user?: { id: string };
 }
 
+const tokenBlacklist = new Set<string>();
+
+export const blacklistToken = (token: string) => {
+  tokenBlacklist.add(token);
+};
+
+export const isTokenBlacklisted = (token: string) => {
+  return tokenBlacklist.has(token);
+};
+
 export const verifyToken = (
   req: AuthenticatedRequest,
   res: Response,
@@ -13,6 +23,10 @@ export const verifyToken = (
   const token = req.headers['authorization']?.split(' ')[1];
   if (!token) {
     return res.status(403).send('A token is required for authentication');
+  }
+
+  if (isTokenBlacklisted(token)) {
+    return res.status(401).json({ message: 'Token is blacklisted' });
   }
 
   try {

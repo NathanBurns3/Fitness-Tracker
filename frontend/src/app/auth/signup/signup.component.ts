@@ -76,8 +76,9 @@ export class SignupComponent {
     this.recaptchaV3Service.execute('signup').subscribe({
       next: (token: string) => {
         this.captchaToken = token;
+        const encodedPassword = btoa(this.password);
         this.authService
-          .signup(this.userSettings, this.password, this.captchaToken)
+          .signup(this.userSettings, encodedPassword, this.captchaToken)
           .subscribe(
             () => {
               this.router.navigate(['/login']);

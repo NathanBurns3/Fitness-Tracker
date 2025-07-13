@@ -1,5 +1,8 @@
 import { Request, Response } from 'express';
-import { AuthenticatedRequest } from '../../helpers/authMiddleware';
+import {
+  AuthenticatedRequest,
+  blacklistToken,
+} from '../../helpers/authMiddleware';
 import { IUserSettings } from '../../models/api/settings/user-settings';
 import bcrypt from 'bcrypt';
 import User from '../../models/db/user';
@@ -63,7 +66,7 @@ export const signup = async (req: Request, res: Response) => {
       return res.status(409).json({ message: 'Email already exists' });
     }
 
-    const hashedPassword = await bcrypt.hash(password, 10);
+    const hashedPassword = await bcrypt.hash(decodedPassword, 10);
     const newUser = new User({
       password: hashedPassword,
       firstName: userSettings.personalInformation.firstName,
@@ -201,6 +204,10 @@ export const login = async (req: Request, res: Response) => {
 
 export const logout = async (req: Request, res: Response) => {
   try {
+    const token = req.headers['authorization']?.split(' ')[1];
+    if (token) {
+      blacklistToken(token);
+    }
     res.status(200).json({ message: 'Logged out successfully' });
   } catch (error: Error | any) {
     res.status(500).json({ message: error.message });

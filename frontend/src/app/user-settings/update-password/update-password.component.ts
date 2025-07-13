@@ -3,9 +3,9 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { UserSettingsService } from '../services/user-settings.service';
 
 @Component({
-    selector: 'update-password',
-    templateUrl: './update-password.component.html',
-    standalone: false
+  selector: 'update-password',
+  templateUrl: './update-password.component.html',
+  standalone: false,
 })
 export class UpdatePasswordComponent {
   constructor(
@@ -49,8 +49,9 @@ export class UpdatePasswordComponent {
       return;
     }
 
+    const encodedPassword = btoa(this.newPassword);
     this.userSettingsService
-      .updatePassword(this.newPassword)
+      .updatePassword(encodedPassword)
       .subscribe((success: boolean) => {
         if (success) {
           this.dialogRef.close();

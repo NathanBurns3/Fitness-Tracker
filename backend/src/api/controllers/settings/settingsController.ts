@@ -20,6 +20,7 @@ import { IActivityGoal } from '../../models/api/settings/activity-goals';
 import { calculateMacros } from '../../helpers/macroCalculation';
 import { AuthenticatedRequest } from '../../helpers/authMiddleware';
 import validator from 'validator';
+import bcrypt from 'bcrypt';
 
 export const getUserSettings = async (
   req: AuthenticatedRequest,
@@ -152,12 +153,9 @@ export const updatePassword = async (
         .json({ message: 'Invalid user ID.', success: false });
     }
 
-    console.log('newPassword', newPassword);
-
     const decodedPassword = Buffer.from(newPassword, 'base64').toString(
       'utf-8'
     );
-    console.log('decodedPassword', decodedPassword);
     const passwordSafe =
       decodedPassword.length >= 8 &&
       /[A-Z]/.test(decodedPassword) &&
@@ -172,12 +170,12 @@ export const updatePassword = async (
       });
     }
 
-    console.log("password we're saving", newPassword);
+    const hashedPassword = await bcrypt.hash(decodedPassword, 10);
 
     const updatedSettings = await User.findOneAndUpdate(
       { _id: userID },
       {
-        password: newPassword,
+        password: hashedPassword,
       },
       { new: true }
     );

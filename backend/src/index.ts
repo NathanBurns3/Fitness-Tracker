@@ -37,6 +37,9 @@ app.use('/auth/signup', authLimiter);
 app.use('/auth/login', authLimiter);
 app.use('/auth/logout', authLimiter);
 app.use('/auth/user', authLimiter);
+app.use('/auth/request-password-reset', authLimiter);
+app.use('/auth/reset-password', authLimiter);
+app.use('/auth/complete-registration', authLimiter);
 
 app.use(helmet());
 

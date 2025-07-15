@@ -15,6 +15,11 @@ export class LoginComponent {
   showCaptcha = false;
   captchaToken = '';
 
+  // Forgot password properties
+  showForgotPasswordForm = false;
+  resetEmail = '';
+  isRequestingReset = false;
+
   constructor(
     private authService: AuthService,
     private router: Router,
@@ -74,5 +79,49 @@ export class LoginComponent {
         }
       }
     );
+  }
+
+  // Forgot password methods
+  showForgotPassword() {
+    this.showForgotPasswordForm = true;
+    this.resetEmail = this.email; // Pre-fill with current email if entered
+  }
+
+  hideForgotPassword() {
+    this.showForgotPasswordForm = false;
+    this.resetEmail = '';
+  }
+
+  requestPasswordReset() {
+    if (!this.resetEmail) {
+      this.snackBar.open('Please enter your email address', 'Close', {
+        duration: 3000,
+      });
+      return;
+    }
+
+    this.isRequestingReset = true;
+    const encodedEmail = btoa(this.resetEmail);
+
+    this.authService.requestPasswordReset(encodedEmail).subscribe({
+      next: (response: any) => {
+        this.isRequestingReset = false;
+        this.snackBar.open(
+          'If the email exists, a reset link has been sent to your inbox.',
+          'Close',
+          { duration: 5000 }
+        );
+        this.hideForgotPassword();
+      },
+      error: (error) => {
+        this.isRequestingReset = false;
+        this.snackBar.open(
+          error.error?.message ||
+            'Failed to send reset email. Please try again.',
+          'Close',
+          { duration: 5000 }
+        );
+      },
+    });
   }
 }

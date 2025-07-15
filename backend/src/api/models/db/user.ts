@@ -25,6 +25,8 @@ interface IUserDB extends Document {
     count: number;
     lastAttempt: Date | null;
   };
+  passwordResetToken?: string;
+  passwordResetExpires?: Date;
 }
 
 const UserSchema: Schema = new Schema(
@@ -62,6 +64,8 @@ const UserSchema: Schema = new Schema(
       count: { type: Number, default: 0 },
       lastAttempt: { type: Date, default: null },
     },
+    passwordResetToken: { type: String },
+    passwordResetExpires: { type: Date },
   },
   {
     collection: 'User',

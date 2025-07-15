@@ -5,11 +5,23 @@ import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
 import { UserSettingsModule } from '../user-settings/user-settings.module';
 import { RECAPTCHA_V3_SITE_KEY, RecaptchaV3Module } from 'ng-recaptcha';
+import { VerifyEmailComponent } from './verify-email/verify-email.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
 @NgModule({
-  declarations: [LoginComponent, SignupComponent],
+  declarations: [
+    LoginComponent,
+    SignupComponent,
+    VerifyEmailComponent,
+    ResetPasswordComponent,
+  ],
   imports: [BrowserModule, FormsModule, UserSettingsModule, RecaptchaV3Module],
-  exports: [LoginComponent, SignupComponent],
+  exports: [
+    LoginComponent,
+    SignupComponent,
+    VerifyEmailComponent,
+    ResetPasswordComponent,
+  ],
   providers: [
     {
       provide: RECAPTCHA_V3_SITE_KEY,

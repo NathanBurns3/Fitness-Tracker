@@ -14,9 +14,15 @@ import FavoriteFoods from '../../models/db/favoriteFoods';
 import Goals from '../../models/db/goals';
 import MonthlyInfo from '../../models/db/monthlyInfo';
 import YearlyInfo from '../../models/db/yearlyInfo';
+import PendingEmail from '../../models/db/pendingEmail';
 import { calculateMacros } from '../../helpers/macroCalculation';
 import axios from 'axios';
 import validator from 'validator';
+import {
+  sendVerificationEmail,
+  sendPasswordResetEmail,
+  generateToken,
+} from '../../helpers/emailService';
 
 export const signup = async (req: Request, res: Response) => {
   try {
@@ -59,68 +65,39 @@ export const signup = async (req: Request, res: Response) => {
       return res.status(400).json({ message: 'CAPTCHA verification failed' });
     }
 
-    const existingUser = await User.findOne({
-      email: userSettings.contactInformation.email,
-    });
+    const email = userSettings.contactInformation.email;
+
+    const existingUser = await User.findOne({ email });
     if (existingUser) {
       return res.status(409).json({ message: 'Email already exists' });
     }
 
-    const hashedPassword = await bcrypt.hash(decodedPassword, 10);
-    const newUser = new User({
-      password: hashedPassword,
-      firstName: userSettings.personalInformation.firstName,
-      lastName: userSettings.personalInformation.lastName,
-      email: userSettings.contactInformation.email,
-      phone: userSettings.contactInformation.phoneNumber,
-      profileImage: userSettings.personalInformation.profilePicture,
-      gender: userSettings.personalInformation.gender,
-      age: userSettings.personalInformation.age,
-      height: userSettings.physicalMeasurements.height,
-      weight: userSettings.physicalMeasurements.weight,
-      activityLevel: userSettings.activityGoal.Activity,
-      weightGoal: userSettings.activityGoal.WeightGoal,
-      dietPlan: userSettings.dietPlan,
+    const existingPending = await PendingEmail.findOne({ email });
+    if (existingPending) {
+      return res.status(409).json({
+        message: 'Email already pending verification. Please check your inbox.',
+      });
+    }
+
+    const verificationToken = generateToken();
+    const verificationExpires = new Date(Date.now() + 24 * 60 * 60 * 1000);
+
+    const pendingEmail = new PendingEmail({
+      email,
+      verificationToken,
+      verificationExpires,
+      userSettings,
+      password,
     });
 
-    await newUser.save();
+    await pendingEmail.save();
 
-    const userId = newUser._id;
+    await sendVerificationEmail(email, verificationToken);
 
-    const macros = calculateMacros(
-      userSettings.personalInformation.age,
-      userSettings.personalInformation.gender,
-      userSettings.physicalMeasurements.height,
-      userSettings.physicalMeasurements.weight,
-      userSettings.activityGoal.Activity,
-      userSettings.activityGoal.WeightGoal,
-      userSettings.dietPlan
-    );
-
-    const blankCollections = [
-      new CustomMeals({ userID: userId, meals: [] }),
-      new DailyInfo({ userID: userId, exercisesCompleted: [], foods: [] }),
-      new Exercises({ userID: userId, items: [] }),
-      new FavoriteFoods({ userID: userId, foods: [] }),
-      new Goals({
-        userID: userId,
-        exerciseStreak: 0,
-        eatingGoalStreak: 0,
-        foodGoals: {
-          calories: macros.calories,
-          protein: macros.protein,
-          carbs: macros.carbs,
-          fat: macros.fat,
-          fiber: macros.fiber,
-        },
-      }),
-      new MonthlyInfo({ userID: userId, sets: [], goalsCompleted: [] }),
-      new YearlyInfo({ userID: userId, month: [] }),
-    ];
-
-    await Promise.all(blankCollections.map((collection) => collection.save()));
-
-    res.status(201).json({ message: 'User created successfully' });
+    res.status(201).json({
+      message:
+        'Registration initiated. Please check your email to verify your account.',
+    });
   } catch (error: Error | any) {
     res.status(500).json({ message: error.message });
   }
@@ -221,6 +198,202 @@ export const getUser = async (req: AuthenticatedRequest, res: Response) => {
       return res.status(404).json({ message: 'User not found' });
     }
     res.json(user);
+  } catch (error: Error | any) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+export const verifyEmail = async (req: Request, res: Response) => {
+  try {
+    const { token } = req.query;
+
+    if (!token) {
+      return res.status(400).json({ message: 'Token is required' });
+    }
+
+    const pendingEmail = await PendingEmail.findOne({
+      verificationToken: token,
+      verificationExpires: { $gt: Date.now() },
+    });
+
+    if (!pendingEmail) {
+      return res.status(400).json({ message: 'Invalid or expired token' });
+    }
+
+    res.status(200).json({
+      message:
+        'Email verified successfully. You can now complete your registration.',
+      email: pendingEmail.email,
+    });
+  } catch (error: Error | any) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+export const completeRegistration = async (req: Request, res: Response) => {
+  try {
+    const { token } = req.body;
+    if (!token) {
+      return res.status(400).json({ message: 'Token is required' });
+    }
+
+    const pendingEmail = await PendingEmail.findOne({
+      verificationToken: token,
+      verificationExpires: { $gt: Date.now() },
+    });
+    if (!pendingEmail) {
+      return res.status(400).json({ message: 'Invalid or expired token' });
+    }
+
+    const { email, userSettings, password } = pendingEmail;
+
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return res.status(409).json({ message: 'Email already exists' });
+    }
+
+    const decodedPassword = Buffer.from(password, 'base64').toString('utf-8');
+    const hashedPassword = await bcrypt.hash(decodedPassword, 10);
+
+    const newUser = new User({
+      password: hashedPassword,
+      firstName: userSettings.personalInformation.firstName,
+      lastName: userSettings.personalInformation.lastName,
+      email: email,
+      phone: userSettings.contactInformation.phoneNumber,
+      profileImage: userSettings.personalInformation.profilePicture,
+      gender: userSettings.personalInformation.gender,
+      age: userSettings.personalInformation.age,
+      height: userSettings.physicalMeasurements.height,
+      weight: userSettings.physicalMeasurements.weight,
+      activityLevel: userSettings.activityGoal.Activity,
+      weightGoal: userSettings.activityGoal.WeightGoal,
+      dietPlan: userSettings.dietPlan,
+    });
+
+    await newUser.save();
+
+    await PendingEmail.deleteOne({ _id: pendingEmail._id });
+
+    const userId = newUser._id;
+
+    const macros = calculateMacros(
+      userSettings.personalInformation.age,
+      userSettings.personalInformation.gender,
+      userSettings.physicalMeasurements.height,
+      userSettings.physicalMeasurements.weight,
+      userSettings.activityGoal.Activity,
+      userSettings.activityGoal.WeightGoal,
+      userSettings.dietPlan
+    );
+
+    const blankCollections = [
+      new CustomMeals({ userID: userId, meals: [] }),
+      new DailyInfo({ userID: userId, exercisesCompleted: [], foods: [] }),
+      new Exercises({ userID: userId, items: [] }),
+      new FavoriteFoods({ userID: userId, foods: [] }),
+      new Goals({
+        userID: userId,
+        exerciseStreak: 0,
+        eatingGoalStreak: 0,
+        foodGoals: {
+          calories: macros.calories,
+          protein: macros.protein,
+          carbs: macros.carbs,
+          fat: macros.fat,
+          fiber: macros.fiber,
+        },
+      }),
+      new MonthlyInfo({ userID: userId, sets: [], goalsCompleted: [] }),
+      new YearlyInfo({ userID: userId, month: [] }),
+    ];
+
+    await Promise.all(blankCollections.map((collection) => collection.save()));
+
+    res.status(201).json({ message: 'User created successfully' });
+  } catch (error: Error | any) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+export const requestPasswordReset = async (req: Request, res: Response) => {
+  try {
+    const { email } = req.body;
+
+    if (!email) {
+      return res.status(400).json({ message: 'Email is required' });
+    }
+
+    const decodedEmail = Buffer.from(email, 'base64').toString('utf-8');
+    const user = await User.findOne({ email: decodedEmail });
+
+    if (!user) {
+      return res
+        .status(200)
+        .json({ message: 'If the email exists, a reset link has been sent.' });
+    }
+
+    const resetToken = generateToken();
+    const resetExpires = new Date(Date.now() + 60 * 60 * 1000);
+
+    user.passwordResetToken = resetToken;
+    user.passwordResetExpires = resetExpires;
+    await user.save();
+
+    await sendPasswordResetEmail(decodedEmail, resetToken);
+
+    res
+      .status(200)
+      .json({ message: 'If the email exists, a reset link has been sent.' });
+  } catch (error: Error | any) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+export const resetPassword = async (req: Request, res: Response) => {
+  try {
+    const { token, newPassword } = req.body;
+
+    if (!token || !newPassword) {
+      return res
+        .status(400)
+        .json({ message: 'Token and new password are required' });
+    }
+
+    const user = await User.findOne({
+      passwordResetToken: token,
+      passwordResetExpires: { $gt: Date.now() },
+    });
+
+    if (!user) {
+      return res.status(400).json({ message: 'Invalid or expired token' });
+    }
+
+    const decodedPassword = Buffer.from(newPassword, 'base64').toString(
+      'utf-8'
+    );
+
+    const passwordSafe =
+      decodedPassword.length >= 8 &&
+      /[A-Z]/.test(decodedPassword) &&
+      /[a-z]/.test(decodedPassword) &&
+      /\d/.test(decodedPassword) &&
+      /[!@#$%^&*(),.?":{}|<>]/.test(decodedPassword);
+
+    if (!passwordSafe) {
+      return res.status(400).json({
+        message:
+          'Password must be at least 8 characters and include uppercase, lowercase, number, and special character.',
+      });
+    }
+
+    const hashedPassword = await bcrypt.hash(decodedPassword, 10);
+    user.password = hashedPassword;
+    user.passwordResetToken = undefined;
+    user.passwordResetExpires = undefined;
+    await user.save();
+
+    res.status(200).json({ message: 'Password reset successfully' });
   } catch (error: Error | any) {
     res.status(500).json({ message: error.message });
   }

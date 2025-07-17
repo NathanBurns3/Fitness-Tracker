@@ -14,8 +14,6 @@ export class LoginComponent {
   password = '';
   showCaptcha = false;
   captchaToken = '';
-
-  // Forgot password properties
   showForgotPasswordForm = false;
   resetEmail = '';
   isRequestingReset = false;
@@ -81,10 +79,9 @@ export class LoginComponent {
     );
   }
 
-  // Forgot password methods
   showForgotPassword() {
     this.showForgotPasswordForm = true;
-    this.resetEmail = this.email; // Pre-fill with current email if entered
+    this.resetEmail = this.email;
   }
 
   hideForgotPassword() {

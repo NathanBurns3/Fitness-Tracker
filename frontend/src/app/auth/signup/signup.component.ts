@@ -81,6 +81,11 @@ export class SignupComponent {
           .signup(this.userSettings, encodedPassword, this.captchaToken)
           .subscribe(
             () => {
+              this.snackBar.open(
+                'Verification email sent! Please check your inbox to verify your account.',
+                'Close',
+                { duration: 5000 }
+              );
               this.router.navigate(['/login']);
             },
             (error) => {
@@ -90,7 +95,6 @@ export class SignupComponent {
                   'Close',
                   { duration: 3000 }
                 );
-                this.router.navigate(['/login']);
               } else if (error.error && error.error.message) {
                 this.snackBar.open(error.error.message, 'Close', {
                   duration: 3000,

@@ -8,8 +8,7 @@ apiInstance.setApiKey(
 );
 
 export const sendVerificationEmail = async (email: string, token: string) => {
-  //Nathan: fix this to: ${process.env.FRONTEND_URL}
-  const verificationUrl = `http://localhost:4200/verify-email?token=${token}`;
+  const verificationUrl = `${process.env.FRONTEND_URL}/verify-email?token=${token}`;
 
   const sendSmtpEmail = new SibApiV3Sdk.SendSmtpEmail();
   sendSmtpEmail.subject = 'Verify Your Email - ActiveLife Tracker';
@@ -39,8 +38,7 @@ export const sendVerificationEmail = async (email: string, token: string) => {
 };
 
 export const sendPasswordResetEmail = async (email: string, token: string) => {
-  //Nathan: fix this to: ${process.env.FRONTEND_URL}
-  const resetUrl = `http://localhost:4200/reset-password?token=${token}`;
+  const resetUrl = `${process.env.FRONTEND_URL}/reset-password?token=${token}`;
 
   const sendSmtpEmail = new SibApiV3Sdk.SendSmtpEmail();
   sendSmtpEmail.subject = 'Password Reset - ActiveLife Tracker';

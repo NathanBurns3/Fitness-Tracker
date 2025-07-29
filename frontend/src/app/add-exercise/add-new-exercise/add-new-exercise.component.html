@@ -22,9 +22,11 @@
       <option [value]="'Choose a Muscle Group'" selected disabled>
         Choose a Muscle Group
       </option>
-      <option *ngFor="let muscle of muscleGroups" [value]="muscle">
-        {{ muscle }}
-      </option>
+      @for (muscle of muscleGroups; track muscle) {
+        <option [value]="muscle">
+          {{ muscle }}
+        </option>
+      }
     </select>
 
     <h1 class="text-lg font-bold text-blue-800 mb-2">Exercise:</h1>

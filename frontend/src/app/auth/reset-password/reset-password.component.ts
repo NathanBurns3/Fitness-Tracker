@@ -13,8 +13,6 @@ export class ResetPasswordComponent implements OnInit {
   newPassword = '';
   confirmPassword = '';
   isLoading = false;
-  showPassword = false;
-  showConfirmPassword = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -83,14 +81,6 @@ export class ResetPasswordComponent implements OnInit {
       /\d/.test(password) &&
       /[!@#$%^&*(),.?":{}|<>]/.test(password)
     );
-  }
-
-  togglePasswordVisibility() {
-    this.showPassword = !this.showPassword;
-  }
-
-  toggleConfirmPasswordVisibility() {
-    this.showConfirmPassword = !this.showConfirmPassword;
   }
 
   goToLogin() {

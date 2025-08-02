@@ -9,10 +9,10 @@ import {
 import { IPhysicalMeasurements } from '../models/physical-measurements';
 
 @Component({
-    selector: 'physical-measurements',
-    templateUrl: './physical-measurements.component.html',
-    styleUrls: ['./physical-measurements.component.css'],
-    standalone: false
+  selector: 'physical-measurements',
+  templateUrl: './physical-measurements.component.html',
+  styleUrl: './physical-measurements.component.css',
+  standalone: false,
 })
 export class PhysicalMeasurementsComponent implements OnInit, OnChanges {
   @Input() originalPhysicalMeasurements!: IPhysicalMeasurements;

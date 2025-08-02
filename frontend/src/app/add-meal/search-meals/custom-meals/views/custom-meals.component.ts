@@ -7,10 +7,10 @@ import { CustomMealDetailsComponent } from 'src/app/add-meal/custom-meal-details
 import { ICustomMeal } from 'src/app/add-meal/models/custom-meal';
 
 @Component({
-    selector: 'custom-meals',
-    templateUrl: './custom-meals.component.html',
-    styleUrls: ['./custom-meals.component.css'],
-    standalone: false
+  selector: 'custom-meals',
+  templateUrl: './custom-meals.component.html',
+  styleUrl: './custom-meals.component.css',
+  standalone: false,
 })
 export class CustomMealsComponent {
   @Input() customMeals: ICustomMeal[] = [];
@@ -18,7 +18,7 @@ export class CustomMealsComponent {
 
   constructor(
     private customMealService: CustomMealService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
   ) {}
 
   loadCustomMeals(): void {
@@ -80,19 +80,21 @@ export class CustomMealsComponent {
         calories: parseFloat(
           meal.food
             .reduce((acc, f) => acc + f.nutritions.calories, 0)
-            .toFixed(2)
+            .toFixed(2),
         ),
         protein: parseFloat(
-          meal.food.reduce((acc, f) => acc + f.nutritions.protein, 0).toFixed(2)
+          meal.food
+            .reduce((acc, f) => acc + f.nutritions.protein, 0)
+            .toFixed(2),
         ),
         carbs: parseFloat(
-          meal.food.reduce((acc, f) => acc + f.nutritions.carbs, 0).toFixed(2)
+          meal.food.reduce((acc, f) => acc + f.nutritions.carbs, 0).toFixed(2),
         ),
         fat: parseFloat(
-          meal.food.reduce((acc, f) => acc + f.nutritions.fat, 0).toFixed(2)
+          meal.food.reduce((acc, f) => acc + f.nutritions.fat, 0).toFixed(2),
         ),
         fiber: parseFloat(
-          meal.food.reduce((acc, f) => acc + f.nutritions.fiber, 0).toFixed(2)
+          meal.food.reduce((acc, f) => acc + f.nutritions.fiber, 0).toFixed(2),
         ),
       },
     };

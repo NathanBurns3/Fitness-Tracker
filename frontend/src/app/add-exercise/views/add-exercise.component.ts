@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 
 @Component({
-    selector: 'add-exercise',
-    templateUrl: './add-exercise.component.html',
-    styleUrls: ['./add-exercise.component.css'],
-    standalone: false
+  selector: 'add-exercise',
+  templateUrl: './add-exercise.component.html',
+  styleUrl: './add-exercise.component.css',
+  standalone: false,
 })
 export class AddExerciseComponent {
   selectedMuscleGroup: string = '';

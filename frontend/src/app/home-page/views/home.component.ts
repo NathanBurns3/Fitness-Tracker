@@ -16,11 +16,11 @@ import { AuthService } from 'src/app/auth/services/auth.service';
 import { Router } from '@angular/router';
 
 @Component({
-    selector: 'home',
-    templateUrl: './home.component.html',
-    styleUrls: ['./home.component.css'],
-    providers: [ProfileInfoService],
-    standalone: false
+  selector: 'home',
+  templateUrl: './home.component.html',
+  styleUrl: './home.component.css',
+  providers: [ProfileInfoService],
+  standalone: false,
 })
 export class HomeComponent implements OnInit {
   profileInfo!: IProfileInfo;
@@ -59,7 +59,7 @@ export class HomeComponent implements OnInit {
     private yearlyExercisesService: YearlyExercisesService,
     private yearlyEatingGoalsService: YearlyEatingGoalsService,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
   ) {}
 
   ngOnInit(): void {
@@ -100,7 +100,7 @@ export class HomeComponent implements OnInit {
         this.dailyEatingInfo = eatingInfo;
         this.dailyExerciseInfo = exerciseInfo;
         this.checkAllApiCallsCompleted();
-      }
+      },
     );
   }
 
@@ -160,7 +160,7 @@ export class HomeComponent implements OnInit {
       },
       (error) => {
         console.error('Logout error', error);
-      }
+      },
     );
   }
 }

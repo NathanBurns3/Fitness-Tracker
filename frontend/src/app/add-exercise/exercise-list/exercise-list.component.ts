@@ -6,10 +6,10 @@ import { DailyExercisesService } from '../services/daily-exercises.service';
 import { switchMap } from 'rxjs';
 
 @Component({
-    selector: 'exercise-list',
-    templateUrl: './exercise-list.component.html',
-    styleUrls: ['./exercise-list.component.css'],
-    standalone: false
+  selector: 'exercise-list',
+  templateUrl: './exercise-list.component.html',
+  styleUrl: './exercise-list.component.css',
+  standalone: false,
 })
 export class ExerciseListComponent implements OnInit {
   exercises: IExercise[] = [];
@@ -17,7 +17,7 @@ export class ExerciseListComponent implements OnInit {
 
   constructor(
     private dailyExerciseService: DailyExercisesService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
   ) {}
 
   ngOnInit(): void {

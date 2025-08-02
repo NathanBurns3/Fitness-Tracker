@@ -14,10 +14,10 @@ import { MonthlyExerciseInfoService } from '../services/monthly-exercise-info.se
 import { Chart, ChartConfiguration } from 'chart.js';
 
 @Component({
-    selector: 'MonthlySummaryComponent',
-    templateUrl: './monthly-summary.component.html',
-    styleUrls: ['./monthly-summary.component.css'],
-    standalone: false
+  selector: 'MonthlySummaryComponent',
+  templateUrl: './monthly-summary.component.html',
+  styleUrl: './monthly-summary.component.css',
+  standalone: false,
 })
 export class MonthlySummaryComponent implements OnInit, OnDestroy, OnChanges {
   @Input() daysOfMonth!: IMonthlyBreakdownInfo[];
@@ -119,7 +119,7 @@ export class MonthlySummaryComponent implements OnInit, OnDestroy, OnChanges {
     for (let i = 0; i < exerciseInfo.length; i++) {
       if (exerciseInfo[i] !== 0) {
         const percentage = parseFloat(
-          ((exerciseInfo[i] / totalSets) * 100).toFixed(1)
+          ((exerciseInfo[i] / totalSets) * 100).toFixed(1),
         );
         percentages.push(percentage);
         totalPercentage += percentage;

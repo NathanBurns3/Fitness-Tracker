@@ -8,10 +8,10 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { convertUnit } from 'src/app/helpers/unit-converter';
 
 @Component({
-    selector: 'custom-meal-details',
-    templateUrl: './custom-meal-details.component.html',
-    styleUrls: ['./custom-meal-details.component.css'],
-    standalone: false
+  selector: 'custom-meal-details',
+  templateUrl: './custom-meal-details.component.html',
+  styleUrl: './custom-meal-details.component.css',
+  standalone: false,
 })
 export class CustomMealDetailsComponent {
   @Output() foodUpdate = new EventEmitter<void>();
@@ -77,7 +77,7 @@ export class CustomMealDetailsComponent {
     public data: { meal: ICustomMeal; title: string; action: string },
     private mealLookupService: MealLookupService,
     private customMealService: CustomMealService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
   ) {
     this.title = data.title;
     this.customFood = data.meal;
@@ -100,19 +100,19 @@ export class CustomMealDetailsComponent {
     };
     food.forEach((f) => {
       totalNutritions.calories = Number(
-        (totalNutritions.calories + (f.nutritions.calories ?? 0)).toFixed(2)
+        (totalNutritions.calories + (f.nutritions.calories ?? 0)).toFixed(2),
       );
       totalNutritions.protein = Number(
-        (totalNutritions.protein + (f.nutritions.protein ?? 0)).toFixed(2)
+        (totalNutritions.protein + (f.nutritions.protein ?? 0)).toFixed(2),
       );
       totalNutritions.carbs = Number(
-        (totalNutritions.carbs + (f.nutritions.carbs ?? 0)).toFixed(2)
+        (totalNutritions.carbs + (f.nutritions.carbs ?? 0)).toFixed(2),
       );
       totalNutritions.fat = Number(
-        (totalNutritions.fat + (f.nutritions.fat ?? 0)).toFixed(2)
+        (totalNutritions.fat + (f.nutritions.fat ?? 0)).toFixed(2),
       );
       totalNutritions.fiber = Number(
-        (totalNutritions.fiber + (f.nutritions.fiber ?? 0)).toFixed(2)
+        (totalNutritions.fiber + (f.nutritions.fiber ?? 0)).toFixed(2),
       );
     });
     return totalNutritions;
@@ -181,31 +181,31 @@ export class CustomMealDetailsComponent {
           (
             (this.foodChosen.nutritions.calories ?? 0) *
             (Number(amount) / this.foodChosen.servingSize)
-          ).toFixed(2)
+          ).toFixed(2),
         ),
         protein: Number(
           (
             (this.foodChosen.nutritions.protein ?? 0) *
             (Number(amount) / this.foodChosen.servingSize)
-          ).toFixed(2)
+          ).toFixed(2),
         ),
         carbs: Number(
           (
             (this.foodChosen.nutritions.carbs ?? 0) *
             (Number(amount) / this.foodChosen.servingSize)
-          ).toFixed(2)
+          ).toFixed(2),
         ),
         fat: Number(
           (
             (this.foodChosen.nutritions.fat ?? 0) *
             (Number(amount) / this.foodChosen.servingSize)
-          ).toFixed(2)
+          ).toFixed(2),
         ),
         fiber: Number(
           (
             (this.foodChosen.nutritions.fiber ?? 0) *
             (Number(amount) / this.foodChosen.servingSize)
-          ).toFixed(2)
+          ).toFixed(2),
         ),
       },
     };
@@ -286,13 +286,13 @@ export class CustomMealDetailsComponent {
       return convertUnit(
         food.servingSize,
         food.servingUnit,
-        this.clonedMeal.servingUnit
+        this.clonedMeal.servingUnit,
       );
     } else {
       return convertUnit(
         this.previousServingSize,
         this.previousServingUnit,
-        this.clonedMeal.servingUnit
+        this.clonedMeal.servingUnit,
       );
     }
   }

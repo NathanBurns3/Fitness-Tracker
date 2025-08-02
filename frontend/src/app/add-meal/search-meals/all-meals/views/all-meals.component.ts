@@ -14,10 +14,10 @@ import { SearchMealsComponent } from '../../views/search-meals.component';
 import { FavoriteMealsService } from '../../favorite-meals/services/favorite-meals.service';
 
 @Component({
-    selector: 'all-meals',
-    templateUrl: './all-meals.component.html',
-    styleUrls: ['./all-meals.component.css'],
-    standalone: false
+  selector: 'all-meals',
+  templateUrl: './all-meals.component.html',
+  styleUrl: './all-meals.component.css',
+  standalone: false,
 })
 export class AllMealsComponent {
   @Output() favoriteMealsChange = new EventEmitter<IFood[]>();
@@ -30,7 +30,7 @@ export class AllMealsComponent {
   constructor(
     private mealLookupService: MealLookupService,
     private favoriteMealsService: FavoriteMealsService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
   ) {}
 
   Lookup(meal: string) {

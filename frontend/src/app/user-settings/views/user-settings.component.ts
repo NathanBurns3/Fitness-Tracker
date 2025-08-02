@@ -10,10 +10,10 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { DietEnum } from '../models/diet-enum';
 
 @Component({
-    selector: 'user-settings',
-    templateUrl: './user-settings.component.html',
-    styleUrls: ['./user-settings.component.css'],
-    standalone: false
+  selector: 'user-settings',
+  templateUrl: './user-settings.component.html',
+  styleUrl: './user-settings.component.css',
+  standalone: false,
 })
 export class UserSettingsComponent implements OnInit {
   userSettings!: IUserSettings;
@@ -30,7 +30,7 @@ export class UserSettingsComponent implements OnInit {
 
   constructor(
     private userSettingsService: UserSettingsService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
   ) {}
 
   ngOnInit(): void {
@@ -42,7 +42,7 @@ export class UserSettingsComponent implements OnInit {
   }
 
   updateContactInformation(
-    updatedContactInformation: IContactInformation
+    updatedContactInformation: IContactInformation,
   ): void {
     this.pageValid =
       this.isInformationValid(updatedContactInformation) &&
@@ -53,7 +53,7 @@ export class UserSettingsComponent implements OnInit {
   }
 
   updatePersonalInformation(
-    updatedPersonalInformation: IPersonalInformation
+    updatedPersonalInformation: IPersonalInformation,
   ): void {
     this.pageValid = this.isInformationValid(updatedPersonalInformation);
     if (
@@ -68,7 +68,7 @@ export class UserSettingsComponent implements OnInit {
   }
 
   updatePhysicalMeasurements(
-    updatedPhysicalMeasurements: IPhysicalMeasurements
+    updatedPhysicalMeasurements: IPhysicalMeasurements,
   ): void {
     this.pageValid = this.isInformationValid(updatedPhysicalMeasurements);
     if (

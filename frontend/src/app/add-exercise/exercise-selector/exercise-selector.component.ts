@@ -10,10 +10,10 @@ import { FormControl, Validators } from '@angular/forms';
 import { map } from 'rxjs';
 
 @Component({
-    selector: 'exercise-selector',
-    templateUrl: './exercise-selector.component.html',
-    styleUrls: ['./exercise-selector.component.css'],
-    standalone: false
+  selector: 'exercise-selector',
+  templateUrl: './exercise-selector.component.html',
+  styleUrl: './exercise-selector.component.css',
+  standalone: false,
 })
 export class ExerciseSelectorComponent {
   @Output() muscleGroupChange = new EventEmitter<string>();
@@ -27,19 +27,19 @@ export class ExerciseSelectorComponent {
   constructor(
     private exercisesService: ExercisesService,
     private dailyExercisesService: DailyExercisesService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
   ) {}
 
   onMuscleGroupChange() {
     if (this.selectedMuscleGroup !== 'Choose a Muscle Group') {
       this.exercisesService
         .getExercisesById(
-          muscleGroupsEnum[this.selectedMuscleGroup as muscleGroupsEnum]
+          muscleGroupsEnum[this.selectedMuscleGroup as muscleGroupsEnum],
         )
         .pipe(
           map((exercises: IExercise[]) =>
-            exercises.map((exercise) => exercise.exerciseName)
-          )
+            exercises.map((exercise) => exercise.exerciseName),
+          ),
         )
         .subscribe((exerciseNames: string[]) => {
           this.exercises = exerciseNames;

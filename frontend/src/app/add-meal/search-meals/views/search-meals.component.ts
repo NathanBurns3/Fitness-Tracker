@@ -6,10 +6,10 @@ import { CustomMealService } from '../custom-meals/services/custom-meals.service
 import { ICustomMeal } from '../../models/custom-meal';
 
 @Component({
-    selector: 'search-meals',
-    templateUrl: './search-meals.component.html',
-    styleUrls: ['./search-meals.component.css'],
-    standalone: false
+  selector: 'search-meals',
+  templateUrl: './search-meals.component.html',
+  styleUrl: './search-meals.component.css',
+  standalone: false,
 })
 export class SearchMealsComponent implements OnInit {
   selectedSearch: string = 'All';
@@ -19,7 +19,7 @@ export class SearchMealsComponent implements OnInit {
 
   constructor(
     private favoriteMealsService: FavoriteMealsService,
-    private customMealService: CustomMealService
+    private customMealService: CustomMealService,
   ) {}
 
   ngOnInit(): void {

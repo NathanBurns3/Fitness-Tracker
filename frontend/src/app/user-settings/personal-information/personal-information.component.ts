@@ -10,10 +10,10 @@ import { IPersonalInformation } from '../models/personal-information';
 import { GenderEnum } from '../models/gender-enum';
 
 @Component({
-    selector: 'personal-information',
-    templateUrl: './personal-information.component.html',
-    styleUrls: ['./personal-information.component.css'],
-    standalone: false
+  selector: 'personal-information',
+  templateUrl: './personal-information.component.html',
+  styleUrl: './personal-information.component.css',
+  standalone: false,
 })
 export class PersonalInformationComponent implements OnInit, OnChanges {
   @Input() originalPersonalInformation!: IPersonalInformation;
@@ -60,7 +60,7 @@ export class PersonalInformationComponent implements OnInit, OnChanges {
             0,
             0,
             size,
-            size
+            size,
           );
 
           const resizedImage = canvas.toDataURL('image/png');

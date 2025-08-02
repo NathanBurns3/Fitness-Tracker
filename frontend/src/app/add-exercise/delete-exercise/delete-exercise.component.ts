@@ -6,10 +6,10 @@ import { map } from 'rxjs';
 import { IExercise } from '../models/exercise';
 
 @Component({
-    selector: 'delete-exercise',
-    templateUrl: './delete-exercise.component.html',
-    styleUrls: ['./delete-exercise.component.css'],
-    standalone: false
+  selector: 'delete-exercise',
+  templateUrl: './delete-exercise.component.html',
+  styleUrl: './delete-exercise.component.css',
+  standalone: false,
 })
 export class DeleteExerciseComponent {
   @Output() exerciseDeleted = new EventEmitter<void>();
@@ -21,7 +21,7 @@ export class DeleteExerciseComponent {
 
   constructor(
     public dialogRef: MatDialogRef<DeleteExerciseComponent>,
-    private exercisesService: ExercisesService
+    private exercisesService: ExercisesService,
   ) {}
 
   closeDeleteExercise() {
@@ -33,7 +33,7 @@ export class DeleteExerciseComponent {
     if (this.muscleGroup !== 'Choose a Muscle Group') {
       this.exercisesService
         .getExercisesById(
-          muscleGroupsEnum[this.muscleGroup as muscleGroupsEnum]
+          muscleGroupsEnum[this.muscleGroup as muscleGroupsEnum],
         )
         .pipe(map((exercises: IExercise[]) => exercises))
         .subscribe((exercises: IExercise[]) => {
@@ -49,7 +49,7 @@ export class DeleteExerciseComponent {
         .deleteExercise(
           this.muscleGroup as muscleGroupsEnum,
           this.exercise.exerciseID,
-          this.exercise.exerciseName
+          this.exercise.exerciseName,
         )
         .subscribe((success: boolean) => {
           if (success) {

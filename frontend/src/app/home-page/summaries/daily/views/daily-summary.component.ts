@@ -15,10 +15,10 @@ import { Chart, ChartConfiguration } from 'chart.js';
 import { forkJoin } from 'rxjs';
 
 @Component({
-    selector: 'DailySummaryComponent',
-    templateUrl: './daily-summary.component.html',
-    styleUrls: ['./daily-summary.component.css'],
-    standalone: false
+  selector: 'DailySummaryComponent',
+  templateUrl: './daily-summary.component.html',
+  styleUrl: './daily-summary.component.css',
+  standalone: false,
 })
 export class DailySummaryComponent implements OnInit, OnDestroy, OnChanges {
   @Input() dailyEatingInfo!: IDailyEatingInfo;
@@ -128,7 +128,7 @@ export class DailySummaryComponent implements OnInit, OnDestroy, OnChanges {
     for (let i = 0; i < exerciseInfo.length; i++) {
       if (exerciseInfo[i] !== 0) {
         const percentage = parseFloat(
-          ((exerciseInfo[i] / totalSets) * 100).toFixed(1)
+          ((exerciseInfo[i] / totalSets) * 100).toFixed(1),
         );
         percentages.push(percentage);
         totalPercentage += percentage;

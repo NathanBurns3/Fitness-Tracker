@@ -9,10 +9,10 @@ import {
 import { DietEnum } from '../models/diet-enum';
 
 @Component({
-    selector: 'diet-selection',
-    templateUrl: './diet-selection.component.html',
-    styleUrls: ['./diet-selection.component.css'],
-    standalone: false
+  selector: 'diet-selection',
+  templateUrl: './diet-selection.component.html',
+  styleUrl: './diet-selection.component.css',
+  standalone: false,
 })
 export class DietSelectionComponent implements OnInit, OnChanges {
   @Input() originalDietSelection!: string;

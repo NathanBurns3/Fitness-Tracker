@@ -11,10 +11,10 @@ import { WeightGoalEnum } from '../models/weight-goal-enum';
 import { IActivityGoal } from '../models/activity-goals';
 
 @Component({
-    selector: 'activity-goal',
-    templateUrl: './activity-goal.component.html',
-    styleUrls: ['./activity-goal.component.css'],
-    standalone: false
+  selector: 'activity-goal',
+  templateUrl: './activity-goal.component.html',
+  styleUrl: './activity-goal.component.css',
+  standalone: false,
 })
 export class ActivityGoalComponent implements OnInit, OnChanges {
   @Input() originalActivityGoal!: IActivityGoal;

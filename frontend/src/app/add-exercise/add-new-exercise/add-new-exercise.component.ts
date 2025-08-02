@@ -4,10 +4,10 @@ import { ExercisesService } from '../services/exercises.service';
 import { muscleGroupsEnum } from '../models/muscle-groups-enum';
 
 @Component({
-    selector: 'add-new-exercise',
-    templateUrl: './add-new-exercise.component.html',
-    styleUrls: ['./add-new-exercise.component.css'],
-    standalone: false
+  selector: 'add-new-exercise',
+  templateUrl: './add-new-exercise.component.html',
+  styleUrl: './add-new-exercise.component.css',
+  standalone: false,
 })
 export class AddNewExerciseComponent {
   @Output() exerciseAdded = new EventEmitter<void>();
@@ -18,7 +18,7 @@ export class AddNewExerciseComponent {
 
   constructor(
     public dialogRef: MatDialogRef<AddNewExerciseComponent>,
-    private exercisesService: ExercisesService
+    private exercisesService: ExercisesService,
   ) {}
 
   closeAddNewExercise() {

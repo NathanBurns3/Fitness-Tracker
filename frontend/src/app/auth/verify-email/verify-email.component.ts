@@ -6,7 +6,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   selector: 'app-verify-email',
   templateUrl: './verify-email.component.html',
-  styleUrls: ['./verify-email.component.css'],
+  styleUrl: './verify-email.component.css',
   standalone: false,
 })
 export class VerifyEmailComponent implements OnInit {
@@ -20,7 +20,7 @@ export class VerifyEmailComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private authService: AuthService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
   ) {}
 
   ngOnInit() {
@@ -62,7 +62,7 @@ export class VerifyEmailComponent implements OnInit {
           this.snackBar.open(
             'Registration complete! You can now log in.',
             'Close',
-            { duration: 3000 }
+            { duration: 3000 },
           );
           this.router.navigate(['/login']);
         },

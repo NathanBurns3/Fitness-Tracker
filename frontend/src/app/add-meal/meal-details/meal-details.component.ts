@@ -14,10 +14,10 @@ import { ICustomMeal } from '../models/custom-meal';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
-    selector: 'meal-details',
-    templateUrl: './meal-details.component.html',
-    styleUrls: ['./meal-details.component.css'],
-    standalone: false
+  selector: 'meal-details',
+  templateUrl: './meal-details.component.html',
+  styleUrl: './meal-details.component.css',
+  standalone: false,
 })
 export class MealDetailsComponent {
   @Output() foodUpdate = new EventEmitter<void>();
@@ -50,7 +50,7 @@ export class MealDetailsComponent {
     private favoriteMealsService: FavoriteMealsService,
     private customMealService: CustomMealService,
     private dailyFoodService: DailyFoodService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
   ) {
     this.food = this.setValues(this.data.food);
     this.clonedFood = JSON.parse(JSON.stringify(this.food));
@@ -117,19 +117,21 @@ export class MealDetailsComponent {
         calories: parseFloat(
           meal.food
             .reduce((acc, f) => acc + f.nutritions.calories, 0)
-            .toFixed(2)
+            .toFixed(2),
         ),
         protein: parseFloat(
-          meal.food.reduce((acc, f) => acc + f.nutritions.protein, 0).toFixed(2)
+          meal.food
+            .reduce((acc, f) => acc + f.nutritions.protein, 0)
+            .toFixed(2),
         ),
         carbs: parseFloat(
-          meal.food.reduce((acc, f) => acc + f.nutritions.carbs, 0).toFixed(2)
+          meal.food.reduce((acc, f) => acc + f.nutritions.carbs, 0).toFixed(2),
         ),
         fat: parseFloat(
-          meal.food.reduce((acc, f) => acc + f.nutritions.fat, 0).toFixed(2)
+          meal.food.reduce((acc, f) => acc + f.nutritions.fat, 0).toFixed(2),
         ),
         fiber: parseFloat(
-          meal.food.reduce((acc, f) => acc + f.nutritions.fiber, 0).toFixed(2)
+          meal.food.reduce((acc, f) => acc + f.nutritions.fiber, 0).toFixed(2),
         ),
       },
     };
@@ -171,7 +173,7 @@ export class MealDetailsComponent {
       .subscribe((customMeal) => {
         if (customMeal) {
           customMeal.servingSize = this.calculateTotalNutritions(
-            customMeal.food
+            customMeal.food,
           );
           const dialogRef = this.dialog.open(CustomMealDetailsComponent, {
             data: { meal: customMeal, title: 'Edit Custom Meal' },

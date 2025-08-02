@@ -5,10 +5,10 @@ import { MatDialog } from '@angular/material/dialog';
 import { MealDetailsComponent } from 'src/app/add-meal/meal-details/meal-details.component';
 
 @Component({
-    selector: 'favorite-meals',
-    templateUrl: './favorite-meals.component.html',
-    styleUrls: ['./favorite-meals.component.css'],
-    standalone: false
+  selector: 'favorite-meals',
+  templateUrl: './favorite-meals.component.html',
+  styleUrl: './favorite-meals.component.css',
+  standalone: false,
 })
 export class FavoriteMealsComponent {
   @Input() favoriteMeals: IFood[] = [];
@@ -18,7 +18,7 @@ export class FavoriteMealsComponent {
 
   constructor(
     private favoriteMealsService: FavoriteMealsService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
   ) {}
 
   loadFavoriteMeals(): void {

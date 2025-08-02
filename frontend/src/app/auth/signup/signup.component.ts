@@ -24,7 +24,7 @@ import { environment } from 'src/environments/environment';
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
-  styleUrls: ['./signup.component.css'],
+  styleUrl: './signup.component.css',
   standalone: false,
 })
 export class SignupComponent {
@@ -41,7 +41,7 @@ export class SignupComponent {
     private authService: AuthService,
     private router: Router,
     private snackBar: MatSnackBar,
-    private recaptchaV3Service: ReCaptchaV3Service
+    private recaptchaV3Service: ReCaptchaV3Service,
   ) {
     this.userSettings = {
       personalInformation: {
@@ -84,7 +84,7 @@ export class SignupComponent {
               this.snackBar.open(
                 'Verification email sent! Please check your inbox to verify your account.',
                 'Close',
-                { duration: 5000 }
+                { duration: 5000 },
               );
               this.router.navigate(['/login']);
             },
@@ -93,7 +93,7 @@ export class SignupComponent {
                 this.snackBar.open(
                   'An account with that email already exists',
                   'Close',
-                  { duration: 3000 }
+                  { duration: 3000 },
                 );
               } else if (error.error && error.error.message) {
                 this.snackBar.open(error.error.message, 'Close', {
@@ -103,10 +103,10 @@ export class SignupComponent {
                 this.snackBar.open(
                   'Signup failed. Please try again.',
                   'Close',
-                  { duration: 3000 }
+                  { duration: 3000 },
                 );
               }
-            }
+            },
           );
       },
       error: () => {
@@ -127,7 +127,7 @@ export class SignupComponent {
   }
 
   updateContactInformation(
-    updatedContactInformation: IContactInformation
+    updatedContactInformation: IContactInformation,
   ): void {
     this.pageValid =
       this.isInformationValid(updatedContactInformation) &&
@@ -138,7 +138,7 @@ export class SignupComponent {
   }
 
   updatePersonalInformation(
-    updatedPersonalInformation: IPersonalInformation
+    updatedPersonalInformation: IPersonalInformation,
   ): void {
     this.pageValid = this.isInformationValid(updatedPersonalInformation);
     if (
@@ -153,7 +153,7 @@ export class SignupComponent {
   }
 
   updatePhysicalMeasurements(
-    updatedPhysicalMeasurements: IPhysicalMeasurements
+    updatedPhysicalMeasurements: IPhysicalMeasurements,
   ): void {
     this.pageValid = this.isInformationValid(updatedPhysicalMeasurements);
     if (
@@ -208,7 +208,7 @@ export class SignupComponent {
         'Close',
         {
           duration: 5000,
-        }
+        },
       );
     }
   }

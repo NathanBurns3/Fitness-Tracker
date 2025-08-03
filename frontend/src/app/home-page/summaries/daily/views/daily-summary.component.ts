@@ -174,7 +174,7 @@ export class DailySummaryComponent implements OnInit, OnDestroy, OnChanges {
 
   createChart(): void {
     setTimeout(() => {
-      const canvas = document.getElementById('myChart') as HTMLCanvasElement;
+      const canvas = document.getElementById('dailyChart') as HTMLCanvasElement;
       if (canvas) {
         const context = canvas.getContext('2d');
         if (context) {

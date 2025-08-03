@@ -17,7 +17,7 @@
 }
 
 @media (max-width: 370px) {
-  .myChart {
+  .dailyChart {
     max-width: 200px;
   }
 }

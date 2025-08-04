@@ -26,6 +26,7 @@ import {
 
 export const signup = async (req: Request, res: Response) => {
   try {
+    console.log('Signup request received:', JSON.stringify(req.body));
     const {
       userSettings,
       password,
@@ -36,13 +37,16 @@ export const signup = async (req: Request, res: Response) => {
       return res.status(400).json({ message: 'Invalid input' });
     }
 
+    console.log('Validating email and phone...');
     if (
       !validator.isEmail(userSettings.contactInformation.email) ||
       !validator.isMobilePhone(userSettings.contactInformation.phoneNumber)
     ) {
+      console.log('Validation failed for email or phone');
       return res.status(400).json({ message: 'Invalid email or phone number' });
     }
 
+    console.log('Decoding and checking password...');
     const decodedPassword = Buffer.from(password, 'base64').toString('utf-8');
     const passwordSafe =
       decodedPassword.length >= 8 &&
@@ -58,6 +62,7 @@ export const signup = async (req: Request, res: Response) => {
       });
     }
 
+    console.log('Verifying CAPTCHA...');
     const secretKey = process.env.RECAPTCHA_SECRET_KEY;
     const verifyUrl = `https://www.google.com/recaptcha/api/siteverify?secret=${secretKey}&response=${captchaToken}`;
     const response = await axios.post(verifyUrl);
@@ -67,11 +72,13 @@ export const signup = async (req: Request, res: Response) => {
 
     const email = userSettings.contactInformation.email;
 
+    console.log('Checking for existing user...');
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       return res.status(409).json({ message: 'Email already exists' });
     }
 
+    console.log('Checking for pending email...');
     const existingPending = await PendingEmail.findOne({ email });
     if (existingPending) {
       return res.status(409).json({
@@ -91,14 +98,17 @@ export const signup = async (req: Request, res: Response) => {
     });
 
     await pendingEmail.save();
+    console.log('Pending email saved:', email);
 
     await sendVerificationEmail(email, verificationToken);
+    console.log('Verification email sent to:', email);
 
     res.status(201).json({
       message:
         'Registration initiated. Please check your email to verify your account.',
     });
   } catch (error: Error | any) {
+    console.error('Signup error:', error); // This will print the stack trace
     res.status(500).json({ message: error.message });
   }
 };

@@ -175,7 +175,7 @@ export class MonthlySummaryComponent implements OnInit, OnDestroy, OnChanges {
         },
       };
 
-      this.chart = new Chart('myChart', config);
+      this.chart = new Chart('monthlyChart', config);
     }
   }
 

@@ -20,7 +20,7 @@ export class YearlySummaryComponent implements OnInit, OnDestroy {
   @Input() eatingGoalsCompleted!: number[];
   @Input() isLoading: boolean = false;
 
-  myChart!: Chart;
+  yearlyChart!: Chart;
   screenWidth!: number;
 
   ngOnInit(): void {
@@ -28,8 +28,8 @@ export class YearlySummaryComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if (this.myChart) {
-      this.myChart.destroy();
+    if (this.yearlyChart) {
+      this.yearlyChart.destroy();
     }
   }
 
@@ -61,11 +61,11 @@ export class YearlySummaryComponent implements OnInit, OnDestroy {
   debouncedCreateChart = this.debounce(() => this.createChart(), 200);
 
   createChart(): void {
-    if (this.myChart) {
-      this.myChart.destroy();
+    if (this.yearlyChart) {
+      this.yearlyChart.destroy();
     }
 
-    var ctx = document.getElementById('myChart') as HTMLCanvasElement;
+    var ctx = document.getElementById('yearlyChart') as HTMLCanvasElement;
     var gradient1 = ctx?.getContext('2d')?.createLinearGradient(0, 0, 0, 400);
     gradient1?.addColorStop(0, 'rgba(21, 101, 192, 0.5)');
     gradient1?.addColorStop(1, 'rgba(21, 101, 192, 1)');
@@ -74,7 +74,7 @@ export class YearlySummaryComponent implements OnInit, OnDestroy {
     gradient2?.addColorStop(0, 'rgba(245, 124, 0, 0.5)');
     gradient2?.addColorStop(1, 'rgba(245, 124, 0, 1)');
 
-    this.myChart = new Chart(ctx, {
+    this.yearlyChart = new Chart(ctx, {
       type: 'bar',
       data: {
         labels: [

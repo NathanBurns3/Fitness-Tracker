@@ -21,9 +21,11 @@
       <option [value]="'Choose a Muscle Group'" selected disabled>
         Choose a Muscle Group
       </option>
-      <option *ngFor="let muscle of muscleGroups" [value]="muscle">
-        {{ muscle }}
-      </option>
+      @for (muscle of muscleGroups; track muscle) {
+        <option [value]="muscle">
+          {{ muscle }}
+        </option>
+      }
     </select>
 
     <h1 class="text-lg font-bold text-blue-800 mb-2">Exercise:</h1>
@@ -33,13 +35,15 @@
       class="w-full block rounded-lg border p-2.5 text-sm bg-white text-blue-950 focus:ring-2 focus:ring-blue-500 shadow-lg transition duration-500 ease-in-out transform mb-5"
       [ngClass]="{
         'hover:-translate-y-0.5 hover:scale-105':
-          muscleGroup !== 'Choose a Muscle Group'
+          muscleGroup !== 'Choose a Muscle Group',
       }"
     >
       <option [value]="'Choose a Exercise'" selected>Choose a Exercise</option>
-      <option *ngFor="let exercise of exercises" [value]="exercise">
-        {{ exercise }}
-      </option>
+      @for (exercise of exercises; track exercise) {
+        <option [value]="exercise">
+          {{ exercise }}
+        </option>
+      }
     </select>
 
     <h1 class="text-lg font-bold text-blue-800 mb-2">Number of Sets:</h1>

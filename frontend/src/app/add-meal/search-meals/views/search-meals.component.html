@@ -37,17 +37,18 @@
     </li>
   </ul>
 </div>
-<all-meals
-  *ngIf="selectedSearch === 'All'"
-  (favoriteMealsChange)="getNewFavoriteMeals($event)"
-></all-meals>
-<favorite-meals
-  *ngIf="selectedSearch === 'Favorites'"
-  [favoriteMeals]="favoriteMeals"
-  [isLoading]="isLoading"
-></favorite-meals>
-<custom-meals
-  *ngIf="selectedSearch === 'Custom'"
-  [customMeals]="customMeals"
-  [isLoading]="isLoading"
-></custom-meals>
+@if (selectedSearch === "All") {
+  <all-meals (favoriteMealsChange)="getNewFavoriteMeals($event)"></all-meals>
+}
+@if (selectedSearch === "Favorites") {
+  <favorite-meals
+    [favoriteMeals]="favoriteMeals"
+    [isLoading]="isLoading"
+  ></favorite-meals>
+}
+@if (selectedSearch === "Custom") {
+  <custom-meals
+    [customMeals]="customMeals"
+    [isLoading]="isLoading"
+  ></custom-meals>
+}

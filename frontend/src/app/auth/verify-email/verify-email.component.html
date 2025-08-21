@@ -2,34 +2,38 @@
   <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md text-center">
     <h2 class="text-2xl font-bold text-blue-950 mb-4">Email Verification</h2>
 
-    <div *ngIf="isLoading" class="text-gray-600">
-      <div
-        class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-950 mx-auto mb-4"
-      ></div>
-      <p>Verifying your email...</p>
-    </div>
-
-    <div *ngIf="isSuccess && !isLoading" class="text-green-600">
-      <div class="text-5xl mb-4">✓</div>
-      <p class="mb-4">Email verified successfully!</p>
-      <p class="text-sm text-gray-600 mb-6">Email: {{ verifiedEmail }}</p>
-      <button
-        (click)="completeRegistration()"
-        class="w-full px-4 py-2 bg-blue-950 text-white rounded hover:bg-blue-800 mb-2"
-      >
-        Complete Registration
-      </button>
-    </div>
-
-    <div *ngIf="errorMessage && !isLoading" class="text-red-600">
-      <div class="text-5xl mb-4">✗</div>
-      <p class="mb-4">{{ errorMessage }}</p>
-      <button
-        (click)="goToLogin()"
-        class="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600"
-      >
-        Go to Login
-      </button>
-    </div>
+    @if (isLoading) {
+      <div class="text-gray-600">
+        <div
+          class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-950 mx-auto mb-4"
+        ></div>
+        <p>Verifying your email...</p>
+      </div>
+    }
+    @if (isSuccess && !isLoading) {
+      <div class="text-green-600">
+        <div class="text-5xl mb-4">✓</div>
+        <p class="mb-4">Email verified successfully!</p>
+        <p class="text-sm text-gray-600 mb-6">Email: {{ verifiedEmail }}</p>
+        <button
+          (click)="completeRegistration()"
+          class="rounded-lg border w-full p-2.5 font-semibold bg-gradient-to-r from-blue-500 to-blue-700 text-white hover:from-blue-700 hover:to-blue-900 mb-2"
+        >
+          Complete Registration
+        </button>
+      </div>
+    }
+    @if (errorMessage && !isLoading) {
+      <div class="text-red-600">
+        <div class="text-5xl mb-4">✗</div>
+        <p class="mb-4">{{ errorMessage }}</p>
+        <button
+          (click)="goToLogin()"
+          class="rounded-lg border w-full p-2.5 font-semibold bg-gray-500 text-white hover:bg-gray-600"
+        >
+          Go to Login
+        </button>
+      </div>
+    }
   </div>
 </div>

@@ -9,12 +9,11 @@
       class="selector activity text-lg p-2 font-bold text-blue-950 border rounded-lg focus:ring-2 focus:ring-orange-500 w-56 shadow-sm transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-102 text-center"
     >
       <option value="" disabled selected>Select Activity Level</option>
-      <option
-        *ngFor="let level of activityLevelLabels | keyvalue"
-        [value]="level.key"
-      >
-        {{ level.value }}
-      </option>
+      @for (level of activityLevelLabels | keyvalue; track $index) {
+        <option [value]="level.key">
+          {{ level.value }}
+        </option>
+      }
     </select>
   </div>
 
@@ -26,12 +25,11 @@
       class="selector goal text-lg p-2 font-bold text-blue-950 border rounded-lg focus:ring-2 focus:ring-orange-500 w-56 shadow-sm transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-102 text-center"
     >
       <option value="" disabled selected>Select Weight Goal</option>
-      <option
-        *ngFor="let goal of weightGoalLabels | keyvalue"
-        [value]="goal.key"
-      >
-        {{ goal.value }}
-      </option>
+      @for (goal of weightGoalLabels | keyvalue; track $index) {
+        <option [value]="goal.key">
+          {{ goal.value }}
+        </option>
+      }
     </select>
   </div>
 </div>

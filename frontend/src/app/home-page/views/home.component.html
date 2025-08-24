@@ -1,218 +1,230 @@
-<div *ngIf="isLoading" class="loading-overlay">
-  <div class="spinner"></div>
-</div>
+@if (isLoading) {
+  <div class="loading-overlay">
+    <div class="spinner"></div>
+  </div>
+}
 <body class="h-screen bg-zinc-300 text-center">
   <div class="main-container flex justify-center">
     <!--PROFILE SECTION-->
-    <div
-      id="ProfileSection"
-      class="ProfileSection relative box-border m-2 bg-neutral-50 h-[calc(100vh-16px)] rounded-lg shadow-2xl overflow-auto lg:block transform transition-transform duration-200 lg:translate-x-0 z-40"
-      [ngClass]="{ open: isSidebarOpen }"
-      *ngIf="!isLoading"
-    >
-      <div #ProfileHeader>
-        <button
-          *ngIf="isSidebarOpen"
-          (click)="toggleSidebar()"
-          class="toggle-button lg:hidden absolute top-0 left-5 m-3 px-1 bg-blue-700 text-white rounded z-50 hover:bg-blue-700 hover:cursor-pointer transition-colors duration-200 ease-in-out"
-        >
-          ☰
-        </button>
-        <a>
-          <h3
-            routerLink="/user-settings"
-            class="absolute top-0 right-3 mt-3 text-sm text-orange-700 hover:cursor-default px-1 py-1 border border-orange-700 rounded hover:bg-orange-700 hover:text-white transition-colors duration-200"
-          >
-            EDIT
-          </h3>
-        </a>
-        <h1
-          class="ProfileTitle justify-center text-5xl font-bold text-blue-800 pb-4 pt-14"
-        >
-          Profile
-        </h1>
-      </div>
-      <div #ProfilePicture>
-        <img
-          class="Profile-Picture w-8/12 h-8/12 rounded-full mx-auto border-4 border-blue-800 mb-7 shadow-lg"
-          [src]="profileInfo.profileImage"
-          alt="Avatar"
-        />
-      </div>
+    @if (!isLoading) {
       <div
-        #NameAndStats
-        class="w-5/6 mx-auto border border-zinc-300 rounded-md shadow-md p-2"
+        id="ProfileSection"
+        class="ProfileSection relative box-border m-2 bg-neutral-50 h-[calc(100vh-16px)] rounded-lg shadow-2xl overflow-auto lg:block transform transition-transform duration-200 lg:translate-x-0 z-40"
+        [ngClass]="{ open: isSidebarOpen }"
       >
-        <h1 class="justify-center text-2xl font-bold text-blue-900 truncate">
-          {{ profileInfo.firstName }} {{ profileInfo.lastName }}
-        </h1>
-        <h1>{{ profileInfo.gender }}, {{ profileInfo.age }} years</h1>
-        <h1 class="justify-center text-blue-950">
-          {{ formattedHeight }} | {{ profileInfo.weight }} lbs
-        </h1>
-      </div>
-      <div #Goal class="pt-8">
-        <div
-          class="w-5/6 mx-auto border border-zinc-300 rounded-lg shadow-md p-2"
-        >
-          <h1 class="text-xl text-blue-900 underline font-bold">Goal</h1>
-          <h1 class="justify-center text-blue-950">
-            {{ weightGoalLabels[profileInfo.goal] }}
+        <div #ProfileHeader>
+          @if (isSidebarOpen) {
+            <button
+              (click)="toggleSidebar()"
+              class="toggle-button lg:hidden absolute top-0 left-5 m-3 px-1 bg-blue-700 text-white rounded z-50 hover:bg-blue-700 hover:cursor-pointer transition-colors duration-200 ease-in-out"
+            >
+              ☰
+            </button>
+          }
+          <a>
+            <h3
+              routerLink="/user-settings"
+              class="absolute top-0 right-3 mt-3 text-sm text-orange-700 hover:cursor-default px-1 py-1 border border-orange-700 rounded hover:bg-orange-700 hover:text-white transition-colors duration-200"
+            >
+              EDIT
+            </h3>
+          </a>
+          <h1
+            class="ProfileTitle justify-center text-5xl font-bold text-blue-800 pb-4 pt-14"
+          >
+            Profile
           </h1>
         </div>
-      </div>
-      <div #Steaks class="pt-8">
-        <div
-          class="w-5/6 mx-auto p-2 border border-zinc-300 rounded-lg shadow-md"
-        >
-          <h1 class="text-xl text-blue-900 underline font-bold">Streaks</h1>
-          <table class="table-auto text-blue-950 mx-auto">
-            <tr>
-              <td class="text-right pr-2">Exercise:</td>
-              <td class="text-left pl-2">
-                {{ profileInfo.exerciseStreak }} Days
-              </td>
-            </tr>
-            <tr>
-              <td class="text-right pr-2">Eating Goals:</td>
-              <td class="text-left pl-2">
-                {{ profileInfo.eatingGoalStreak }} Days
-              </td>
-            </tr>
-          </table>
+        <div #ProfilePicture>
+          <img
+            class="Profile-Picture w-8/12 h-8/12 rounded-full mx-auto border-4 border-blue-800 mb-7 shadow-lg"
+            [src]="profileInfo.profileImage"
+            alt="Avatar"
+          />
         </div>
-      </div>
-    </div>
-    <!--HOME SECTION-->
-    <div
-      class="HomeSection relative box-border m-2 bg-neutral-50 h-[calc(100vh-16px)] rounded shadow-lg overflow-auto"
-      id="HomeSection"
-      [ngClass]="{ shrink: isSidebarOpen }"
-      *ngIf="!isLoading"
-    >
-      <div #Title class="pt-5">
-        <button
-          *ngIf="!isSidebarOpen"
-          (click)="toggleSidebar()"
-          class="toggle-button lg:hidden absolute top-0 left-5 mt-3 px-1 bg-blue-700 text-white rounded z-50 hover:bg-blue-700 hover:cursor-pointer transition-colors duration-200 ease-in-out"
+        <div
+          #NameAndStats
+          class="w-5/6 mx-auto border border-zinc-300 rounded-md shadow-md p-2"
         >
-          |||
-        </button>
-        <a id="SignOutButton" (click)="logout()">
-          <h3
-            class="absolute top-0 right-5 mt-3 text-orange-700 cursor-default px-1 border border-orange-700 rounded transform hover:bg-orange-700 hover:text-white transition-colors duration-200"
+          <h1 class="justify-center text-2xl font-bold text-blue-900 truncate">
+            {{ profileInfo.firstName }} {{ profileInfo.lastName }}
+          </h1>
+          <h1>{{ profileInfo.gender }}, {{ profileInfo.age }} years</h1>
+          <h1 class="justify-center text-blue-950">
+            {{ formattedHeight }} | {{ profileInfo.weight }} lbs
+          </h1>
+        </div>
+        <div #Goal class="pt-8">
+          <div
+            class="w-5/6 mx-auto border border-zinc-300 rounded-lg shadow-md p-2"
           >
-            <span class="show-on-small">X</span>
-            <span class="hide-on-small">Sign Out</span>
-          </h3>
-        </a>
-        <img
-          id="TitleImage"
-          src="assets/title.png"
-          alt="ActiveLife Tracker"
-          class="mx-auto w-7/12 h-7/12"
-        />
-        <h1
-          id="WelcomeMessage"
-          class="justify-center text-2xl text-orange-700 font-bold pt-3"
-          *ngIf="profileInfo"
-        >
-          Welcome {{ profileInfo.firstName }}!
-        </h1>
-      </div>
-      <div #Date class="pt-1">
-        <h1 class="justify-center text-base text-blue-950 font-bold">
-          {{ formattedDate }}
-        </h1>
-      </div>
-      <div #AddItems class="pt-5">
-        <button
-          routerLink="/add-exercise"
-          #AddExerciseButton
-          class="add-buttons w-48 text-center rounded-3xl border font-bold p-2 text-white shadow-lg transition duration-500 ease-in-out transform bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-700 hover:to-blue-900 hover:-translate-y-0.5 hover:scale-105 cursor-pointer mr-16"
-        >
-          Add Exercise
-        </button>
-        <button
-          routerLink="/add-meal"
-          #AddMealButton
-          class="add-buttons w-48 text-center rounded-3xl border font-bold p-2 text-white shadow-lg transition duration-500 ease-in-out transform bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-700 hover:to-blue-900 hover:-translate-y-0.5 hover:scale-105 cursor-pointer"
-        >
-          Add Meal
-        </button>
-      </div>
-      <div #SummaryNav class="pt-5">
-        <h1 class="text-lg text-blue-950 font-bold">Summary</h1>
-        <div
-          class="summary-bubble w-1/2 mx-auto rounded-full border border-zinc-300 p-1 shadow-sm"
-        >
-          <ul class="flex">
-            <li class="flex-1 mr-2">
-              <a
-                (click)="selectSummary('Daily')"
-                class="summary-button"
-                [ngClass]="
-                  selectedSummary === 'Daily'
-                    ? 'text-center block border border-blue-900 rounded-3xl py-1 px-2 transform bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-700 hover:to-blue-900 text-white text-sm'
-                    : 'text-center block border border-white rounded-3xl hover:border-gray-200 text-blue-700 hover:bg-gray-200 py-1 px-2 text-sm'
-                "
-                >Daily</a
-              >
-            </li>
-            <li class="flex-1 mr-2">
-              <a
-                (click)="selectSummary('Monthly')"
-                class="summary-button"
-                [ngClass]="
-                  selectedSummary === 'Monthly'
-                    ? 'text-center block border border-blue-900 rounded-3xl py-1 px-2 transform bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-700 hover:to-blue-900 text-white text-sm'
-                    : 'text-center block border border-white rounded-3xl hover:border-gray-200 text-blue-700 hover:bg-gray-200 py-1 px-2 text-sm'
-                "
-                >Monthly</a
-              >
-            </li>
-            <li class="text-center flex-1">
-              <a
-                (click)="selectSummary('Yearly')"
-                class="summary-button"
-                [ngClass]="
-                  selectedSummary === 'Yearly'
-                    ? 'text-center block border border-blue-900 rounded-3xl py-1 px-2 transform bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-700 hover:to-blue-900 text-white text-sm'
-                    : 'text-center block border border-white rounded-3xl hover:border-gray-200 text-blue-700 hover:bg-gray-200 py-1 px-2 text-sm'
-                "
-                >Yearly</a
-              >
-            </li>
-          </ul>
+            <h1 class="text-xl text-blue-900 underline font-bold">Goal</h1>
+            <h1 class="justify-center text-blue-950">
+              {{ weightGoalLabels[profileInfo.goal] }}
+            </h1>
+          </div>
+        </div>
+        <div #Steaks class="pt-8">
+          <div
+            class="w-5/6 mx-auto p-2 border border-zinc-300 rounded-lg shadow-md"
+          >
+            <h1 class="text-xl text-blue-900 underline font-bold">Streaks</h1>
+            <table class="table-auto text-blue-950 mx-auto">
+              <tr>
+                <td class="text-right pr-2">Exercise:</td>
+                <td class="text-left pl-2">
+                  {{ profileInfo.exerciseStreak }} Days
+                </td>
+              </tr>
+              <tr>
+                <td class="text-right pr-2">Eating Goals:</td>
+                <td class="text-left pl-2">
+                  {{ profileInfo.eatingGoalStreak }} Days
+                </td>
+              </tr>
+            </table>
+          </div>
         </div>
       </div>
-      <div #SummaryDisplay class="pt-3">
-        <div
-          class="summaries w-5/6 h-[26em] mx-auto p-2 border border-zinc-300 rounded-lg shadow-lg"
-          [ngClass]="{
-            'yearly-summary-height': selectedSummary === 'Yearly',
-          }"
-        >
-          <DailySummaryComponent
-            *ngIf="selectedSummary === 'Daily'"
-            [dailyEatingInfo]="dailyEatingInfo"
-            [dailyExerciseInfo]="dailyExerciseInfo"
-            [isLoading]="isLoading"
-          ></DailySummaryComponent>
-          <MonthlySummaryComponent
-            *ngIf="selectedSummary === 'Monthly'"
-            [monthlyExerciseInfo]="monthlyExerciseInfo"
-            [daysOfMonth]="monthlyBreakdownInfo"
-            [isLoading]="isLoading"
-          ></MonthlySummaryComponent>
-          <YearlySummaryComponent
-            *ngIf="selectedSummary === 'Yearly'"
-            [exercisesCompleted]="yearlyExercisesCompleted"
-            [eatingGoalsCompleted]="yearlyEatingGoalsCompleted"
-            [isLoading]="isLoading"
-          ></YearlySummaryComponent>
+    }
+    <!--HOME SECTION-->
+    @if (!isLoading) {
+      <div
+        class="HomeSection relative box-border m-2 bg-neutral-50 h-[calc(100vh-16px)] rounded shadow-lg overflow-auto"
+        id="HomeSection"
+        [ngClass]="{ shrink: isSidebarOpen }"
+      >
+        <div #Title class="pt-5">
+          @if (!isSidebarOpen) {
+            <button
+              (click)="toggleSidebar()"
+              class="toggle-button lg:hidden absolute top-0 left-5 mt-3 px-1 bg-blue-700 text-white rounded z-50 hover:bg-blue-700 hover:cursor-pointer transition-colors duration-200 ease-in-out"
+            >
+              |||
+            </button>
+          }
+          <a id="SignOutButton" (click)="logout()">
+            <h3
+              class="absolute top-0 right-5 mt-3 text-orange-700 cursor-default px-1 border border-orange-700 rounded transform hover:bg-orange-700 hover:text-white transition-colors duration-200"
+            >
+              <span class="show-on-small">X</span>
+              <span class="hide-on-small">Sign Out</span>
+            </h3>
+          </a>
+          <img
+            id="TitleImage"
+            src="assets/title.png"
+            alt="ActiveLife Tracker"
+            class="mx-auto w-7/12 h-7/12"
+          />
+          @if (profileInfo) {
+            <h1
+              id="WelcomeMessage"
+              class="justify-center text-2xl text-orange-700 font-bold pt-3"
+            >
+              Welcome {{ profileInfo.firstName }}!
+            </h1>
+          }
+        </div>
+        <div #Date class="pt-1">
+          <h1 class="justify-center text-base text-blue-950 font-bold">
+            {{ formattedDate }}
+          </h1>
+        </div>
+        <div #AddItems class="pt-5">
+          <button
+            routerLink="/add-exercise"
+            #AddExerciseButton
+            class="add-buttons w-48 text-center rounded-3xl border font-bold p-2 text-white shadow-lg transition duration-500 ease-in-out transform bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-700 hover:to-blue-900 hover:-translate-y-0.5 hover:scale-105 cursor-pointer mr-16"
+          >
+            Add Exercise
+          </button>
+          <button
+            routerLink="/add-meal"
+            #AddMealButton
+            class="add-buttons w-48 text-center rounded-3xl border font-bold p-2 text-white shadow-lg transition duration-500 ease-in-out transform bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-700 hover:to-blue-900 hover:-translate-y-0.5 hover:scale-105 cursor-pointer"
+          >
+            Add Meal
+          </button>
+        </div>
+        <div #SummaryNav class="pt-5">
+          <h1 class="text-lg text-blue-950 font-bold">Summary</h1>
+          <div
+            class="summary-bubble w-1/2 mx-auto rounded-full border border-zinc-300 p-1 shadow-sm"
+          >
+            <ul class="flex">
+              <li class="flex-1 mr-2">
+                <a
+                  (click)="selectSummary('Daily')"
+                  class="summary-button"
+                  [ngClass]="
+                    selectedSummary === 'Daily'
+                      ? 'text-center block border border-blue-900 rounded-3xl py-1 px-2 transform bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-700 hover:to-blue-900 text-white text-sm'
+                      : 'text-center block border border-white rounded-3xl hover:border-gray-200 text-blue-700 hover:bg-gray-200 py-1 px-2 text-sm'
+                  "
+                  >Daily</a
+                >
+              </li>
+              <li class="flex-1 mr-2">
+                <a
+                  (click)="selectSummary('Monthly')"
+                  class="summary-button"
+                  [ngClass]="
+                    selectedSummary === 'Monthly'
+                      ? 'text-center block border border-blue-900 rounded-3xl py-1 px-2 transform bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-700 hover:to-blue-900 text-white text-sm'
+                      : 'text-center block border border-white rounded-3xl hover:border-gray-200 text-blue-700 hover:bg-gray-200 py-1 px-2 text-sm'
+                  "
+                  >Monthly</a
+                >
+              </li>
+              <li class="text-center flex-1">
+                <a
+                  (click)="selectSummary('Yearly')"
+                  class="summary-button"
+                  [ngClass]="
+                    selectedSummary === 'Yearly'
+                      ? 'text-center block border border-blue-900 rounded-3xl py-1 px-2 transform bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-700 hover:to-blue-900 text-white text-sm'
+                      : 'text-center block border border-white rounded-3xl hover:border-gray-200 text-blue-700 hover:bg-gray-200 py-1 px-2 text-sm'
+                  "
+                  >Yearly</a
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div #SummaryDisplay class="pt-3">
+          <div
+            class="summaries w-5/6 h-[25em] mx-auto p-2 border border-zinc-300 rounded-lg shadow-lg"
+            [ngClass]="{
+              'yearly-summary-height': selectedSummary === 'Yearly',
+            }"
+          >
+            @switch (selectedSummary) {
+              @case ("Daily") {
+                <DailySummaryComponent
+                  [dailyEatingInfo]="dailyEatingInfo"
+                  [dailyExerciseInfo]="dailyExerciseInfo"
+                  [isLoading]="isLoading"
+                ></DailySummaryComponent>
+              }
+              @case ("Monthly") {
+                <MonthlySummaryComponent
+                  [monthlyExerciseInfo]="monthlyExerciseInfo"
+                  [daysOfMonth]="monthlyBreakdownInfo"
+                  [isLoading]="isLoading"
+                ></MonthlySummaryComponent>
+              }
+              @case ("Yearly") {
+                <YearlySummaryComponent
+                  [exercisesCompleted]="yearlyExercisesCompleted"
+                  [eatingGoalsCompleted]="yearlyEatingGoalsCompleted"
+                  [isLoading]="isLoading"
+                ></YearlySummaryComponent>
+              }
+            }
+          </div>
         </div>
       </div>
-    </div>
+    }
   </div>
 </body>

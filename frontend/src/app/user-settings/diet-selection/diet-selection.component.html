@@ -6,8 +6,10 @@
     class="selector text-lg p-2 -mt-5 font-bold text-blue-950 border rounded-lg focus:ring-2 focus:ring-orange-500 w-56 shadow-sm transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-102 text-center"
   >
     <option value="" disabled selected>Select Activity Level</option>
-    <option *ngFor="let diet of dietLabels | keyvalue" [value]="diet.key">
-      {{ diet.value }}
-    </option>
+    @for (diet of dietLabels | keyvalue; track $index) {
+      <option [value]="diet.key">
+        {{ diet.value }}
+      </option>
+    }
   </select>
 </div>

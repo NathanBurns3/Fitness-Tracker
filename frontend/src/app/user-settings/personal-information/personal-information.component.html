@@ -8,12 +8,13 @@
     <h1 class="sub-title text-lg font-bold text-blue-800 mb-1">
       Profile Picture:
     </h1>
-    <img
-      [src]="previewImage"
-      alt="Image Preview"
-      class="profile-image w-40 h-40 rounded-full mx-auto border-2 border-blue-800 shadow-sm object-cover mb-4"
-      *ngIf="previewImage"
-    />
+    @if (previewImage) {
+      <img
+        [src]="previewImage"
+        alt="Image Preview"
+        class="profile-image w-40 h-40 rounded-full mx-auto border-2 border-blue-800 shadow-sm object-cover mb-4"
+      />
+    }
     <label
       class="rounded-lg border p-1 text-sm bg-white text-blue-950 focus:ring-2 focus:ring-blue-500 w-28 shadow-sm transition duration-500 ease-in-out transform hover:-translate-y-0.5 hover:scale-105 cursor-pointer"
     >
@@ -60,12 +61,11 @@
       class="gender rounded-lg border p-2.5 text-sm bg-white text-blue-950 focus:ring-2 focus:ring-blue-500 w-28 mb-5 shadow-sm transition duration-500 ease-in-out transform hover:-translate-y-0.5 hover:scale-105"
     >
       <option [value]="'Gender'" selected disabled>Gender</option>
-      <option
-        *ngFor="let gender of genderLabels | keyvalue"
-        [value]="gender.key"
-      >
-        {{ gender.value }}
-      </option>
+      @for (gender of genderLabels | keyvalue; track $index) {
+        <option [value]="gender.key">
+          {{ gender.value }}
+        </option>
+      }
     </select>
 
     <h1 class="sub-title text-lg font-bold text-blue-800 mb-1">Age:</h1>

@@ -1,11 +1,13 @@
-<div *ngIf="isLoading" class="loading-overlay">
-  <div class="spinner"></div>
-</div>
+@if (isLoading) {
+  <div class="loading-overlay">
+    <div class="spinner"></div>
+  </div>
+}
 <body class="h-screen text-center bg-zinc-300 overflow-auto">
   <div
     class="content bg-neutral-50 rounded-lg shadow-2xl h-[calc(100vh-40px)] m-5 p-5"
   >
-    <div *ngIf="userSettings">
+    @if (userSettings) {
       <div #Title>
         <div class="min-h-[50px] relative mt-5 -mb-4">
           <div class="flex justify-between items-center">
@@ -20,26 +22,30 @@
             >
               Settings
             </h1>
-            <div *ngIf="!mobile" class="absolute right-5">
-              <button
-                class="button rounded-lg border text-center p-2 w-20 mr-2 font-bold bg-gradient-to-r from-blue-500 to-blue-700 text-white hover:from-blue-700 hover:to-blue-900 shadow-lg transition duration-500 ease-in-out transform hover:-translate-y-0.5 hover:scale-105"
-                (click)="saveSettings()"
-                [class.opacity-50]="!userSettingsChanged || !pageValid"
-                [class.pointer-events-none]="!userSettingsChanged || !pageValid"
-                [disabled]="!userSettingsChanged || !pageValid"
-              >
-                Save
-              </button>
-              <button
-                class="button rounded-lg border text-center p-2 w-20 mr-2 font-bold bg-gradient-to-r from-orange-500 to-orange-700 text-white hover:from-orange-700 hover:to-orange-900 shadow-lg transition duration-500 ease-in-out transform hover:-translate-y-0.5 hover:scale-105"
-                (click)="cancelSettings()"
-                [class.opacity-50]="!userSettingsChanged"
-                [class.pointer-events-none]="!userSettingsChanged"
-                [disabled]="!userSettingsChanged"
-              >
-                Cancel
-              </button>
-            </div>
+            @if (!mobile) {
+              <div class="absolute right-5">
+                <button
+                  class="button rounded-lg border text-center p-2 w-20 mr-2 font-bold bg-gradient-to-r from-blue-500 to-blue-700 text-white hover:from-blue-700 hover:to-blue-900 shadow-lg transition duration-500 ease-in-out transform hover:-translate-y-0.5 hover:scale-105"
+                  (click)="saveSettings()"
+                  [class.opacity-50]="!userSettingsChanged || !pageValid"
+                  [class.pointer-events-none]="
+                    !userSettingsChanged || !pageValid
+                  "
+                  [disabled]="!userSettingsChanged || !pageValid"
+                >
+                  Save
+                </button>
+                <button
+                  class="button rounded-lg border text-center p-2 w-20 mr-2 font-bold bg-gradient-to-r from-orange-500 to-orange-700 text-white hover:from-orange-700 hover:to-orange-900 shadow-lg transition duration-500 ease-in-out transform hover:-translate-y-0.5 hover:scale-105"
+                  (click)="cancelSettings()"
+                  [class.opacity-50]="!userSettingsChanged"
+                  [class.pointer-events-none]="!userSettingsChanged"
+                  [disabled]="!userSettingsChanged"
+                >
+                  Cancel
+                </button>
+              </div>
+            }
           </div>
         </div>
       </div>
@@ -95,26 +101,28 @@
           </div>
         </div>
       </div>
-      <div *ngIf="mobile" class="space-x-5">
-        <button
-          class="rounded-lg border text-center p-2 w-20 mr-2 font-bold bg-gradient-to-r from-blue-500 to-blue-700 text-white hover:from-blue-700 hover:to-blue-900 shadow-lg transition duration-500 ease-in-out transform hover:-translate-y-0.5 hover:scale-105"
-          (click)="saveSettings()"
-          [class.opacity-50]="!userSettingsChanged || !pageValid"
-          [class.pointer-events-none]="!userSettingsChanged || !pageValid"
-          [disabled]="!userSettingsChanged || !pageValid"
-        >
-          Save
-        </button>
-        <button
-          class="rounded-lg border text-center p-2 w-20 mr-2 font-bold bg-gradient-to-r from-orange-500 to-orange-700 text-white hover:from-orange-700 hover:to-orange-900 shadow-lg transition duration-500 ease-in-out transform hover:-translate-y-0.5 hover:scale-105"
-          (click)="cancelSettings()"
-          [class.opacity-50]="!userSettingsChanged"
-          [class.pointer-events-none]="!userSettingsChanged"
-          [disabled]="!userSettingsChanged"
-        >
-          Cancel
-        </button>
-      </div>
-    </div>
+      @if (mobile) {
+        <div class="space-x-5">
+          <button
+            class="rounded-lg border text-center p-2 w-20 mr-2 font-bold bg-gradient-to-r from-blue-500 to-blue-700 text-white hover:from-blue-700 hover:to-blue-900 shadow-lg transition duration-500 ease-in-out transform hover:-translate-y-0.5 hover:scale-105"
+            (click)="saveSettings()"
+            [class.opacity-50]="!userSettingsChanged || !pageValid"
+            [class.pointer-events-none]="!userSettingsChanged || !pageValid"
+            [disabled]="!userSettingsChanged || !pageValid"
+          >
+            Save
+          </button>
+          <button
+            class="rounded-lg border text-center p-2 w-20 mr-2 font-bold bg-gradient-to-r from-orange-500 to-orange-700 text-white hover:from-orange-700 hover:to-orange-900 shadow-lg transition duration-500 ease-in-out transform hover:-translate-y-0.5 hover:scale-105"
+            (click)="cancelSettings()"
+            [class.opacity-50]="!userSettingsChanged"
+            [class.pointer-events-none]="!userSettingsChanged"
+            [disabled]="!userSettingsChanged"
+          >
+            Cancel
+          </button>
+        </div>
+      }
+    }
   </div>
 </body>

@@ -46,24 +46,29 @@ export class PersonalInformationComponent implements OnInit, OnChanges {
         img.onload = () => {
           const canvas = document.createElement('canvas');
           const ctx = canvas.getContext('2d')!;
-          const size = Math.min(img.width, img.height);
 
-          canvas.width = size;
-          canvas.height = size;
+          const maxSize = 200;
 
-          ctx.drawImage(
-            img,
-            (img.width - size) / 2,
-            (img.height - size) / 2,
-            size,
-            size,
-            0,
-            0,
-            size,
-            size,
-          );
+          let { width, height } = img;
 
-          const compressedDataURL = canvas.toDataURL('image/png', 0.3);
+          if (width > height) {
+            if (width > maxSize) {
+              height = (height * maxSize) / width;
+              width = maxSize;
+            }
+          } else {
+            if (height > maxSize) {
+              width = (width * maxSize) / height;
+              height = maxSize;
+            }
+          }
+
+          canvas.width = width;
+          canvas.height = height;
+
+          ctx.drawImage(img, 0, 0, width, height);
+
+          const compressedDataURL = canvas.toDataURL('image/jpeg', 0.7);
           this.previewImage = compressedDataURL;
           this.personalInformation.profilePicture = compressedDataURL;
           this.updatePersonalInformation();

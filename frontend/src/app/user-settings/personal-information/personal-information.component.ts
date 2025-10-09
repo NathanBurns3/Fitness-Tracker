@@ -46,7 +46,9 @@ export class PersonalInformationComponent implements OnInit, OnChanges {
         img.onload = () => {
           const canvas = document.createElement('canvas');
           const ctx = canvas.getContext('2d')!;
-          const size = Math.min(img.width, img.height);
+
+          const maxSize = 200;
+          const size = Math.min(img.width, img.height, maxSize);
 
           canvas.width = size;
           canvas.height = size;
@@ -63,9 +65,9 @@ export class PersonalInformationComponent implements OnInit, OnChanges {
             size,
           );
 
-          const resizedImage = canvas.toDataURL('image/png');
-          this.previewImage = resizedImage;
-          this.personalInformation.profilePicture = resizedImage;
+          const compressedDataURL = canvas.toDataURL('image/png', 0.3);
+          this.previewImage = compressedDataURL;
+          this.personalInformation.profilePicture = compressedDataURL;
           this.updatePersonalInformation();
         };
       };

@@ -49,24 +49,15 @@ export class PersonalInformationComponent implements OnInit, OnChanges {
 
           const maxSize = 200;
 
-          let { width, height } = img;
+          const size = Math.min(img.width, img.height);
 
-          if (width > height) {
-            if (width > maxSize) {
-              height = (height * maxSize) / width;
-              width = maxSize;
-            }
-          } else {
-            if (height > maxSize) {
-              width = (width * maxSize) / height;
-              height = maxSize;
-            }
-          }
+          const cropX = (img.width - size) / 2;
+          const cropY = (img.height - size) / 2;
 
-          canvas.width = width;
-          canvas.height = height;
+          canvas.width = maxSize;
+          canvas.height = maxSize;
 
-          ctx.drawImage(img, 0, 0, width, height);
+          ctx.drawImage(img, cropX, cropY, size, size, 0, 0, maxSize, maxSize);
 
           const compressedDataURL = canvas.toDataURL('image/jpeg', 0.7);
           this.previewImage = compressedDataURL;

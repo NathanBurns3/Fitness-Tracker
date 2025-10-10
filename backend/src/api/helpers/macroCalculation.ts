@@ -11,16 +11,42 @@ interface Macros {
   calories: number;
 }
 
+function lbsToKg(pounds: number): number {
+  return pounds * 0.453592;
+}
+
+function inchesToCm(inches: number): number {
+  return inches * 2.54;
+}
+
 function calculateBMR(
   age: number,
   gender: GenderEnum,
-  height: number,
-  weight: number
+  heightInches: number,
+  weightLbs: number
 ): number {
+  const weight = lbsToKg(weightLbs);
+  const height = inchesToCm(heightInches);
+
   if (gender === GenderEnum.Male) {
     return 10 * weight + 6.25 * height - 5 * age + 5;
   } else {
     return 10 * weight + 6.25 * height - 5 * age - 161;
+  }
+}
+
+function getActivityMultiplier(activityLevel: ActivityLevelEnum): number {
+  switch (activityLevel) {
+    case ActivityLevelEnum.Sedentary:
+      return 1.2;
+    case ActivityLevelEnum.Exercise1To3TimesPerWeek:
+      return 1.375;
+    case ActivityLevelEnum.Exercise4To5TimesPerWeek:
+      return 1.55;
+    case ActivityLevelEnum.IntenseExercise6To7TimesPerWeek:
+      return 1.725;
+    default:
+      return 1.55;
   }
 }
 
@@ -31,57 +57,54 @@ function adjustCaloriesForGoal(calories: number, goal: WeightGoalEnum): number {
     case WeightGoalEnum.WeightLoss:
       return calories - 500;
     case WeightGoalEnum.ExtremeWeightLoss:
-      return calories - 1000;
+      return calories - 750;
+    case WeightGoalEnum.Maintain:
+      return calories;
     case WeightGoalEnum.MildWeightGain:
       return calories + 250;
     case WeightGoalEnum.WeightGain:
       return calories + 500;
     case WeightGoalEnum.ExtremeWeightGain:
-      return calories + 1000;
+      return calories + 750;
     default:
       return calories;
   }
 }
 
 function getMacrosFromCalories(calories: number, dietPlan: DietEnum): Macros {
-  let proteinPercentage: number, carbsPercentage: number, fatPercentage: number;
+  let proteinPct: number, carbsPct: number, fatPct: number;
 
   switch (dietPlan) {
     case DietEnum.LowFat:
-      proteinPercentage = 30;
-      carbsPercentage = 50;
-      fatPercentage = 20;
+      proteinPct = 30;
+      carbsPct = 50;
+      fatPct = 20;
       break;
     case DietEnum.LowCarbs:
-      proteinPercentage = 40;
-      carbsPercentage = 30;
-      fatPercentage = 30;
+      proteinPct = 40;
+      carbsPct = 30;
+      fatPct = 30;
       break;
     case DietEnum.HighProtein:
-      proteinPercentage = 50;
-      carbsPercentage = 30;
-      fatPercentage = 20;
+      proteinPct = 35;
+      carbsPct = 35;
+      fatPct = 30;
       break;
     case DietEnum.Balanced:
     default:
-      proteinPercentage = 30;
-      carbsPercentage = 40;
-      fatPercentage = 30;
+      proteinPct = 30;
+      carbsPct = 40;
+      fatPct = 30;
       break;
   }
 
-  const protein = (calories * (proteinPercentage / 100)) / 4;
-  const carbs = (calories * (carbsPercentage / 100)) / 4;
-  const fat = (calories * (fatPercentage / 100)) / 9;
-  const fiber = carbs / 10;
+  const protein = Math.round((calories * (proteinPct / 100)) / 4);
+  const carbs = Math.round((calories * (carbsPct / 100)) / 4);
+  const fat = Math.round((calories * (fatPct / 100)) / 9);
+  const fiber = Math.round((calories / 1000) * 14);
+  const totalCalories = Math.round(calories);
 
-  return {
-    protein,
-    carbs,
-    fat,
-    fiber,
-    calories,
-  };
+  return { protein, carbs, fat, fiber, calories: totalCalories };
 }
 
 export function calculateMacros(
@@ -94,7 +117,9 @@ export function calculateMacros(
   dietPlan: DietEnum
 ): Macros {
   const bmr = calculateBMR(age, gender, height, weight);
-  const maintenanceCalories = bmr * activityLevel;
+  const activityMultiplier = getActivityMultiplier(activityLevel);
+  const maintenanceCalories = bmr * activityMultiplier;
   const adjustedCalories = adjustCaloriesForGoal(maintenanceCalories, goal);
+
   return getMacrosFromCalories(adjustedCalories, dietPlan);
 }

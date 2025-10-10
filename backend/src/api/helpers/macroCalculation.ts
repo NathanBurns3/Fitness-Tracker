@@ -11,27 +11,19 @@ interface Macros {
   calories: number;
 }
 
-function lbsToKg(pounds: number): number {
-  return pounds * 0.453592;
-}
-
-function inchesToCm(inches: number): number {
-  return inches * 2.54;
-}
-
 function calculateBMR(
   age: number,
   gender: GenderEnum,
   heightInches: number,
   weightLbs: number
 ): number {
-  const weight = lbsToKg(weightLbs);
-  const height = inchesToCm(heightInches);
+  const weightKg = weightLbs * 0.453592;
+  const heightCm = heightInches * 2.54;
 
   if (gender === GenderEnum.Male) {
-    return 10 * weight + 6.25 * height - 5 * age + 5;
+    return 10 * weightKg + 6.25 * heightCm - 5 * age + 5;
   } else {
-    return 10 * weight + 6.25 * height - 5 * age - 161;
+    return 10 * weightKg + 6.25 * heightCm - 5 * age - 161;
   }
 }
 

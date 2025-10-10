@@ -110,13 +110,13 @@ function getMacrosFromCalories(calories: number, dietPlan: DietEnum): Macros {
 export function calculateMacros(
   age: number,
   gender: GenderEnum,
-  height: number,
-  weight: number,
+  heightInches: number,
+  weightLbs: number,
   activityLevel: ActivityLevelEnum,
   goal: WeightGoalEnum,
   dietPlan: DietEnum
 ): Macros {
-  const bmr = calculateBMR(age, gender, height, weight);
+  const bmr = calculateBMR(age, gender, heightInches, weightLbs);
   const activityMultiplier = getActivityMultiplier(activityLevel);
   const maintenanceCalories = bmr * activityMultiplier;
   const adjustedCalories = adjustCaloriesForGoal(maintenanceCalories, goal);

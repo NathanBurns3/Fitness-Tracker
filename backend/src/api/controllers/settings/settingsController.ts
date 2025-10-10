@@ -239,8 +239,8 @@ export const calculateUserMacros = async (
 
     const age: number = updatedSettings.age;
     const gender: GenderEnum = updatedSettings.gender;
-    const heightInCentimeters: number = updatedSettings.height * 2.54;
-    const weightInKilograms: number = updatedSettings.weight * 0.453592;
+    const heightInches: number = updatedSettings.height; // Remove conversion
+    const weightInPounds: number = updatedSettings.weight; // Remove conversion
     const activityLevel: ActivityLevelEnum = updatedSettings.activityLevel;
     const goal: WeightGoalEnum = updatedSettings.weightGoal;
     const diet: DietEnum = updatedSettings.dietPlan;
@@ -248,8 +248,8 @@ export const calculateUserMacros = async (
     const macros = calculateMacros(
       age,
       gender,
-      heightInCentimeters,
-      weightInKilograms,
+      heightInches,
+      weightInPounds,
       activityLevel,
       goal,
       diet

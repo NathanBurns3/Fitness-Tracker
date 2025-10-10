@@ -23,7 +23,7 @@ export class ActivityGoalComponent implements OnInit, OnChanges {
   activityLevelLabels = {
     [ActivityLevelEnum.Sedentary]: 'None',
     [ActivityLevelEnum.Exercise1To3TimesPerWeek]: '1-3 Days a week',
-    [ActivityLevelEnum.Exercise4To5TimesPerWeek]: '3-5 Days a week',
+    [ActivityLevelEnum.Exercise4To5TimesPerWeek]: '4-5 Days a week',
     [ActivityLevelEnum.IntenseExercise6To7TimesPerWeek]: '6-7 days a week',
   };
   weightGoalLabels = {

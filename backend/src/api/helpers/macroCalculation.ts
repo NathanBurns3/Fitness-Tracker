@@ -17,14 +17,15 @@ function calculateBMR(
   heightInches: number,
   weightLbs: number
 ): number {
-  const weightKg = weightLbs * 0.453592;
+  const weightKg = weightLbs * 0.45359237;
   const heightCm = heightInches * 2.54;
 
-  if (gender === GenderEnum.Male) {
-    return 10 * weightKg + 6.25 * heightCm - 5 * age + 5;
-  } else {
-    return 10 * weightKg + 6.25 * heightCm - 5 * age - 161;
-  }
+  const bmr =
+    gender === GenderEnum.Male
+      ? 10 * weightKg + 6.25 * heightCm - 5 * age + 5
+      : 10 * weightKg + 6.25 * heightCm - 5 * age - 161;
+
+  return Math.round(bmr);
 }
 
 function getActivityMultiplier(activityLevel: ActivityLevelEnum): number {
@@ -34,9 +35,9 @@ function getActivityMultiplier(activityLevel: ActivityLevelEnum): number {
     case ActivityLevelEnum.Exercise1To3TimesPerWeek:
       return 1.375;
     case ActivityLevelEnum.Exercise4To5TimesPerWeek:
-      return 1.725;
+      return 1.55;
     case ActivityLevelEnum.IntenseExercise6To7TimesPerWeek:
-      return 1.9;
+      return 1.725;
     default:
       return 1.55;
   }
@@ -44,59 +45,50 @@ function getActivityMultiplier(activityLevel: ActivityLevelEnum): number {
 
 function adjustCaloriesForGoal(calories: number, goal: WeightGoalEnum): number {
   switch (goal) {
-    case WeightGoalEnum.MildWeightLoss:
-      return calories - 250;
-    case WeightGoalEnum.WeightLoss:
-      return calories - 500;
     case WeightGoalEnum.ExtremeWeightLoss:
-      return calories - 750;
+      return Math.round(calories * 0.8);
+    case WeightGoalEnum.WeightLoss:
+      return Math.round(calories * 0.9);
+    case WeightGoalEnum.MildWeightLoss:
+      return Math.round(calories * 0.95);
     case WeightGoalEnum.Maintain:
-      return calories;
+      return Math.round(calories);
     case WeightGoalEnum.MildWeightGain:
-      return calories + 250;
+      return Math.round(calories * 1.05);
     case WeightGoalEnum.WeightGain:
-      return calories + 500;
+      return Math.round(calories * 1.1);
     case WeightGoalEnum.ExtremeWeightGain:
-      return calories + 750;
+      return Math.round(calories * 1.2);
     default:
-      return calories;
+      return Math.round(calories);
   }
 }
 
 function getMacrosFromCalories(calories: number, dietPlan: DietEnum): Macros {
-  let proteinPct: number, carbsPct: number, fatPct: number;
+  let proteinPct = 30,
+    carbsPct = 40,
+    fatPct = 30;
 
   switch (dietPlan) {
     case DietEnum.LowFat:
-      proteinPct = 30;
-      carbsPct = 50;
-      fatPct = 20;
+      [proteinPct, carbsPct, fatPct] = [30, 50, 20];
       break;
     case DietEnum.LowCarbs:
-      proteinPct = 40;
-      carbsPct = 30;
-      fatPct = 30;
+      [proteinPct, carbsPct, fatPct] = [40, 30, 30];
       break;
     case DietEnum.HighProtein:
-      proteinPct = 35;
-      carbsPct = 35;
-      fatPct = 30;
+      [proteinPct, carbsPct, fatPct] = [35, 35, 30];
       break;
-    case DietEnum.Balanced:
     default:
-      proteinPct = 30;
-      carbsPct = 40;
-      fatPct = 30;
-      break;
+      [proteinPct, carbsPct, fatPct] = [30, 40, 30];
   }
 
   const protein = Math.round((calories * (proteinPct / 100)) / 4);
   const carbs = Math.round((calories * (carbsPct / 100)) / 4);
   const fat = Math.round((calories * (fatPct / 100)) / 9);
   const fiber = Math.round((calories / 1000) * 14);
-  const totalCalories = Math.round(calories);
 
-  return { protein, carbs, fat, fiber, calories: totalCalories };
+  return { protein, carbs, fat, fiber, calories };
 }
 
 export function calculateMacros(
@@ -109,9 +101,7 @@ export function calculateMacros(
   dietPlan: DietEnum
 ): Macros {
   const bmr = calculateBMR(age, gender, heightInches, weightLbs);
-  const activityMultiplier = getActivityMultiplier(activityLevel);
-  const maintenanceCalories = bmr * activityMultiplier;
-  const adjustedCalories = adjustCaloriesForGoal(maintenanceCalories, goal);
-
-  return getMacrosFromCalories(adjustedCalories, dietPlan);
+  const tdee = Math.round(bmr * getActivityMultiplier(activityLevel));
+  const adjusted = adjustCaloriesForGoal(tdee, goal);
+  return getMacrosFromCalories(adjusted, dietPlan);
 }

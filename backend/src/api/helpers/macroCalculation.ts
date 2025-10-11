@@ -25,7 +25,7 @@ function calculateBMR(
       ? 10 * weightKg + 6.25 * heightCm - 5 * age + 5
       : 10 * weightKg + 6.25 * heightCm - 5 * age - 161;
 
-  return Math.round(bmr);
+  return bmr;
 }
 
 function getActivityMultiplier(activityLevel: ActivityLevelEnum): number {
@@ -46,21 +46,21 @@ function getActivityMultiplier(activityLevel: ActivityLevelEnum): number {
 function adjustCaloriesForGoal(calories: number, goal: WeightGoalEnum): number {
   switch (goal) {
     case WeightGoalEnum.ExtremeWeightLoss:
-      return Math.round(calories * 0.8);
+      return calories - 1000;
     case WeightGoalEnum.WeightLoss:
-      return Math.round(calories * 0.85);
+      return calories - 500;
     case WeightGoalEnum.MildWeightLoss:
-      return Math.round(calories * 0.9);
+      return calories - 250;
     case WeightGoalEnum.Maintain:
-      return Math.round(calories);
+      return calories;
     case WeightGoalEnum.MildWeightGain:
-      return Math.round(calories * 1.1);
+      return calories + 250;
     case WeightGoalEnum.WeightGain:
-      return Math.round(calories * 1.15);
+      return calories + 500;
     case WeightGoalEnum.ExtremeWeightGain:
-      return Math.round(calories * 1.2);
+      return calories + 1000;
     default:
-      return Math.round(calories);
+      return calories;
   }
 }
 
@@ -94,9 +94,9 @@ function getMacrosFromCalories(calories: number, dietPlan: DietEnum): Macros {
   const protein = Math.round((calories * (proteinPct / 100)) / 4);
   const carbs = Math.round((calories * (carbsPct / 100)) / 4);
   const fat = Math.round((calories * (fatPct / 100)) / 9);
-  const fiber = Math.round(calories * 0.014);
+  const fiber = Math.round((calories / 1000) * 14);
 
-  return { protein, carbs, fat, fiber, calories };
+  return { protein, carbs, fat, fiber, calories: Math.round(calories) };
 }
 
 export function calculateMacros(

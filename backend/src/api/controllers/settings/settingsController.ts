@@ -239,8 +239,8 @@ export const calculateUserMacros = async (
 
     const age: number = updatedSettings.age;
     const gender: GenderEnum = updatedSettings.gender;
-    const heightInches: number = updatedSettings.height; // Remove conversion
-    const weightInPounds: number = updatedSettings.weight; // Remove conversion
+    const heightInches: number = updatedSettings.height;
+    const weightInPounds: number = updatedSettings.weight;
     const activityLevel: ActivityLevelEnum = updatedSettings.activityLevel;
     const goal: WeightGoalEnum = updatedSettings.weightGoal;
     const diet: DietEnum = updatedSettings.dietPlan;

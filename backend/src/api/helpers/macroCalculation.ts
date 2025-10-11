@@ -48,15 +48,15 @@ function adjustCaloriesForGoal(calories: number, goal: WeightGoalEnum): number {
     case WeightGoalEnum.ExtremeWeightLoss:
       return Math.round(calories * 0.8);
     case WeightGoalEnum.WeightLoss:
-      return Math.round(calories * 0.9);
+      return Math.round(calories * 0.85);
     case WeightGoalEnum.MildWeightLoss:
-      return Math.round(calories * 0.95);
+      return Math.round(calories * 0.9);
     case WeightGoalEnum.Maintain:
       return Math.round(calories);
     case WeightGoalEnum.MildWeightGain:
-      return Math.round(calories * 1.05);
-    case WeightGoalEnum.WeightGain:
       return Math.round(calories * 1.1);
+    case WeightGoalEnum.WeightGain:
+      return Math.round(calories * 1.15);
     case WeightGoalEnum.ExtremeWeightGain:
       return Math.round(calories * 1.2);
     default:
@@ -65,28 +65,36 @@ function adjustCaloriesForGoal(calories: number, goal: WeightGoalEnum): number {
 }
 
 function getMacrosFromCalories(calories: number, dietPlan: DietEnum): Macros {
-  let proteinPct = 30,
-    carbsPct = 40,
-    fatPct = 30;
+  let proteinPct: number, carbsPct: number, fatPct: number;
 
   switch (dietPlan) {
     case DietEnum.LowFat:
-      [proteinPct, carbsPct, fatPct] = [30, 50, 20];
+      proteinPct = 25;
+      carbsPct = 55;
+      fatPct = 20;
       break;
     case DietEnum.LowCarbs:
-      [proteinPct, carbsPct, fatPct] = [40, 30, 30];
+      proteinPct = 30;
+      carbsPct = 25;
+      fatPct = 45;
       break;
     case DietEnum.HighProtein:
-      [proteinPct, carbsPct, fatPct] = [35, 35, 30];
+      proteinPct = 35;
+      carbsPct = 30;
+      fatPct = 35;
       break;
+    case DietEnum.Balanced:
     default:
-      [proteinPct, carbsPct, fatPct] = [30, 40, 30];
+      proteinPct = 20;
+      carbsPct = 50;
+      fatPct = 30;
+      break;
   }
 
   const protein = Math.round((calories * (proteinPct / 100)) / 4);
   const carbs = Math.round((calories * (carbsPct / 100)) / 4);
   const fat = Math.round((calories * (fatPct / 100)) / 9);
-  const fiber = Math.round((calories / 1000) * 14);
+  const fiber = Math.round(calories * 0.014);
 
   return { protein, carbs, fat, fiber, calories };
 }
@@ -101,7 +109,9 @@ export function calculateMacros(
   dietPlan: DietEnum
 ): Macros {
   const bmr = calculateBMR(age, gender, heightInches, weightLbs);
-  const tdee = Math.round(bmr * getActivityMultiplier(activityLevel));
-  const adjusted = adjustCaloriesForGoal(tdee, goal);
-  return getMacrosFromCalories(adjusted, dietPlan);
+  const activityMultiplier = getActivityMultiplier(activityLevel);
+  const maintenanceCalories = bmr * activityMultiplier;
+  const adjustedCalories = adjustCaloriesForGoal(maintenanceCalories, goal);
+
+  return getMacrosFromCalories(adjustedCalories, dietPlan);
 }

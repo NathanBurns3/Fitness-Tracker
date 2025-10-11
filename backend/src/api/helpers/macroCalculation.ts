@@ -34,9 +34,9 @@ function getActivityMultiplier(activityLevel: ActivityLevelEnum): number {
     case ActivityLevelEnum.Exercise1To3TimesPerWeek:
       return 1.375;
     case ActivityLevelEnum.Exercise4To5TimesPerWeek:
-      return 1.55;
-    case ActivityLevelEnum.IntenseExercise6To7TimesPerWeek:
       return 1.725;
+    case ActivityLevelEnum.IntenseExercise6To7TimesPerWeek:
+      return 1.9;
     default:
       return 1.55;
   }

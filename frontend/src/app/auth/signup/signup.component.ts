@@ -117,62 +117,76 @@ export class SignupComponent {
     });
   }
 
+  private validateAllFields(): boolean {
+    const personalInfoValid =
+      this.isInformationValid(this.userSettings.personalInformation) &&
+      this.userSettings.personalInformation.firstName.length <= 50 &&
+      this.userSettings.personalInformation.lastName.length <= 50 &&
+      this.userSettings.personalInformation.age <= 999;
+
+    const contactInfoValid =
+      this.isInformationValid(this.userSettings.contactInformation) &&
+      validator.isEmail(this.userSettings.contactInformation.email) &&
+      validator.isMobilePhone(this.userSettings.contactInformation.phoneNumber);
+
+    const physicalMeasurementsValid =
+      this.isInformationValid(this.userSettings.physicalMeasurements) &&
+      this.userSettings.physicalMeasurements.height <= 119 &&
+      this.userSettings.physicalMeasurements.weight <= 999;
+
+    const passwordsValid =
+      !this.passwordSet ||
+      (this.password !== '' &&
+        this.password === this.confirmPassword &&
+        this.isPasswordSafe(this.password));
+
+    return (
+      personalInfoValid &&
+      contactInfoValid &&
+      physicalMeasurementsValid &&
+      passwordsValid
+    );
+  }
+
   updatePassword(): void {
     this.passwordSet = true;
-    this.pageValid =
-      this.password !== '' &&
-      this.password === this.confirmPassword &&
-      this.isPasswordSafe(this.password);
+    this.pageValid = this.validateAllFields();
     this.userSettingsChanged = true;
   }
 
   updateContactInformation(
     updatedContactInformation: IContactInformation,
   ): void {
-    this.pageValid =
-      this.isInformationValid(updatedContactInformation) &&
-      validator.isEmail(updatedContactInformation.email) &&
-      validator.isMobilePhone(updatedContactInformation.phoneNumber);
     this.userSettings.contactInformation = updatedContactInformation;
+    this.pageValid = this.validateAllFields();
     this.userSettingsChanged = true;
   }
 
   updatePersonalInformation(
     updatedPersonalInformation: IPersonalInformation,
   ): void {
-    this.pageValid = this.isInformationValid(updatedPersonalInformation);
-    if (
-      updatedPersonalInformation.firstName.length > 50 ||
-      updatedPersonalInformation.lastName.length > 50 ||
-      updatedPersonalInformation.age > 999
-    ) {
-      this.pageValid = false;
-    }
     this.userSettings.personalInformation = updatedPersonalInformation;
+    this.pageValid = this.validateAllFields();
     this.userSettingsChanged = true;
   }
 
   updatePhysicalMeasurements(
     updatedPhysicalMeasurements: IPhysicalMeasurements,
   ): void {
-    this.pageValid = this.isInformationValid(updatedPhysicalMeasurements);
-    if (
-      updatedPhysicalMeasurements.height > 119 ||
-      updatedPhysicalMeasurements.weight > 999
-    ) {
-      this.pageValid = false;
-    }
     this.userSettings.physicalMeasurements = updatedPhysicalMeasurements;
+    this.pageValid = this.validateAllFields();
     this.userSettingsChanged = true;
   }
 
   updateActivityGoal(updatedActivityGoal: IActivityGoal): void {
     this.userSettings.activityGoal = updatedActivityGoal;
+    this.pageValid = this.validateAllFields();
     this.userSettingsChanged = true;
   }
 
   updateDietSelection(dietSelection: string): void {
     this.userSettings.dietPlan = dietSelection as DietEnum;
+    this.pageValid = this.validateAllFields();
     this.userSettingsChanged = true;
   }
 

@@ -4,6 +4,15 @@ import YearlyInfo from '../models/db/yearlyInfo';
 import Goals from '../models/db/goals';
 import mongoose from 'mongoose';
 
+function getTargetDateInNY(daysOffset = -1) {
+  const nowInNY = new Date(
+    new Date().toLocaleString('en-US', { timeZone: 'America/New_York' })
+  );
+  nowInNY.setDate(nowInNY.getDate() + daysOffset);
+  nowInNY.setHours(0, 0, 0, 0);
+  return nowInNY;
+}
+
 async function clearDailyInfo(userID: mongoose.Types.ObjectId) {
   await DailyInfo.updateMany(
     { userID },
@@ -57,7 +66,7 @@ async function updateMonthlyInfo(userID: mongoose.Types.ObjectId) {
   );
 
   const withinGoal = (goal: number, total: number) =>
-    Math.abs(goal - total) / goal <= 0.05;
+    goal === 0 ? total === 0 : Math.abs(goal - total) / goal <= 0.05;
 
   const nutritionGoalsMet = [
     withinGoal(goals.foodGoals.calories, totalNutrition.calories),
@@ -71,8 +80,9 @@ async function updateMonthlyInfo(userID: mongoose.Types.ObjectId) {
 
   const exerciseGoalMet = dailyInfo.exercisesCompleted.length > 0;
 
+  const targetDay = getTargetDateInNY();
   monthlyInfo.goalsCompleted.push({
-    day: new Date(),
+    day: targetDay,
     exerciseGoal: exerciseGoalMet,
     eatingGoal: eatingGoalMet,
   });
@@ -93,7 +103,8 @@ async function updateYearlyInfo(userID: mongoose.Types.ObjectId) {
     yearlyInfo.month = [];
   }
 
-  const currentMonth = new Date().getMonth();
+  const targetDay = getTargetDateInNY();
+  const currentMonth = targetDay.getMonth();
   const monthInfo = yearlyInfo.month.find((m) => m.month === currentMonth);
 
   const exerciseGoalsCompleted = monthlyInfo.goalsCompleted.filter(
@@ -124,8 +135,9 @@ async function updateStreaks(userID: mongoose.Types.ObjectId) {
   const monthlyInfo = await MonthlyInfo.findOne({ userID }).lean();
   if (!monthlyInfo) return;
 
+  const targetDayString = getTargetDateInNY().toDateString();
   const todayGoals = monthlyInfo.goalsCompleted.find(
-    (goal) => goal.day.toDateString() === new Date().toDateString()
+    (goal) => new Date((goal as any).day).toDateString() === targetDayString
   );
   if (!todayGoals) return;
 

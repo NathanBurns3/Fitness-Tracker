@@ -104,7 +104,7 @@ async function updateYearlyInfo(userID: mongoose.Types.ObjectId) {
   }
 
   const targetDay = getTargetDateInNY();
-  const currentMonth = targetDay.getMonth();
+  const currentMonth = targetDay.getMonth() + 1;
   const monthInfo = yearlyInfo.month.find((m) => m.month === currentMonth);
 
   const exerciseGoalsCompleted = monthlyInfo.goalsCompleted.filter(

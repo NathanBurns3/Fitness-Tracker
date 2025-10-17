@@ -139,6 +139,8 @@ export class DailySummaryComponent implements OnInit, OnDestroy, OnChanges {
           exerciseName = 'Abs';
         } else if (exerciseName.includes('back')) {
           exerciseName = 'Back';
+        } else if (exerciseName.includes('chest')) {
+          exerciseName = 'Chest';
         } else {
           exerciseName = exerciseName.replace('sets', '');
           exerciseName =

@@ -1,10 +1,12 @@
 import {
   Component,
+  EventEmitter,
   HostListener,
   Input,
   OnChanges,
   OnDestroy,
   OnInit,
+  Output,
   SimpleChanges,
 } from '@angular/core';
 import { IDailyEatingInfo } from '../models/daily-eating-info';
@@ -24,6 +26,7 @@ export class DailySummaryComponent implements OnInit, OnDestroy, OnChanges {
   @Input() dailyEatingInfo!: IDailyEatingInfo;
   @Input() dailyExerciseInfo!: IExerciseInfo;
   @Input() isLoading: boolean = false;
+  @Output() trackedNutritionsChange = new EventEmitter<string[]>();
 
   exercisePercentage!: number[];
   eatingPercentage!: number[];
@@ -113,6 +116,19 @@ export class DailySummaryComponent implements OnInit, OnDestroy, OnChanges {
 
   isSmallScreen() {
     return this.screenWidth < 450;
+  }
+
+  isNutritionTracked(macro: string): boolean {
+    return this.dailyEatingInfo.trackedNutritions.includes(macro.toLowerCase());
+  }
+
+  toggleNutritionTracking(macro: string) {
+    const macroLower = macro.toLowerCase();
+    const updatedNutritions = this.isNutritionTracked(macro)
+      ? this.dailyEatingInfo.trackedNutritions.filter((n) => n !== macroLower)
+      : [...this.dailyEatingInfo.trackedNutritions, macroLower];
+
+    this.trackedNutritionsChange.emit(updatedNutritions);
   }
 
   debouncedCreateChart = this.debounce(() => this.createChart(), 200);

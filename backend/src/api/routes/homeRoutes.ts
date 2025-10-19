@@ -3,6 +3,7 @@ import { getProfileInfo } from '../controllers/home/profileController';
 import {
   getDailyEatingInfo,
   getDailyExerciseInfo,
+  updateTrackedNutritions,
 } from '../controllers/home/dailyInfoController';
 import {
   getMonthlyBreakdownInfo,
@@ -23,5 +24,10 @@ homeRouter.get('/monthlyExerciseInfo', verifyToken, getMonthlyExerciseInfo);
 homeRouter.get('/monthlyBreakdownInfo', verifyToken, getMonthlyBreakdownInfo);
 homeRouter.get('/yearlyEatingGoals', verifyToken, getYearlyEatingGoals);
 homeRouter.get('/yearlyExerciseGoals', verifyToken, getYearlyExerciseGoals);
+homeRouter.put(
+  '/dailyEatingInfo/trackedNutritions',
+  verifyToken,
+  updateTrackedNutritions
+);
 
 export default homeRouter;

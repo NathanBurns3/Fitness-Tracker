@@ -12,11 +12,22 @@ import { Router } from '@angular/router';
 export class DailyEatingInfoService {
   private apiUrl = environment.apiURL + '/home';
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+  ) {}
 
   getDailyEatingInfo(): Observable<IDailyEatingInfo> {
     return this.http.get<IDailyEatingInfo>(this.apiUrl + '/dailyEatingInfo', {
       headers: getHeaders(this.router),
     });
+  }
+
+  updateTrackedNutritions(nutritions: string[]): Observable<IDailyEatingInfo> {
+    return this.http.put<IDailyEatingInfo>(
+      this.apiUrl + '/dailyEatingInfo/trackedNutritions',
+      { trackedNutritions: nutritions },
+      { headers: getHeaders(this.router) },
+    );
   }
 }

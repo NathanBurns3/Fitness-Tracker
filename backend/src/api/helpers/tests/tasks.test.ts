@@ -104,6 +104,7 @@ describe('Tasks', () => {
           fat: 70,
           fiber: 30,
         },
+        trackedNutritions: ['calories', 'protein'],
       }),
       save: jest.fn().mockResolvedValue({}),
     });

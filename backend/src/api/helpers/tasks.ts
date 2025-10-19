@@ -68,15 +68,15 @@ async function updateMonthlyInfo(userID: mongoose.Types.ObjectId) {
   const withinGoal = (goal: number, total: number) =>
     goal === 0 ? total === 0 : Math.abs(goal - total) / goal <= 0.05;
 
-  const nutritionGoalsMet = [
-    withinGoal(goals.foodGoals.calories, totalNutrition.calories),
-    withinGoal(goals.foodGoals.protein, totalNutrition.protein),
-    withinGoal(goals.foodGoals.carbs, totalNutrition.carbs),
-    withinGoal(goals.foodGoals.fat, totalNutrition.fat),
-    withinGoal(goals.foodGoals.fiber, totalNutrition.fiber),
-  ];
+  const nutritionGoalsMet = goals.trackedNutritions.map((nutrition) =>
+    withinGoal(goals.foodGoals[nutrition], totalNutrition[nutrition])
+  );
 
-  const eatingGoalMet = nutritionGoalsMet.filter((goal) => goal).length >= 3;
+  const eatingGoalMet =
+    goals.trackedNutritions.length > 0
+      ? nutritionGoalsMet.filter((goal) => goal).length ===
+        goals.trackedNutritions.length
+      : false;
 
   const exerciseGoalMet = dailyInfo.exercisesCompleted.length > 0;
 

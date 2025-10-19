@@ -145,6 +145,17 @@ export class HomeComponent implements OnInit {
     });
   }
 
+  updateTrackedNutritions(nutritions: string[]): void {
+    this.dailyEatingInfoService.updateTrackedNutritions(nutritions).subscribe(
+      (updatedInfo: IDailyEatingInfo) => {
+        this.dailyEatingInfo = updatedInfo;
+      },
+      (error) => {
+        console.error('Error updating tracked nutritions', error);
+      },
+    );
+  }
+
   private checkAllApiCallsCompleted(): void {
     this.apiCallsCompleted++;
     if (this.apiCallsCompleted === this.totalApiCalls) {

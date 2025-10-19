@@ -63,6 +63,13 @@ export const getDailyEatingInfo = async (
         fat: 0,
         fiber: 0,
       },
+      trackedNutritions: userGoals.trackedNutritions || [
+        'calories',
+        'protein',
+        'carbs',
+        'fat',
+        'fiber',
+      ],
     };
 
     res.status(200).json(dailyEatingInfo);
@@ -226,6 +233,77 @@ export const getDailyExerciseInfo = async (
     };
 
     res.status(200).json(exerciseInfo);
+  } catch (error: Error | any) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+export const updateTrackedNutritions = async (
+  req: AuthenticatedRequest,
+  res: Response
+) => {
+  try {
+    const userID = req.user?.id;
+    const { trackedNutritions } = req.body;
+
+    if (!userID || !mongoose.Types.ObjectId.isValid(userID)) {
+      return res.status(400).json({ message: 'Invalid user ID.' });
+    }
+
+    const updatedGoals = await Goals.findOneAndUpdate(
+      { userID },
+      { $set: { trackedNutritions } },
+      { new: true }
+    ).lean();
+
+    if (!updatedGoals) {
+      return res.status(404).json({ message: 'Goals not found for this user' });
+    }
+
+    const dailyEatingInfo: IDailyEatingInfo = {
+      goals: {
+        caloriesGoal: updatedGoals.foodGoals.calories,
+        proteinGoal: updatedGoals.foodGoals.protein,
+        carbsGoal: updatedGoals.foodGoals.carbs,
+        fatGoal: updatedGoals.foodGoals.fat,
+        fiberGoal: updatedGoals.foodGoals.fiber,
+      },
+      totals: (
+        await DailyInfo.aggregate([
+          { $match: { userID: new Types.ObjectId(userID) } },
+          { $unwind: { path: '$foods', preserveNullAndEmptyArrays: true } },
+          {
+            $group: {
+              _id: null,
+              calories: { $sum: '$foods.nutritions.calories' },
+              protein: { $sum: '$foods.nutritions.protein' },
+              carbs: { $sum: '$foods.nutritions.carbs' },
+              fat: { $sum: '$foods.nutritions.fat' },
+              fiber: { $sum: '$foods.nutritions.fiber' },
+            },
+          },
+          {
+            $project: {
+              _id: 0,
+              calories: 1,
+              protein: 1,
+              carbs: 1,
+              fat: 1,
+              fiber: 1,
+            },
+          },
+        ])
+      )[0] || {
+        calories: 0,
+        protein: 0,
+        carbs: 0,
+        fat: 0,
+        fiber: 0,
+      },
+      trackedNutritions: updatedGoals.trackedNutritions,
+    };
+
+    res.status(200).json(dailyEatingInfo);
   } catch (error: Error | any) {
     res.status(500).json({ message: error.message });
   }

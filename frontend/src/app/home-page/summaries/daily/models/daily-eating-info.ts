@@ -13,4 +13,5 @@ export interface IDailyEatingInfo {
     fat: number;
     fiber: number;
   };
+  trackedNutritions: string[];
 }

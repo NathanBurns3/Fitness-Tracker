@@ -1,5 +1,7 @@
 import mongoose, { Schema, Document } from 'mongoose';
 
+type NutritionType = 'calories' | 'protein' | 'carbs' | 'fat' | 'fiber';
+
 interface IGoalsDB extends Document {
   userID: mongoose.Types.ObjectId;
   exerciseStreak: number;
@@ -11,6 +13,7 @@ interface IGoalsDB extends Document {
     fat: number;
     fiber: number;
   };
+  trackedNutritions: NutritionType[];
 }
 
 const GoalsSchema: Schema = new Schema(
@@ -30,6 +33,12 @@ const GoalsSchema: Schema = new Schema(
         { _id: false }
       ),
       required: true,
+    },
+    trackedNutritions: {
+      type: [String],
+      required: true,
+      enum: ['calories', 'protein', 'carbs', 'fat', 'fiber'],
+      default: ['calories', 'protein', 'carbs', 'fat', 'fiber'],
     },
   },
   {

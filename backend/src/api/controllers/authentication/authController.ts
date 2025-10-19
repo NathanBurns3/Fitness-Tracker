@@ -303,6 +303,7 @@ export const completeRegistration = async (req: Request, res: Response) => {
           fat: macros.fat,
           fiber: macros.fiber,
         },
+        trackedNutritions: ['calories', 'protein', 'carbs', 'fat', 'fiber'],
       }),
       new MonthlyInfo({ userID: userId, sets: [], goalsCompleted: [] }),
       new YearlyInfo({ userID: userId, month: [] }),

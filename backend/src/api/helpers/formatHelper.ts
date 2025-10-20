@@ -8,14 +8,23 @@ export const formatMealData = (data: any): IFood[] => {
     for (let nutrient of food.foodNutrients) {
       nutrients[nutrient.nutrientId] = nutrient.value;
     }
+
+    const limitWords = (text: string, maxWords: number): string => {
+      if (!text) return text;
+      const words = text.split(' ');
+      return words.length > maxWords
+        ? words.slice(0, maxWords).join(' ') + '...'
+        : text;
+    };
+
     let meal: IFood = {
       fdcID: food.fdcId,
-      description: food.description,
+      description: limitWords(food.description, 7),
       brandName: food.brandName,
       servingSize: food.servingSize || 1,
       servingUnit: food.servingSizeUnit || 'item',
       packageWeight: food.packageWeight,
-      ingredients: food.ingredients,
+      ingredients: limitWords(food.ingredients, 30),
       nutritions: {
         calories: nutrients[Nutrient_Ids.Energy] || 0,
         protein: nutrients[Nutrient_Ids.Protein] || 0,

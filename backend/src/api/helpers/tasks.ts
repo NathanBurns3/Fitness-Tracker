@@ -94,11 +94,12 @@ async function updateYearlyInfo(userID: mongoose.Types.ObjectId) {
   const monthlyInfo = await MonthlyInfo.findOne({ userID }).lean();
   if (!monthlyInfo) return;
 
+  if (monthlyInfo.goalsCompleted.length === 0) return;
+
   let yearlyInfo = await YearlyInfo.findOne({ userID });
   if (!yearlyInfo) {
     yearlyInfo = new YearlyInfo({ userID, month: [] });
   }
-
   if (!yearlyInfo.month) {
     yearlyInfo.month = [];
   }

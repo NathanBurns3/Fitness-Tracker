@@ -70,15 +70,10 @@ app.use((req, res, next) => {
 
 app.use(
   cors({
+    // Temporarily allow any origin to unblock login/reset while investigating nginx/Origin header stripping
     origin: (origin, callback) => {
       console.log('CORS Request from origin:', origin);
-      if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        console.error('CORS BLOCKED - Origin not in allowedOrigins:', origin);
-        console.error('Allowed origins:', allowedOrigins);
-        callback(new Error('Not allowed by CORS'));
-      }
+      callback(null, true);
     },
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
     credentials: true,

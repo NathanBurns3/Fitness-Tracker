@@ -54,6 +54,20 @@ const allowedOrigins = [
   'https://activelifetracker.com',
 ];
 
+app.use((req, res, next) => {
+  // If origin is undefined, try to extract from referer
+  if (!req.headers.origin && req.headers.referer) {
+    try {
+      const refererUrl = new URL(req.headers.referer);
+      req.headers.origin = `${refererUrl.protocol}//${refererUrl.host}`;
+      console.log('Extracted origin from referer:', req.headers.origin);
+    } catch (e) {
+      console.error('Failed to extract origin from referer:', e);
+    }
+  }
+  next();
+});
+
 app.use(
   cors({
     origin: (origin, callback) => {
